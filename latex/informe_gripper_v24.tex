@@ -15,7 +15,11 @@
 \usepackage{lastpage}
 \usepackage[labelfont=bf,labelsep=colon,font=small]{caption}
 \usepackage{enumitem}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
+\definecolor{ok}{RGB}{20,120,60}
+\definecolor{warn}{RGB}{190,110,0}
+\definecolor{bad}{RGB}{185,30,30}
+\definecolor{head}{RGB}{232,236,242}
 \usepackage[hidelinks]{hyperref}
 
 \graphicspath{{figuras/}}
@@ -368,6 +372,10 @@ El ciclo evaluado es: cierre hasta $\theta_{MCP} = \theta_{PIP} = 30°$ en 1.5 s
 \label{fig:consumo}
 \end{figure}
 
+La Tabla \ref{tab:resumenconsumo} resume el resultado principal: la energía por ciclo, la potencia media y si el N20 típico puede sostener el agarre.
+
+\input{tablas/resumen_consumo}
+
 \input{tablas/fases}
 \input{tablas/consumo}
 
@@ -463,7 +471,10 @@ El modelo dinámico se acciona por torque. El tren central se representa con eng
 \item El análisis cinemático entregó las posiciones, velocidades y aceleraciones lineales y angulares de las falanges, y las velocidades requeridas en los motores para un tiempo de cierre dado.
 \item El análisis dinámico mostró que los efectos inerciales son despreciables frente a las cargas de agarre y que el mayor consumo de energía se produce en la retención del PIP.
 \item La simulación en Working Model 2D validó el cálculo analítico con un error máximo de 0.034 \% en 180 configuraciones y reprodujo el comportamiento de agarre de los tres modos de accionamiento.
+\item Con motores típicos, el consumo eléctrico por ciclo va de 6.4 J (power 1 kg) a 128 J (pinch 4 kg), y la retención del PIP con los N20 es la que lo determina. El N20 típico 298:1 sostiene de forma continua los agarres de 1 kg, solo admite picos cortos en el power de 4 kg y no puede sostener el pinch de 4 kg en la punta (Tabla \ref{tab:resumenconsumo2}).
 \end{itemize}
+
+\input{tablas/resumen_consumo_concl}
 
 % ======================================================================
 \appendix

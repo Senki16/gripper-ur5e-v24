@@ -180,3 +180,17 @@ th:not(:first-child) { text-align: right; }
 .two + .h3, .wide + .h3 { margin-top: 36px; }
 .h3.mt { margin-top: 40px; }
 .fine + .wide, .wide + .tbl { margin-top: 16px; }
+
+/* ---------- tabla clave de consumo ---------- */
+.key { margin: 8px 0 28px; padding: 22px; border-radius: 22px; background: linear-gradient(180deg, #f2f6fc, #fff); border: 1px solid #c9d6ea; }
+.key-k { margin: 0 0 12px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); }
+.key-tbl td, .key-tbl th { font-size: 16px; }
+.key-tbl td:nth-child(2), .key-tbl td:nth-child(3), .key-tbl th:nth-child(2), .key-tbl th:nth-child(3) { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.key-tbl td:first-child { font-weight: 600; white-space: nowrap; }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 980px; font-size: 13px; font-weight: 600; margin-right: 6px; white-space: nowrap; }
+.pill.ok { background: #e3f5ea; color: #14783c; }
+.pill.warn { background: #fdf0dc; color: #9a5800; }
+.pill.bad { background: #fde4e4; color: #b51e1e; }
+.key-tbl th, .key-tbl td:last-child { white-space: normal; }
+.key-tbl td:last-child, .key-tbl th:last-child { text-align: left; min-width: 170px; }
+@media (max-width: 720px) { .key { padding: 14px; } .key-tbl th, .key-tbl td { padding: 10px 9px; font-size: 14px; } .key-tbl th { font-size: 11px; } }

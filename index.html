@@ -6,7 +6,7 @@
 <title>Gripper V2.4</title>
 <meta name="description" content="Gripper robótico de tres dedos para UR5e: estática, cinemática, dinámica y validación en Working Model 2D.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231d1d1f'/%3E%3Cpath d='M10 9v9l3 5M22 9v9l-3 5M16 7v10' stroke='%23f5f5f7' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=4">
 </head>
 <body>
 
@@ -18,6 +18,7 @@
       <a href="#estatica">Estática</a>
       <a href="#cinematica">Cinemática</a>
       <a href="#dinamica">Dinámica</a>
+      <a href="#consumo">Consumo</a>
       <a href="#simulador">Simulador</a>
       <a href="#pruebas">Pruebas</a>
       <a href="#validacion">Validación</a>
@@ -188,6 +189,18 @@
       </tbody></table></div>
 
     <h3 class="h3 mt">Consumo eléctrico con motores típicos</h3>
+    <div class="key" id="consumo">
+      <p class="key-k">Resultado clave</p>
+      <div class="tbl"><table class="key-tbl">
+        <thead><tr><th>Caso</th><th>Energía por ciclo</th><th>Potencia media</th><th>N20 típico (298:1)</th></tr></thead>
+        <tbody>
+          <tr><td>Power 1 kg</td><td>6.4 J</td><td>0.77 W</td><td><span class="pill ok">✓ Continuo</span></td></tr>
+          <tr><td>Power 4 kg</td><td>34.4 J</td><td>4.14 W</td><td><span class="pill warn">△ Solo picos cortos</span></td></tr>
+          <tr><td>Pinch 1 kg</td><td>13.5 J</td><td>1.62 W</td><td><span class="pill ok">✓ Continuo</span></td></tr>
+          <tr><td>Pinch 4 kg</td><td>128 J</td><td>15.45 W</td><td><span class="pill bad">✕ No viable</span> necesita 0.444 N·m, por encima de su par de bloqueo de 0.39 N·m</td></tr>
+        </tbody></table></div>
+      <p class="fine">Ciclo de 8.3 s: cierre 1.5 s, apriete 0.3 s, retención 5 s y apertura 1.5 s, con motores típicos de catálogo.</p>
+    </div>
     <p class="fine">El plano no define los motores. Se usan datos típicos de catálogo: servo digital de 20 kg·cm (clase DS3218, rotación continua, 6.8 V, 111 rpm, bloqueo 1.96 N·m / 2.5 A) y N20 6 V 298:1 (100 rpm, bloqueo 0.39 N·m / 1.6 A). Modelo DC lineal I = I₀ + T/K<sub>t</sub>, P = (IR + K<sub>e</sub>ω)·I. Ciclo: cierre 1.5 s, apriete 0.3 s, retención 5 s, apertura 1.5 s.</p>
     <figure class="wide"><img src="assets/img/D8_consumo_electrico.webp" alt="Corriente y potencia eléctrica del servo y del N20 durante un ciclo" loading="lazy"></figure>
     <div class="tbl"><table>

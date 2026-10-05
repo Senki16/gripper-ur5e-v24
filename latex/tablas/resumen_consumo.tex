@@ -1,0 +1,14 @@
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|r|r|>{\raggedright\arraybackslash}p{6.8cm}|}
+\hline
+\rowcolor{head}\textbf{Caso} & \textbf{Energía por ciclo} & \textbf{Potencia media} & \textbf{N20 típico (298:1)} \\ \hline
+Power 1 kg & 6.4 J & 0.77 W & \textcolor{ok}{\checkmark\ Continuo} \\ \hline
+Power 4 kg & 34.4 J & 4.14 W & \textcolor{warn}{$\triangle$\ Solo picos cortos} \\ \hline
+Pinch 1 kg & 13.5 J & 1.62 W & \textcolor{ok}{\checkmark\ Continuo} \\ \hline
+Pinch 4 kg & 128 J & 15.45 W & \textcolor{bad}{$\times$\ No viable: necesita 0.444 N$\cdot$m, por encima de su par de bloqueo de 0.39 N$\cdot$m} \\ \hline
+\end{tabular}
+\caption{\textbf{Resumen de consumo eléctrico y viabilidad del motor de dedo.} Ciclo de 8.3 s (cierre, apriete, retención de 5 s y apertura), motores típicos de catálogo.}
+\label{tab:resumenconsumo}
+\end{table}
