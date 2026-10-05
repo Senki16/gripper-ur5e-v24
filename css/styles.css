@@ -178,3 +178,5 @@ th:not(:first-child) { text-align: right; }
 #test-tbl td:not(:first-child), #test-tbl th:not(:first-child) { font-variant-numeric: tabular-nums; text-align: right; }
 
 .two + .h3, .wide + .h3 { margin-top: 36px; }
+.h3.mt { margin-top: 40px; }
+.fine + .wide, .wide + .tbl { margin-top: 16px; }

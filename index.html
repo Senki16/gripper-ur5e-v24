@@ -181,11 +181,24 @@
         <tr><td>Cierre</td><td>Servo (3 dedos)</td><td>43.6 mJ</td><td>105.3 mW</td><td>η 0.6</td></tr>
         <tr><td>Cierre</td><td>N20 (por dedo)</td><td>1.79 mJ</td><td>4.43 mW</td><td>η 0.6</td></tr>
         <tr><td>Retención</td><td>Servo</td><td>0</td><td>0</td><td>Sinfín autobloqueante</td></tr>
-        <tr><td>Retención</td><td>N20 (por dedo)</td><td>I²R·t</td><td>I²R</td><td>T = 0.444 N·m; K<sub>t</sub> y R: dato faltante</td></tr>
+        <tr><td>Retención</td><td>N20 (por dedo)</td><td>I²R·t</td><td>I²R</td><td>T = 0.444 N·m (pinch 4 kg); ver consumo eléctrico</td></tr>
         <tr><td>Apertura</td><td>Servo (3 dedos)</td><td>15.6 mJ</td><td>37.7 mW</td><td>Vence el autobloqueo</td></tr>
         <tr><td>Apertura</td><td>N20</td><td>0</td><td>0</td><td>Sinfín reversible</td></tr>
         <tr><td><b>Ciclo</b></td><td><b>Servo / 3 N20</b></td><td><b>59.2 / 5.4 mJ</b></td><td></td><td>Energía mecánica en los ejes</td></tr>
       </tbody></table></div>
+
+    <h3 class="h3 mt">Consumo eléctrico con motores típicos</h3>
+    <p class="fine">El plano no define los motores. Se usan datos típicos de catálogo: servo digital de 20 kg·cm (clase DS3218, rotación continua, 6.8 V, 111 rpm, bloqueo 1.96 N·m / 2.5 A) y N20 6 V 298:1 (100 rpm, bloqueo 0.39 N·m / 1.6 A). Modelo DC lineal I = I₀ + T/K<sub>t</sub>, P = (IR + K<sub>e</sub>ω)·I. Ciclo: cierre 1.5 s, apriete 0.3 s, retención 5 s, apertura 1.5 s.</p>
+    <figure class="wide"><img src="assets/img/D8_consumo_electrico.webp" alt="Corriente y potencia eléctrica del servo y del N20 durante un ciclo" loading="lazy"></figure>
+    <div class="tbl"><table>
+      <thead><tr><th>Caso</th><th>I servo (apriete)</th><th>T N20</th><th>I N20 (retención)</th><th>N20</th><th>E ciclo</th><th>Potencia media</th></tr></thead>
+      <tbody>
+        <tr><td>Power 1 kg</td><td>0.38 A</td><td>0.060 N·m</td><td>0.33 A</td><td>Continuo</td><td>6.4 J</td><td>0.77 W</td></tr>
+        <tr><td>Power 4 kg</td><td>1.07 A</td><td>0.237 N·m</td><td>1.01 A</td><td>Solo pico</td><td>34.4 J</td><td>4.14 W</td></tr>
+        <tr><td>Pinch 1 kg</td><td>0.42 A</td><td>0.112 N·m</td><td>0.53 A</td><td>Continuo</td><td>13.5 J</td><td>1.62 W</td></tr>
+        <tr><td>Pinch 4 kg</td><td>1.23 A</td><td>0.444 N·m</td><td>1.81 A</td><td><b>Excede</b></td><td>128.2 J</td><td>15.45 W</td></tr>
+      </tbody></table></div>
+    <p class="fine">El servo gasta menos de 1.9 J por ciclo porque el sinfín autobloqueante le permite apagarse al retener. Entre el 77 % y el 99 % de la energía la consumen los N20 sosteniendo el PIP; el pinch de 4 kg supera el par de bloqueo del N20 típico.</p>
   </div>
 </section>
 

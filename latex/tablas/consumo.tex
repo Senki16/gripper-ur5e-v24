@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering
+
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{|l|r|r|c|r|r|r|c|r|r|r|r|}
+\hline
+\textbf{Caso} & \textbf{$T_c$ [N$\cdot$m]} & \textbf{$I_{servo}$ [A]} & \textbf{Servo} & \textbf{$T_{N20}$ [N$\cdot$m]} & \textbf{$I_{N20}$ [A]} & \textbf{$P_{ret}$ [W]} & \textbf{N20} & \textbf{$E_{servo}$ [J]} & \textbf{$E_{3\,N20}$ [J]} & \textbf{$E_{ciclo}$ [J]} & \textbf{$\bar P$ [W]} \\ \hline
+Power 1 kg (D) & 0.195 & 0.38 & Continuo & 0.060 & 0.33 & 0.41 & Continuo & 1.47 & 4.94 & 6.41 & 0.77 \\ \hline
+Power 4 kg (D) & 0.767 & 1.07 & Solo pico & 0.237 & 1.01 & 3.85 & Solo pico & 1.77 & 32.62 & 34.39 & 4.14 \\ \hline
+Pinch 1 kg (T) & 0.229 & 0.42 & Continuo & 0.112 & 0.53 & 1.05 & Continuo & 1.48 & 11.98 & 13.46 & 1.62 \\ \hline
+Pinch 4 kg (T) & 0.905 & 1.23 & Solo pico & 0.444 & 1.81 & 12.25 & \textbf{Excede} & 1.88 & 126.36 & 128.23 & 15.45 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Consumo eléctrico por ciclo con motores típicos: cierre 1.5 s, apriete 0.3 s, retención 5 s y apertura 1.5 s, agarre a 30°/30°, $\mu = 0.5$, $\eta = 0.6$. $I_{N20}$ y $P_{ret}$ corresponden al dedo más cargado.}
+\label{tab:consumo}
+\end{table}

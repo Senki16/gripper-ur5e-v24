@@ -348,7 +348,30 @@ En la apertura la gravedad ayuda y el trabajo articular es negativo. Como el sin
 \input{tablas/ciclo}
 
 \subsection{Consumo durante la retención}
-Una vez cerrado, el sinfín central autobloqueante sostiene los MCP sin consumo. El PIP, en cambio, necesita par continuo: en un pinch de 4 kg en la punta ($\theta = 30°/30°$) el N20 de cada dedo debe entregar $T = 1.066/(4 \times 0.6) = 0.444$ N$\cdot$m de forma permanente. La potencia eléctrica de retención es $P = I^2 R$ con $I = T/K_t$, que depende de la constante de par $K_t$ y la resistencia $R$ del motor (dato faltante).
+Una vez cerrado, el sinfín central autobloqueante sostiene los MCP sin consumo. El PIP, en cambio, necesita par continuo: en un pinch de 4 kg en la punta ($\theta = 30°/30°$) el N20 de cada dedo debe entregar $T = 1.066/(4 \times 0.6) = 0.444$ N$\cdot$m de forma permanente. La potencia eléctrica de retención es $P = I^2 R$ con $I = T/K_t$, que depende de la constante de par $K_t$ y la resistencia $R$ del motor. Como el plano no especifica los motores, en la sección siguiente se estima con datos típicos de catálogo.
+
+\subsection{Consumo eléctrico con motores típicos}
+El plano no define el modelo de los motores, por lo que se usan valores típicos de catálogo (Tabla \ref{tab:motores}). Para el motor central se toma un servo digital de 20 kg$\cdot$cm (clase DS3218) en versión de rotación continua, ya que el sinfín central debe girar varias vueltas; para cada dedo, un micromotorreductor N20 de 6 V con reductora 298:1. Estos valores son supuestos y deben reemplazarse por los de la hoja de datos del motor elegido.
+
+\input{tablas/motores}
+
+Cada motor se representa con el modelo lineal de motor DC referido a su eje de salida:
+\eq{I = I_0 + \frac{T}{K_t} \qquad V_m = I R + K_e\,\omega \qquad P_{el} = V_m\, I \qquad R = \frac{V}{I_{st}} \qquad K_t = \frac{T_{st}}{I_{st}-I_0}}
+donde $T$ es el par en el eje del motor obtenido en las secciones anteriores ($T_c = \sum\tau_{MCP}/(12\eta)$, $T_i = \tau_{PIP}/(4\eta)$) y $\omega$ su velocidad. Con el motor detenido (apriete y retención) la potencia es $I^2R$; se conserva $I_0$, lo que es conservador. Se supone un driver PWM ideal que entrega solo la tensión $V_m$ necesaria.
+
+El ciclo evaluado es: cierre hasta $\theta_{MCP} = \theta_{PIP} = 30°$ en 1.5 s (perfil cicloidal), apriete de 0.3 s hasta el par de agarre, retención de 5 s y apertura en 1.5 s. Con el cierre en 1.5 s el sinfín central necesita 80 rpm y el sinfín del N20 26.7 rpm, por debajo de las velocidades disponibles (110.8 y 99.8 rpm), así que ambos motores alcanzan el perfil. Durante la retención el sinfín central se autobloquea y el servo solo consume la corriente de reposo de su electrónica; el N20, en cambio, debe sostener el par del PIP de forma continua.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D8_consumo_electrico.png}
+\caption{Corriente y potencia eléctrica del servo central y del N20 del dedo A durante un ciclo (power 1 kg).}
+\label{fig:consumo}
+\end{figure}
+
+\input{tablas/fases}
+\input{tablas/consumo}
+
+En la Tabla \ref{tab:consumo}, ``Continuo'' indica que el par no supera el 30 \% del par de bloqueo, ``Solo pico'' que lo supera pero queda por debajo del bloqueo, y ``Excede'' que el motor típico no puede entregarlo. Para el servo, ``Solo pico'' es aceptable porque el par de agarre solo se mantiene durante el apriete (0.3 s) y luego el sinfín autobloqueante lo sostiene.
 
 \subsection{Análisis de resultados dinámicos}
 \begin{itemize}
@@ -356,7 +379,9 @@ Una vez cerrado, el sinfín central autobloqueante sostiene los MCP sin consumo.
 \item Un ciclo completo en vacío requiere 59.2 mJ en el eje del servo y 5.4 mJ entre los tres N20.
 \item El cierre en vacío requiere 9.8 mJ por dedo y una potencia máxima de 105 mW en el eje del servo con $\eta = 0.6$.
 \item El balance energético cierra con error de $10^{-14}$ J, lo que valida la formulación dinámica.
-\item El mayor consumo energético del sistema proviene de la retención en el PIP, por lo que se recomienda un tren autobloqueante o un freno en esa articulación.
+\item Con motores típicos, un ciclo de 8.3 s con 1 kg en power consume 6.4 J (0.77 W en promedio); con 4 kg sube a 34.4 J (4.1 W). El servo aporta menos de 1.9 J por ciclo en todos los casos porque el sinfín autobloqueante le permite apagarse durante la retención.
+\item Entre el 77 \% y el 99 \% de la energía del ciclo la consumen los N20 al retener el PIP. En un pinch de 4 kg en la punta el N20 típico tendría que dar 0.444 N$\cdot$m, por encima de su par de bloqueo (0.39 N$\cdot$m), así que ese caso no es viable con un N20 298:1.
+\item El mayor consumo energético del sistema proviene de la retención en el PIP, por lo que se recomienda un tren autobloqueante o un freno en esa articulación: eliminaría casi todo el consumo de retención.
 \end{itemize}
 
 % ======================================================================
