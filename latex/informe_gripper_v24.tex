@@ -1,0 +1,437 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{textcomp}
+\DeclareUnicodeCharacter{00B0}{\ensuremath{^\circ}}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[labelfont=bf,labelsep=colon,font=small]{caption}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{figuras/}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+\renewcommand{\arraystretch}{1.15}
+\setlist[itemize]{label=\scriptsize$\blacksquare$,itemsep=0.4em}
+
+% --- encabezado y pie con el formato de la entrega de referencia
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Diseño de Detalle - Gripper Robótico}
+\fancyhead[R]{Gripper 3 dedos UR5e V2.4}
+\fancyfoot[L]{Entrega Final}
+\fancyfoot[C]{\thepage\ de \pageref{LastPage}}
+\fancyfoot[R]{Universidad EAFIT}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\eq}[1]{{\boldmath\begin{equation*}#1\end{equation*}}}
+
+\begin{document}
+
+% ======================================================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\Large Universidad EAFIT\par}
+\vspace{0.5cm}
+{\large Escuela de Ciencias Aplicadas e Ingeniería\par}
+\vspace{2.5cm}
+{\huge\bfseries Gripper robótico de tres dedos UR5e V2.4\par}
+\vspace{0.6cm}
+{\Large Diseño de detalle: cálculos estáticos, cinemáticos y dinámicos\par}
+\vspace{0.4cm}
+{\large Puntos 3.1, 3.3 y 3.4\par}
+\vspace{2cm}
+\includegraphics[width=0.85\textwidth]{gripper_hero_cad.jpg}\par
+\vspace{2cm}
+{\large Entrega Final\par}
+\vspace{0.3cm}
+{\large Octubre de 2026\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ======================================================================
+\section{Introducción}
+El presente informe desarrolla el diseño de detalle de un gripper robótico antropomórfico de tres dedos para el robot colaborativo UR5e, a partir del plano de medidas GV24-MED-01 (versión V2.4) y del ensamble CAD del mecanismo. Cada dedo tiene dos falanges, proximal (L1) y distal (L2), articuladas en las juntas MCP y PIP.
+
+La arquitectura emplea cuatro motores. Un motor central (servo) mueve un sinfín de módulo 1 que acciona, mediante un par de engranes z20, las tres ruedas z30 que a su vez mueven el piñón z12 de cada articulación MCP. Además, cada dedo tiene un motor N20 propio alojado en la falange proximal, que acciona la articulación PIP mediante un sinfín de módulo 0.5 y una rueda z16.
+
+En el documento se desarrollan los cálculos estáticos en las vistas lateral, superior y frontal (punto 3.1), los cálculos cinemáticos de posición, velocidad y aceleración lineal y angular (punto 3.3) y los cálculos dinámicos con las estimaciones de potencia y consumo energético (punto 3.4). Los resultados analíticos se validan con dos modelos construidos en Working Model 2D.
+
+% ======================================================================
+\section{Objetivos}
+\subsection{Objetivo general}
+Determinar las fuerzas, torques, velocidades, aceleraciones y potencias del gripper de tres dedos V2.4 en sus configuraciones de agarre, y validar los resultados mediante simulación en Working Model 2D.
+
+\subsection{Objetivos específicos}
+\begin{itemize}
+\item Identificar las transmisiones del mecanismo y su relación con los cuatro motores.
+\item Calcular las fuerzas, torques y reacciones del sistema en las vistas lateral, superior y frontal para agarres tipo pinch y power.
+\item Determinar el torque requerido por el motor central y por cada motor de dedo, considerando relación de transmisión y eficiencia.
+\item Describir los desplazamientos, velocidades y aceleraciones lineales y angulares de las falanges durante el cierre.
+\item Estimar la potencia y la energía consumidas en un ciclo de cierre y durante la retención del objeto.
+\item Comparar el cálculo analítico con los resultados de Working Model 2D y reportar el error porcentual.
+\end{itemize}
+
+% ======================================================================
+\section{Datos de entrada}
+\subsection{Plano de medidas V2.4}
+Los cálculos usan exclusivamente la geometría, las masas y las transmisiones del plano GV24-MED-01 (Figura \ref{fig:plano}). Los parámetros que el plano no define se tratan como variables y se identifican como \emph{dato faltante}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plano_v24.png}
+\caption{Plano de medidas GV24-MED-01 del dedo y de la palma.}
+\label{fig:plano}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|r|r|}
+\hline
+\textbf{Vector} & \textbf{Par} & \textbf{$r_{y'}$ [mm]} & \textbf{$r_{z'}$ [mm]} \\ \hline
+r1 & MCP $\rightarrow$ G$_1$ (CoM L1) & 26.52 & 0.89 \\ \hline
+r2 & MCP $\rightarrow$ P (huella P) & 31.00 & $-13.00$ \\ \hline
+r3 & MCP $\rightarrow$ PIP & 50.00 & $-4.00$ \\ \hline
+r4 & MCP $\rightarrow$ G$_2$ (CoM L2) & 66.19 & $-4.11$ \\ \hline
+r5 & MCP $\rightarrow$ D (huella D) & 71.45 & $-13.00$ \\ \hline
+r6 & MCP $\rightarrow$ T (punta) & 85.00 & $-13.00$ \\ \hline
+r7 & MCP $\rightarrow$ eje rueda z30 & $-7.79$ & $-19.50$ \\ \hline
+r8 & PIP $\rightarrow$ G$_2$ & 16.19 & $-0.11$ \\ \hline
+r9 & PIP $\rightarrow$ D & 21.45 & $-9.00$ \\ \hline
+r10 & PIP $\rightarrow$ T & 35.00 & $-9.00$ \\ \hline
+\end{tabular}
+\caption{Vectores de posición del plano V2.4 (dedo recto).}
+\label{tab:vectores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Eslabón} & \textbf{Masa [g]} & \textbf{$I_{CoM}$ [g$\cdot$mm$^2$]} & \textbf{$I_{eje}$ [g$\cdot$mm$^2$]} \\ \hline
+L1 proximal & 31.49 & 8\,941 & 31\,105 (MCP) \\ \hline
+L2 distal & 12.35 & 1\,826 & 5\,063 (PIP) \\ \hline
+Dedo completo & 43.84 & 24\,952 & 87\,257 (MCP) \\ \hline
+\end{tabular}
+\caption{Masas e inercias del plano V2.4.}
+\label{tab:masas}
+\end{table}
+
+\subsection{Transmisiones y motores}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|r|r|l|}
+\hline
+\textbf{Tren} & \textbf{$a$ [mm]} & \textbf{$i$} & \textbf{Motor y función} \\ \hline
+Sinfín m1 $\leftrightarrow$ rueda z30 & 23.0 & 30:1 & Central $\rightarrow$ rueda z30 de cada dedo \\ \hline
+z20 motriz $\leftrightarrow$ z20 & 20.0 & 1:1 & Central $\rightarrow$ sinfines B y C \\ \hline
+Rueda z30 $\leftrightarrow$ piñón z12 & 21.0 & 1:2.5 & MCP de cada dedo \\ \hline
+Sinfín m0.5 $\leftrightarrow$ rueda z16 & 7.0 & 4:1 & N20 de cada dedo $\rightarrow$ PIP \\ \hline
+\end{tabular}
+\caption{Transmisiones del plano y su asignación a los motores.}
+\label{tab:trenes}
+\end{table}
+
+La relación total entre el motor central y cada MCP es $i_{MCP} = 30 \times \frac{12}{30} = 12$, igual en las tres ramas, por lo que en el modo central se cumple $\theta_{MCP,A} = \theta_{MCP,B} = \theta_{MCP,C}$. La relación entre cada motor N20 y su PIP es $i_{PIP} = 4$.
+
+% ======================================================================
+\section{Cálculos estáticos (3.1)}
+\subsection{Descripción}
+El análisis estático determina las fuerzas, torques y momentos en el gripper durante la sujeción de un objeto cilíndrico. Se estudian tres vistas: la vista lateral, que contiene el plano de flexión de cada dedo y las articulaciones MCP y PIP; la vista superior, que corresponde al plano de la palma y muestra el equilibrio entre los tres dedos y las fuerzas en los engranes; y la vista frontal, que contiene el eje del gripper y permite obtener la reacción transmitida a la brida del UR5e.
+
+\subsection{Objetivo de cálculo}
+\begin{itemize}
+\item Determinar las posiciones de los puntos de contacto P, D y T y de los centros de masa para cada postura.
+\item Calcular los torques requeridos en las articulaciones MCP y PIP y las reacciones en ambas juntas.
+\item Calcular la fuerza normal mínima para sujetar objetos de 1 a 4 kg con $\mu$ de 0.3, 0.5 y 0.7.
+\item Obtener el torque del motor central y de cada motor N20, y el caso crítico de todo el barrido.
+\end{itemize}
+
+\subsection{Variables del modelo de cálculo}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Variable} & \textbf{Descripción} \\ \hline
+$\theta_{MCP}$, $\theta_{PIP}$ & Ángulos articulares de cierre (0°, 15°, 30°, 45°, 60° y 0°, 15°, 30°, 45°) \\ \hline
+$m$, $W$ & Masa y peso del objeto (1 a 4 kg) \\ \hline
+$\mu$ & Coeficiente de fricción en el contacto (0.3, 0.5, 0.7) \\ \hline
+$N$, $F_t$ & Fuerza normal y tangencial de contacto por dedo \\ \hline
+$\tau_{MCP}$, $\tau_{PIP}$ & Torques requeridos en las articulaciones \\ \hline
+$R_{MCP}$, $R_{PIP}$ & Reacciones en las juntas \\ \hline
+$\eta$ & Eficiencia total de cada rama de transmisión (50 a 80 \%) \\ \hline
+$T_c$, $T_A$, $T_B$, $T_C$ & Torques de los cuatro motores \\ \hline
+\end{tabular}
+\caption{Variables del modelo estático.}
+\label{tab:varest}
+\end{table}
+
+\subsection{Modelo de cálculo}
+Se usa un marco fijo a la palma con origen en el eje MCP, con $y'$ a lo largo del dedo recto y $z'$ hacia el dorso. El ángulo de cierre es positivo de $+y'$ hacia $-z'$. Los vectores r1 a r7 se rotan con $\theta_{MCP}$ y r8 a r10 con $\theta_{MCP}+\theta_{PIP}$:
+\eq{y = r_y\cos\theta + r_z\sin\theta \qquad z = -r_y\sin\theta + r_z\cos\theta}
+
+El torque requerido en una articulación, positivo en el sentido de cierre, se obtiene con las coordenadas reales del punto de aplicación de cada fuerza:
+\eq{\tau = \sum_i \left( y_i F_{z,i} - z_i F_{y,i} \right)}
+
+Con los actuadores tratados como pares puros, las reacciones son:
+\eq{R_{PIP} = -\left(F_{L2} + m_2 g\right) \qquad R_{MCP} = -\left(F_{c} + m_1 g + m_2 g\right)}
+
+La condición de no deslizamiento define la fuerza normal mínima por dedo:
+\eq{2\mu N \geq W \;\;(\text{pinch}) \qquad 3\mu N \geq W \;\;(\text{power})}
+
+Finalmente, los torques de los motores se obtienen con la relación de transmisión y la eficiencia:
+\eq{T_c = \frac{\tau_{MCP,A}+\tau_{MCP,B}+\tau_{MCP,C}}{12\,\eta} \qquad T_i = \frac{\tau_{PIP,i}}{4\,\eta}}
+
+\subsection{Valores del modelo de cálculo}
+Se evalúan 5 ángulos MCP $\times$ 4 ángulos PIP, contactos en P, D y T, masas de 1, 2, 3 y 4 kg, $\mu$ de 0.3, 0.5 y 0.7 y eficiencias de 50, 60, 70 y 80 \%. Se considera $g = 9.81$ m/s$^2$ con el gripper orientado hacia abajo, que es la condición de recogida del UR5e.
+
+\input{tablas/posiciones}
+\input{tablas/gravedad}
+
+\subsection{Resultados vista lateral}
+La Figura \ref{fig:lateral} muestra el diagrama de cuerpo libre del dedo A en un pinch de 4 kg con contacto en la punta. La normal de contacto genera el torque dominante: los efectos gravitacionales del propio dedo son menores al 0.5 \% del torque de agarre (Tabla \ref{tab:gravedad}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{D6_vista_lateral_DCL.png}
+\caption{Diagrama de cuerpo libre en vista lateral del dedo A.}
+\label{fig:lateral}
+\end{figure}
+
+\input{tablas/nmin}
+\input{tablas/pinch}
+\input{tablas/power}
+\input{tablas/desigual}
+
+\subsection{Resultados vista superior}
+En el plano de la palma los tres dedos aplican sus fuerzas normales sobre el objeto. Según el plano V2.4, el dedo A se opone a los dedos B y C, que son paralelos y están separados 34 mm, por lo que el equilibrio horizontal exige $N_A = N_B + N_C$. Esta condición hace que el dedo A soporte el doble de carga que B o C (Figura \ref{fig:superior}). Las fuerzas de B y C generan momentos de $\pm 0.334$ N$\cdot$m alrededor del eje del objeto que se anulan entre sí.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D5_vista_superior.png}
+\caption{Fuerzas normales en vista superior según el plano y con la idealización a 120°.}
+\label{fig:superior}
+\end{figure}
+
+\input{tablas/superior}
+\input{tablas/engranes}
+
+\subsection{Resultados vista frontal}
+En la vista frontal se obtiene la reacción en la brida del robot (Figura \ref{fig:frontal}). Con un objeto de 4 kg la brida soporta $F_z = 40.5$ N, que incluye el peso de los tres dedos, y un momento $M_y = 0.21$ N$\cdot$m debido a la excentricidad de 5.27 mm del eje del objeto. La masa de la palma, el servo y los motores N20 no está en el plano y se debe sumar a $F_z$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{D7_vista_frontal_DCL.png}
+\caption{Diagrama de cuerpo libre en vista frontal del gripper con el objeto.}
+\label{fig:frontal}
+\end{figure}
+
+\subsection{Caso crítico}
+\input{tablas/critico}
+
+\subsection{Análisis de resultados estáticos}
+\begin{itemize}
+\item El contacto en la punta con dedos rectos y $\mu = 0.3$ es la condición más exigente. Agarrar en P o en P+D reduce el torque PIP hasta diez veces y el torque central a la mitad.
+\item El torque máximo de un motor de dedo (1.233 N$\cdot$m en el eje del N20) es alto para un micromotorreductor de esa familia. Se debe verificar con la hoja de datos del motor; un pinch de punta de 4 kg no resulta viable con el N20.
+\item La fuerza tangencial en el piñón z12 alcanza 972 N en el caso crítico, por lo que la resistencia del diente debe revisarse en el dimensionamiento.
+\item El sinfín central es autobloqueante ($\lambda = 3.6°$), de modo que los MCP se sostienen sin consumo de energía. El sinfín PIP de cuatro entradas no lo es ($\lambda = 18.4°$) y requiere par continuo del N20.
+\end{itemize}
+
+% ======================================================================
+\section{Cálculos cinemáticos (3.3)}
+\subsection{Descripción}
+El análisis cinemático describe los desplazamientos, velocidades y aceleraciones lineales y angulares de las falanges durante el cierre. Como el plano no define la velocidad del servo ni la del N20, el cierre se modela con una ley de movimiento cicloidal de duración $t_c$, que parte y termina con velocidad y aceleración nulas, y se reporta cómo escalan los resultados con $t_c$.
+
+\subsection{Objetivo de cálculo}
+\begin{itemize}
+\item Determinar la evolución de $\theta$, $\omega$ y $\alpha$ de cada articulación y de la falange distal.
+\item Calcular la velocidad y la aceleración lineal de los puntos de contacto P, D y T.
+\item Obtener las velocidades requeridas en los ejes de los motores y en los engranes.
+\end{itemize}
+
+\subsection{Modelo de cálculo}
+La ley cicloidal para un recorrido $h$ en un tiempo $t_c$ es:
+\eq{\theta(t) = h\left(\frac{t}{t_c} - \frac{1}{2\pi}\sin\frac{2\pi t}{t_c}\right) \qquad \omega(t) = \frac{h}{t_c}\left(1-\cos\frac{2\pi t}{t_c}\right) \qquad \alpha(t) = \frac{2\pi h}{t_c^2}\sin\frac{2\pi t}{t_c}}
+
+La velocidad de cualquier punto se obtiene con el Jacobiano del dedo y la aceleración derivando nuevamente:
+\eq{\dot{\mathbf{x}}_T = \mathbf{J}(\theta)\,\dot{\boldsymbol\theta} \qquad \ddot{\mathbf{x}}_T = \mathbf{J}(\theta)\,\ddot{\boldsymbol\theta} + \dot{\mathbf{J}}(\theta)\,\dot{\boldsymbol\theta}}
+
+Las velocidades de los motores se obtienen con las relaciones de transmisión: $\omega_{sinfín} = 12\,\omega_{MCP}$ y $\omega_{N20} = 4\,\omega_{PIP}$.
+
+\subsection{Valores del modelo de cálculo}
+Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP en $t_c = 1$ s (dato faltante: velocidad real de los motores).
+
+\subsection{Resultados}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D1_cinematica_angular.png}
+\caption{Posición, velocidad y aceleración angular durante el cierre.}
+\label{fig:cinang}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D2_cinematica_lineal.png}
+\caption{Velocidad y aceleración lineal de los puntos de contacto.}
+\label{fig:cinlin}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{D3_trayectorias.png}
+\caption{Trayectorias de P, D y T y posturas intermedias del dedo.}
+\label{fig:tray}
+\end{figure}
+
+\input{tablas/cinem}
+\input{tablas/escala}
+
+\subsection{Análisis de resultados cinemáticos}
+\begin{itemize}
+\item La punta alcanza 0.23 m/s y 0.76 m/s$^2$ con un cierre de 1 s. Las velocidades escalan con $1/t_c$ y las aceleraciones con $1/t_c^2$.
+\item Para cerrar en 1 s, el eje del sinfín central debe girar a 240 rpm y el sinfín del N20 a 60 rpm, valores que deben compararse con las curvas de los motores.
+\item La falange distal gira con $\omega_{MCP}+\omega_{PIP}$ y alcanza 3.67 rad/s, la mayor velocidad angular del dedo.
+\end{itemize}
+
+% ======================================================================
+\section{Cálculos dinámicos (3.4)}
+\subsection{Descripción}
+El análisis dinámico incorpora las fuerzas inerciales del dedo durante el cierre y estima la potencia y la energía consumidas por los motores. Se usa la formulación de Lagrange para un mecanismo de dos eslabones con las masas e inercias del plano.
+
+\subsection{Objetivo de cálculo}
+\begin{itemize}
+\item Calcular los torques inerciales y gravitacionales durante el cierre.
+\item Estimar la potencia mecánica en cada articulación y en los ejes de los motores.
+\item Calcular la energía por ciclo y la condición de retención del objeto.
+\end{itemize}
+
+\subsection{Modelo de cálculo}
+La matriz de masa del dedo se construye con los Jacobianos de los centros de masa:
+\eq{\mathbf{M}(\theta) = m_1\mathbf{J}_{G1}^T\mathbf{J}_{G1} + I_1\begin{bmatrix}1&0\\0&0\end{bmatrix} + m_2\mathbf{J}_{G2}^T\mathbf{J}_{G2} + I_2\begin{bmatrix}1&1\\1&1\end{bmatrix}}
+y los torques articulares resultan de las ecuaciones de Lagrange:
+\eq{\boldsymbol\tau = \mathbf{M}\ddot{\boldsymbol\theta} + \dot{\mathbf{M}}\dot{\boldsymbol\theta} - \frac{1}{2}\frac{\partial\left(\dot{\boldsymbol\theta}^T\mathbf{M}\dot{\boldsymbol\theta}\right)}{\partial\boldsymbol\theta} + \frac{\partial V}{\partial\boldsymbol\theta}}
+La potencia en cada articulación y en los motores es:
+\eq{P_j = \tau_j\,\omega_j \qquad P_{servo} = \frac{\sum P_{MCP}}{\eta} \qquad P_{N20} = \frac{P_{PIP}}{\eta}}
+y la energía por ciclo se valida con el balance $\int P\,dt = \Delta E_c + \Delta E_p$.
+
+\subsection{Resultados}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D4_dinamica_potencia.png}
+\caption{Torques inerciales y gravitacionales y potencia de los motores durante el cierre.}
+\label{fig:din}
+\end{figure}
+
+\input{tablas/dinamica}
+
+\subsection{Consumo durante la retención}
+Una vez cerrado, el sinfín central autobloqueante sostiene los MCP sin consumo. El PIP, en cambio, necesita par continuo: en un pinch de 4 kg en la punta ($\theta = 30°/30°$) el N20 de cada dedo debe entregar $T = 1.066/(4 \times 0.6) = 0.444$ N$\cdot$m de forma permanente. La potencia eléctrica de retención es $P = I^2 R$ con $I = T/K_t$, que depende de la constante de par $K_t$ y la resistencia $R$ del motor (dato faltante).
+
+\subsection{Análisis de resultados dinámicos}
+\begin{itemize}
+\item Los torques inerciales son menores a 1 mN$\cdot$m y no condicionan la selección de los motores; el dimensionamiento lo fija la carga estática del agarre.
+\item El cierre en vacío requiere 9.8 mJ por dedo y una potencia máxima de 105 mW en el eje del servo con $\eta = 0.6$.
+\item El balance energético cierra con error de $10^{-14}$ J, lo que valida la formulación dinámica.
+\item El mayor consumo energético del sistema proviene de la retención en el PIP, por lo que se recomienda un tren autobloqueante o un freno en esa articulación.
+\end{itemize}
+
+% ======================================================================
+\section{Simulación en Working Model 2D}
+\subsection{Modelo estático}
+Se construyó un modelo de Working Model 2D en vista lateral con los tres dedos, la palma, el eje del sinfín, las ruedas z30 y los cuatro motores. Cada articulación se controla con un motor de posición y las fuerzas de contacto se aplican en P, D o T. Un barrido automático recorrió 180 configuraciones.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{wm_estatica.jpg}
+\caption{Modelo estático en Working Model 2D.}
+\label{fig:wmest}
+\end{figure}
+
+\input{tablas/wm}
+
+\subsection{Pruebas de agarre en el modelo estático}
+El modelo estático se evaluó en cuatro pruebas con un objeto de 4 kg, $\mu = 0.5$, $\eta = 0.6$ y $\theta_{MCP} = \theta_{PIP} = 15^\circ$. Las figuras muestran la ventana de Working Model en cada prueba, con los controles a la izquierda y los medidores a la derecha. La Tabla~\ref{tab:pruebaswm} resume los valores leídos.
+
+\begin{table}[H]
+\centering
+\caption{Resultados de las pruebas en Working Model 2D (dedos A / B / C).}
+\label{tab:pruebaswm}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Prueba} & \textbf{$T_c$ [N$\cdot$m]} & \textbf{$N$ [N]} & \textbf{$\tau_{MCP}$ [N$\cdot$m]} & \textbf{$\tau_{PIP}$ [N$\cdot$m]} & \textbf{$T_{N20}$ [N$\cdot$m]} \\ \hline
+Pinch (T) & 1.028 & 39.24 / 39.24 / 0 & 3.698 / 3.698 / 0.005 & 1.510 / 1.510 / 0.001 & 0.629 / 0.629 / 0 \\ \hline
+Power 120° (D) & 0.863 & 26.16 / 26.16 / 26.16 & 2.072 / 2.072 / 2.072 & 0.611 / 0.611 / 0.611 & 0.255 / 0.255 / 0.255 \\ \hline
+Power plano (D) & 0.863 & 39.24 / 19.62 / 19.62 & 3.105 / 1.555 / 1.555 & 0.917 / 0.459 / 0.459 & 0.382 / 0.191 / 0.191 \\ \hline
+Desigual (T) & 1.028 & 31.39 / 27.47 / 19.62 & 2.960 / 2.590 / 1.852 & 1.208 / 1.057 / 0.756 & 0.503 / 0.441 / 0.315 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{wm_prueba_pinch.png}
+\caption{Prueba Pinch en Working Model 2D (contacto en T, reparto 50/50/0).}
+\label{fig:wmpinch}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{wm_prueba_power120.png}
+\caption{Prueba Power 120° en Working Model 2D (contacto en D, reparto igual).}
+\label{fig:wmpower120}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{wm_prueba_plano.png}
+\caption{Prueba Power plano V2.4 en Working Model 2D (contacto en D, reparto 50/25/25).}
+\label{fig:wmplano}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{wm_prueba_desigual.png}
+\caption{Prueba Carga desigual en Working Model 2D (contacto en T, reparto 40/35/25).}
+\label{fig:wmdesigual}
+\end{figure}
+
+\subsection{Modelo dinámico}
+El modelo dinámico se acciona por torque. El tren central se representa con engranes 1/30 y 2.5, cada dedo tiene un piñón z12 unido a la falange por la rigidez torsional del engrane y el objeto es un cilindro de 46 mm con fricción. Con 1 kg y $\mu = 0.5$ el objeto cae para $T_c \leq 0.20$ N$\cdot$m y queda sostenido para $T_c \geq 0.25$ N$\cdot$m. Con $T_c = 1.0$ N$\cdot$m el torque en cada MCP converge a 3.589 N$\cdot$m, frente a 3.6 N$\cdot$m teóricos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{wm_agarre.jpg}
+\caption{Modelo dinámico sosteniendo un objeto de 1 kg.}
+\label{fig:wmdin}
+\end{figure}
+
+% ======================================================================
+\section{Conclusiones}
+\begin{itemize}
+\item El análisis estático en las tres vistas permitió determinar las fuerzas de contacto, los torques articulares, las reacciones y los torques de los cuatro motores para todas las combinaciones de postura, contacto, masa, fricción y eficiencia. El caso crítico corresponde al pinch de punta con dedos rectos y fricción baja.
+\item La disposición del plano V2.4, con el dedo A opuesto a los dedos B y C, hace que el dedo A soporte el doble de fuerza normal que cada uno de los otros dos en un agarre de potencia.
+\item El análisis cinemático entregó las posiciones, velocidades y aceleraciones lineales y angulares de las falanges, y las velocidades requeridas en los motores para un tiempo de cierre dado.
+\item El análisis dinámico mostró que los efectos inerciales son despreciables frente a las cargas de agarre y que el mayor consumo de energía se produce en la retención del PIP.
+\item La simulación en Working Model 2D validó el cálculo analítico con un error máximo de 0.034 \% en 180 configuraciones y reprodujo el comportamiento de agarre de los tres modos de accionamiento.
+\end{itemize}
+
+% ======================================================================
+\appendix
+\section{Datos faltantes del plano}
+Los siguientes parámetros no están en el plano V2.4 y se trataron como variables: curva par--velocidad y par máximo del servo y del N20, reducción interna del N20, fricción entre dientes de los sinfines, ángulo de presión de los engranes, mano de los sinfines B y C, eficiencia del par z20, espesor y masa de la palma, diámetro del objeto, rigidez torsional de los trenes e inercia y amortiguamiento equivalentes de los motores.
+
+\end{document}
