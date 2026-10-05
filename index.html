@@ -147,6 +147,18 @@
       <figure class="tile"><img src="assets/img/D2_cinematica_lineal.webp" alt="Velocidad y aceleración lineal de P, D y T" loading="lazy"><figcaption>Velocidad y aceleración lineal de los puntos de contacto.</figcaption></figure>
       <figure class="tile"><img src="assets/img/D3_trayectorias.webp" alt="Trayectorias de los puntos durante el cierre" loading="lazy"><figcaption>Trayectorias de P, D y T y posturas intermedias.</figcaption></figure>
     </div>
+    <h3 class="h3">Desplazamientos del cierre</h3>
+    <div class="tbl tbl-dark"><table>
+      <thead><tr><th>Punto / elemento</th><th>Desplazamiento</th><th>Recorrido</th><th>Velocidad máx.</th><th>Aceleración máx.</th></tr></thead>
+      <tbody>
+        <tr><td>Contacto P</td><td>33.6 mm</td><td>35.2 mm</td><td>0.070 m/s</td><td>0.225 m/s²</td></tr>
+        <tr><td>Contacto D</td><td>81.8 mm</td><td>88.7 mm</td><td>0.179 m/s</td><td>0.595 m/s²</td></tr>
+        <tr><td>Punta T</td><td>103.3 mm</td><td>113.4 mm</td><td>0.229 m/s</td><td>0.760 m/s²</td></tr>
+        <tr><td>Falange proximal (MCP)</td><td>60°</td><td>—</td><td>2.094 rad/s</td><td>6.580 rad/s²</td></tr>
+        <tr><td>Falange distal (absoluta)</td><td>105°</td><td>—</td><td>3.665 rad/s</td><td>11.515 rad/s²</td></tr>
+        <tr><td>Eje del sinfín central</td><td>2 vueltas</td><td>—</td><td>25.13 rad/s</td><td>78.96 rad/s²</td></tr>
+        <tr><td>Sinfín del N20</td><td>0.5 vueltas</td><td>—</td><td>6.283 rad/s</td><td>19.74 rad/s²</td></tr>
+      </tbody></table></div>
   </div>
 </section>
 
@@ -162,6 +174,18 @@
       <article class="card"><p class="big">0.444 N·m</p><p>Par continuo que debe dar cada N20 para retener un pinch de 4 kg en la punta.</p></article>
     </div>
     <figure class="wide"><img src="assets/img/D4_dinamica_potencia.webp" alt="Torques inerciales y potencia durante el cierre" loading="lazy"></figure>
+    <h3 class="h3">Energía por ciclo completo</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Fase</th><th>Motor</th><th>Energía</th><th>Potencia máx.</th><th>Nota</th></tr></thead>
+      <tbody>
+        <tr><td>Cierre</td><td>Servo (3 dedos)</td><td>43.6 mJ</td><td>105.3 mW</td><td>η 0.6</td></tr>
+        <tr><td>Cierre</td><td>N20 (por dedo)</td><td>1.79 mJ</td><td>4.43 mW</td><td>η 0.6</td></tr>
+        <tr><td>Retención</td><td>Servo</td><td>0</td><td>0</td><td>Sinfín autobloqueante</td></tr>
+        <tr><td>Retención</td><td>N20 (por dedo)</td><td>I²R·t</td><td>I²R</td><td>T = 0.444 N·m; K<sub>t</sub> y R: dato faltante</td></tr>
+        <tr><td>Apertura</td><td>Servo (3 dedos)</td><td>15.6 mJ</td><td>37.7 mW</td><td>Vence el autobloqueo</td></tr>
+        <tr><td>Apertura</td><td>N20</td><td>0</td><td>0</td><td>Sinfín reversible</td></tr>
+        <tr><td><b>Ciclo</b></td><td><b>Servo / 3 N20</b></td><td><b>59.2 / 5.4 mJ</b></td><td></td><td>Energía mecánica en los ejes</td></tr>
+      </tbody></table></div>
   </div>
 </section>
 

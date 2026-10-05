@@ -258,7 +258,7 @@ El análisis cinemático describe los desplazamientos, velocidades y aceleracion
 \subsection{Objetivo de cálculo}
 \begin{itemize}
 \item Determinar la evolución de $\theta$, $\omega$ y $\alpha$ de cada articulación y de la falange distal.
-\item Calcular la velocidad y la aceleración lineal de los puntos de contacto P, D y T.
+\item Calcular el desplazamiento, la velocidad y la aceleración lineal de los puntos de contacto P, D y T, del eje PIP y de los centros de masa.
 \item Obtener las velocidades requeridas en los ejes de los motores y en los engranes.
 \end{itemize}
 
@@ -296,11 +296,16 @@ Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP
 \label{fig:tray}
 \end{figure}
 
+La Tabla \ref{tab:desplaz} resume los desplazamientos lineales: posición inicial y final de cada punto en el marco del dedo, componentes del desplazamiento, cuerda $|\Delta r|$ y longitud del recorrido curvo. La Tabla \ref{tab:desplazang} da los desplazamientos angulares de las falanges y del tren de transmisión.
+
+\input{tablas/desplaz}
+\input{tablas/desplazang}
 \input{tablas/cinem}
 \input{tablas/escala}
 
 \subsection{Análisis de resultados cinemáticos}
 \begin{itemize}
+\item La punta recorre 113.4 mm (cuerda de 103.3 mm) durante el cierre; el contacto P recorre 35.2 mm. La falange distal gira 105° en total.
 \item La punta alcanza 0.23 m/s y 0.76 m/s$^2$ con un cierre de 1 s. Las velocidades escalan con $1/t_c$ y las aceleraciones con $1/t_c^2$.
 \item Para cerrar en 1 s, el eje del sinfín central debe girar a 240 rpm y el sinfín del N20 a 60 rpm, valores que deben compararse con las curvas de los motores.
 \item La falange distal gira con $\omega_{MCP}+\omega_{PIP}$ y alcanza 3.67 rad/s, la mayor velocidad angular del dedo.
@@ -315,7 +320,7 @@ El análisis dinámico incorpora las fuerzas inerciales del dedo durante el cier
 \begin{itemize}
 \item Calcular los torques inerciales y gravitacionales durante el cierre.
 \item Estimar la potencia mecánica en cada articulación y en los ejes de los motores.
-\item Calcular la energía por ciclo y la condición de retención del objeto.
+\item Calcular la energía por ciclo completo (cierre, retención y apertura) y la condición de retención del objeto.
 \end{itemize}
 
 \subsection{Modelo de cálculo}
@@ -337,12 +342,18 @@ y la energía por ciclo se valida con el balance $\int P\,dt = \Delta E_c + \Del
 
 \input{tablas/dinamica}
 
+\subsection{Energía por ciclo completo}
+En la apertura la gravedad ayuda y el trabajo articular es negativo. Como el sinfín central es autobloqueante, el servo debe vencer su fricción aun así; la energía se estima con $E = |W|\tan(\phi-\lambda)/\tan\lambda$, con $\lambda = 3.6°$ y $\mu_d = 0.10$ de referencia. El sinfín PIP es reversible y la apertura del PIP no consume energía del N20.
+
+\input{tablas/ciclo}
+
 \subsection{Consumo durante la retención}
 Una vez cerrado, el sinfín central autobloqueante sostiene los MCP sin consumo. El PIP, en cambio, necesita par continuo: en un pinch de 4 kg en la punta ($\theta = 30°/30°$) el N20 de cada dedo debe entregar $T = 1.066/(4 \times 0.6) = 0.444$ N$\cdot$m de forma permanente. La potencia eléctrica de retención es $P = I^2 R$ con $I = T/K_t$, que depende de la constante de par $K_t$ y la resistencia $R$ del motor (dato faltante).
 
 \subsection{Análisis de resultados dinámicos}
 \begin{itemize}
 \item Los torques inerciales son menores a 1 mN$\cdot$m y no condicionan la selección de los motores; el dimensionamiento lo fija la carga estática del agarre.
+\item Un ciclo completo en vacío requiere 59.2 mJ en el eje del servo y 5.4 mJ entre los tres N20.
 \item El cierre en vacío requiere 9.8 mJ por dedo y una potencia máxima de 105 mW en el eje del servo con $\eta = 0.6$.
 \item El balance energético cierra con error de $10^{-14}$ J, lo que valida la formulación dinámica.
 \item El mayor consumo energético del sistema proviene de la retención en el PIP, por lo que se recomienda un tren autobloqueante o un freno en esa articulación.
