@@ -16,6 +16,7 @@
   function show(k) {
     const c = D[k];
     img.src = `assets/img/wm_${k}.webp`; img.alt = `Working Model 2D, prueba ${c.name}`; cap.textContent = c.cap;
+    const an = document.getElementById("test-ana"); if (an && window.PRUEBAS_ANA) an.innerHTML = `<b>Análisis.</b> ${window.PRUEBAS_ANA[k]}`;
     body.innerHTML = row("Reparto de carga", c.sh) + row("Fuerza normal N", c.N, "N", 2) + row("τMCP", c.mcp, "N·m") + row("τPIP", c.pip, "N·m") + row("Motor N20", c.T, "N·m");
     tabs.forEach((b) => { const on = b.dataset.k === k; b.setAttribute("aria-selected", on); b.classList.toggle("on", on); });
   }

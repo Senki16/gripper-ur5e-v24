@@ -194,3 +194,13 @@ th:not(:first-child) { text-align: right; }
 .key-tbl th, .key-tbl td:last-child { white-space: normal; }
 .key-tbl td:last-child, .key-tbl th:last-child { text-align: left; min-width: 170px; }
 @media (max-width: 720px) { .key { padding: 14px; } .key-tbl th, .key-tbl td { padding: 10px 9px; font-size: 14px; } .key-tbl th { font-size: 11px; } }
+
+/* ---------- análisis bajo cada figura ---------- */
+.ana { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--ink); font-size: 14px; line-height: 1.5; }
+.dark .ana { color: var(--on-dark); border-top-color: #333336; }
+.ana b, .ana-p b { color: var(--blue); font-weight: 600; }
+.dark .ana b { color: var(--blue-dark); }
+figcaption.ana-only { font-size: 14px; padding: 0 4px 4px; }
+.wide figcaption.ana-only { padding: 10px 6px 2px; }
+.wide figcaption.ana-only .ana { border-top: 0; padding-top: 0; color: #1d1d1f; }
+.ana-p { margin: 0 4px 6px; font-size: 15px; line-height: 1.5; }
