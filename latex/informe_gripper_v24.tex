@@ -218,6 +218,7 @@ La Figura \ref{fig:lateral} muestra el diagrama de cuerpo libre del dedo A en un
 
 
 
+
 \input{tablas/nmin}
 \input{tablas/pinch}
 \input{tablas/power}
@@ -236,6 +237,7 @@ En el plano de la palma los tres dedos aplican sus fuerzas normales sobre el obj
 
 
 
+
 \input{tablas/superior}
 \input{tablas/engranes}
 
@@ -249,6 +251,7 @@ En la vista frontal se obtiene la reacción en la brida del robot (Figura \ref{f
 \label{fig:frontal}
 \end{figure}
 \par\noindent\textbf{Análisis.} La brida soporta 40.5 N verticales: los 39.24 N del objeto más el peso de los dedos. El momento de 0.21 N$\cdot$m aparece porque el eje del objeto queda 5.27 mm desplazado del eje del gripper; es pequeño, pero crece con la masa, así que conviene centrar la pieza.
+
 
 
 
@@ -379,6 +382,17 @@ La velocidad de cualquier punto se obtiene con el Jacobiano del dedo y la aceler
 
 Las velocidades de los motores se obtienen con las relaciones de transmisión: $\omega_{sinfín} = 12\,\omega_{MCP}$ y $\omega_{N20} = 4\,\omega_{PIP}$.
 
+La Figura \ref{fig:diagcin} muestra las variables cinemáticas sobre el dedo en un instante del cierre: los ángulos articulares, las velocidades y aceleraciones angulares y los vectores de velocidad de P, D y T y de aceleración de la punta.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D9_diagrama_cinematico_chatgpt.png}
+\caption{Diagrama cinemático del dedo en $t = 0.4$ s del cierre cicloidal. Diagrama generado con el modelo y mejorado gráficamente con IA; los valores se verificaron contra el cálculo.}
+\label{fig:diagcin}
+\end{figure}
+\par\noindent\textbf{Análisis.} En t = 0.4 s el dedo ha cerrado 18.4° en el MCP y 13.8° en el PIP, y las dos articulaciones giran en el sentido de cierre (1.894 y 1.421 rad/s) mientras todavía aceleran (3.867 y 2.901 rad/s$^2$). La velocidad crece con la distancia a las articulaciones: 0.064 m/s en P, 0.166 m/s en D y 0.210 m/s en la punta. La aceleración de la punta (0.692 m/s$^2$) apunta hacia la palma porque suma las componentes tangenciales ($\alpha r$) y centrípetas ($\omega^2 r$) de los dos giros.
+
+
 \subsection{Valores del modelo de cálculo}
 Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP en $t_c = 1$ s (dato faltante: velocidad real de los motores).
 
@@ -393,6 +407,7 @@ Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP
 
 
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{D2_cinematica_lineal.png}
@@ -403,6 +418,7 @@ Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP
 
 
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.55\textwidth]{D3_trayectorias.png}
@@ -410,6 +426,7 @@ Se considera un cierre de $0°$ a $60°$ en el MCP y de $0°$ a $45°$ en el PIP
 \label{fig:tray}
 \end{figure}
 \par\noindent\textbf{Análisis.} Las posturas intermedias muestran cómo se enrolla el dedo: la falange distal gira 105° en total frente a 60° de la proximal. Por eso la punta recorre 113.4 mm, más del triple que el contacto P (35.2 mm), y es la que primero toca objetos pequeños.
+
 
 
 
@@ -449,6 +466,17 @@ La potencia en cada articulación y en los motores es:
 \eq{P_j = \tau_j\,\omega_j \qquad P_{servo} = \frac{\sum P_{MCP}}{\eta} \qquad P_{N20} = \frac{P_{PIP}}{\eta}}
 y la energía por ciclo se valida con el balance $\int P\,dt = \Delta E_c + \Delta E_p$.
 
+La Figura \ref{fig:dcldin} muestra el diagrama de cuerpo libre dinámico de cada falange con el principio de d'Alembert: pesos $m_i g$, fuerzas de inercia $-m_i\vec a_{Gi}$, momentos de inercia $-I_i\alpha_i$, reacciones en las articulaciones y torques motores.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D10_DCL_dinamico_chatgpt.png}
+\caption{Diagrama de cuerpo libre dinámico de las falanges en $t = 0.4$ s del cierre en vacío. Diagrama generado con el modelo y mejorado gráficamente con IA; los valores se verificaron contra el cálculo.}
+\label{fig:dcldin}
+\end{figure}
+\par\noindent\textbf{Análisis.} Las fuerzas de inercia (4.41 y 5.71 mN) son entre 20 y 70 veces menores que los pesos de las falanges (309 y 121 mN), así que las reacciones $R_{MCP}$ = 439 mN y $R_{PIP}$ = 127 mN equivalen prácticamente al peso de lo que cuelga de cada articulación. Los torques motores (6.12 mN$\cdot$m en el MCP y 1.13 mN$\cdot$m en el PIP) equilibran sobre todo la gravedad, y la potencia instantánea es P = $\tau\omega$ = 11.59 mW en el MCP y 1.61 mW en el PIP.
+
+
 \subsection{Resultados}
 \begin{figure}[H]
 \centering
@@ -457,6 +485,7 @@ y la energía por ciclo se valida con el balance $\int P\,dt = \Delta E_c + \Del
 \label{fig:din}
 \end{figure}
 \par\noindent\textbf{Análisis.} Los torques inerciales no pasan de 0.65 mN$\cdot$m en el MCP y 0.12 mN$\cdot$m en el PIP, mientras que el torque total con la gravedad del dedo llega a 14.3 y 1.9 mN$\cdot$m. La potencia del servo tiene forma de campana con máximo de 105 mW cerca de t = 0.6 s, y la del N20 apenas llega a 4.4 mW: mover el dedo en vacío es barato frente a sostener una carga.
+
 
 
 
@@ -488,6 +517,7 @@ El ciclo evaluado es: cierre hasta $\theta_{MCP} = \theta_{PIP} = 30°$ en 1.5 s
 \label{fig:consumo}
 \end{figure}
 \par\noindent\textbf{Análisis.} Durante el movimiento el servo consume unos 0.15 A y el N20 0.10 A, casi solo su corriente en vacío. En el apriete la corriente sube a 0.38 A en el servo y 0.33 A en el N20. En la retención el servo baja a 5 mA porque el sinfín se autobloquea, mientras que el N20 mantiene 0.33 A durante los 5 s: esa fase representa 2.04 J de los 2.44 J que gasta el N20 en el ciclo.
+
 
 
 
@@ -526,6 +556,7 @@ Se construyó un modelo de Working Model 2D en vista lateral con los tres dedos,
 
 
 
+
 \input{tablas/wm}
 
 \subsection{Pruebas de agarre en el modelo estático}
@@ -557,6 +588,7 @@ Desigual (T) & 1.028 & 31.39 / 27.47 / 19.62 & 2.960 / 2.590 / 1.852 & 1.208 / 1
 
 
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{wm_prueba_power120.png}
@@ -564,6 +596,7 @@ Desigual (T) & 1.028 & 31.39 / 27.47 / 19.62 & 2.960 / 2.590 / 1.852 & 1.208 / 1
 \label{fig:wmpower120}
 \end{figure}
 \par\noindent\textbf{Análisis.} Con los dedos a 120° la carga se reparte por igual: 26.16 N y 2.072 N$\cdot$m en cada MCP. Es la prueba más favorable para los motores de dedo: el N20 más cargado necesita solo 0.255 N$\cdot$m, el menor máximo de las cuatro pruebas.
+
 
 
 
@@ -577,6 +610,7 @@ Desigual (T) & 1.028 & 31.39 / 27.47 / 19.62 & 2.960 / 2.590 / 1.852 & 1.208 / 1
 
 
 
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{wm_prueba_desigual.png}
@@ -584,6 +618,7 @@ Desigual (T) & 1.028 & 31.39 / 27.47 / 19.62 & 2.960 / 2.590 / 1.852 & 1.208 / 1
 \label{fig:wmdesigual}
 \end{figure}
 \par\noindent\textbf{Análisis.} Con el reparto 40/35/25 los torques siguen exactamente la proporción de la carga (2.960, 2.590 y 1.852 N$\cdot$m en los MCP). El motor central necesita 1.028 N$\cdot$m, igual que en el pinch, porque la carga total y el punto de contacto son los mismos.
+
 
 
 
@@ -597,6 +632,7 @@ El modelo dinámico se acciona por torque. El tren central se representa con eng
 \label{fig:wmdin}
 \end{figure}
 \par\noindent\textbf{Análisis.} Con 1 kg y $\mu$ = 0.5 el objeto se sostiene a partir de $T_c$ = 0.25 N$\cdot$m y cae con 0.20 N$\cdot$m, lo que acota el par mínimo del servo para esa carga. Con $T_c$ = 1.0 N$\cdot$m el torque en cada MCP converge a 3.589 N$\cdot$m frente a 3.6 N$\cdot$m teóricos, una diferencia de 0.3 \%.
+
 
 
 
