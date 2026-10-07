@@ -378,7 +378,7 @@ Los resultados anteriores usan como referencia un objeto de 4 kg con $\mu = 0.5$
 \eq{FS = \frac{T_{bloqueo}}{T_{requerido}} \qquad m_{max} = m\cdot FS}
 \end{itemize}
 
-Como la normal mínima es $N = W/(n\mu)$, todas las cargas escalan con $m/\mu$. Frente al caso de referencia el factor es $(3.5/0.3)/(4/0.5) = 1.458$: aunque la masa baja, la menor fricción aumenta las cargas un 46 \%.
+La normal mínima $N = W/(n\mu)$ escala con $m/\mu$: frente al caso de referencia el factor es $(3.5/0.3)/(4/0.5) = 1.458$, es decir, la normal sube un 46 \% aunque la masa baje. La fricción que sostiene el peso, $F_t = W/n$, depende solo de la masa y baja un 12.5 \%. Como la normal domina el torque, los torques de motor suben entre un 23 y un 36 \% según la postura y el contacto.
 
 \subsubsection{Resultados por caso}
 \begin{table}[H]
@@ -403,12 +403,12 @@ Desigual 40/35/25 (T) & 45.8 / 40.1 / 28.6 & 3.928 / 1.530 & 1.364 & 0.638 & \te
 \hline
 \rowcolor{head}\textbf{Magnitud} & \textbf{4 kg, $\mu = 0.5$} & \textbf{3.5 kg, $\mu = 0.3$} \\ \hline
 Normal por dedo en pinch & 39.2 N & 57.2 N \\ \hline
-Peor torque del motor central (T, 15°/0°) & 0.972 N$\cdot$m & 1.418 N$\cdot$m (FS 1.38) \\ \hline
-Peor torque del N20 (T, 0°/0°) & 0.616 N$\cdot$m & 0.899 N$\cdot$m (FS 0.43) \\ \hline
+Peor torque del motor central (T, 15°/0°) & 1.048 N$\cdot$m & 1.418 N$\cdot$m (FS 1.38) \\ \hline
+Peor torque del N20 (contacto en T) & 0.660 N$\cdot$m & 0.899 N$\cdot$m (FS 0.43) \\ \hline
 Masa máxima que sostiene el servo / el N20 & -- & 4.8 kg / 1.5 kg \\ \hline
 Vista superior: $N_A = N_B + N_C$ & 39.2 = 19.6 + 19.6 N & 57.2 = 28.6 + 28.6 N \\ \hline
 Vista frontal: brida del UR5e & $F_z$ = 40.5 N, $M_y$ = 0.21 N$\cdot$m & $F_z$ = 35.6 N, $M_y$ = 0.18 N$\cdot$m \\ \hline
-Fuerza tangencial en el piñón z12 (pinch) & 583 N & 851 N \\ \hline
+Fuerza tangencial en el piñón z12 (pinch) & 629 N & 851 N \\ \hline
 \end{tabular}
 \caption{Comparación entre los dos casos de diseño.}
 \label{tab:comp35}
@@ -428,7 +428,7 @@ Fuerza tangencial en el piñón z12 (pinch) & 583 N & 851 N \\ \hline
 \caption{Torques de motor de los dos casos de diseño en la postura 15°/15°.}
 \label{fig:e2}
 \end{figure}
-\par\noindent\textbf{Análisis.} Todos los torques suben en la misma proporción, 46 \%, porque la geometría no cambia y la carga de contacto escala con $m/\mu$. Solo el power a 120° queda por debajo del par de bloqueo del N20.
+\par\noindent\textbf{Análisis.} Los torques suben entre un 23 y un 33 \% en la postura 15°/15° (por ejemplo, el motor central pasa de 1.028 a 1.364 N$\cdot$m en el pinch): menos que el 46 \% de la normal, porque la fricción tangencial baja con la masa. Solo el power a 120° queda por debajo del par de bloqueo del N20.
 
 \subsubsection{Cargas internas}
 \begin{figure}[H]
@@ -460,7 +460,7 @@ El modelo estático de Working Model se ejecutó con los deslizadores en 3.5 kg 
 
 \subsubsection{Análisis del caso de diseño 2}
 \begin{itemize}
-\item Bajar la fricción de 0.5 a 0.3 pesa más que bajar la masa de 4 a 3.5 kg: todas las cargas aumentan un 46 \%.
+\item Bajar la fricción de 0.5 a 0.3 pesa más que bajar la masa de 4 a 3.5 kg: la normal de contacto sube un 46 \% y los torques de motor entre un 23 y un 36 \%.
 \item El servo central de 20 kg$\cdot$cm cumple en todos los escenarios con un factor de seguridad mínimo de 1.38.
 \item El N20 298:1 no puede retener el PIP en pinch, power plano ni carga desigual (FS de 0.43 a 0.83). Para este caso se requiere una reducción mayor en el dedo, un sinfín PIP autobloqueante o superficies de contacto con más fricción.
 \item La raíz de la falange proximal soporta 4.91 N$\cdot$m de flexión y 59.8 N de cortante, y el piñón z12 851 N tangenciales; estos valores definen el dimensionamiento estructural.
@@ -749,7 +749,7 @@ El modelo dinámico se acciona por torque. El tren central se representa con eng
 \item La disposición del plano V2.4, con el dedo A opuesto a los dedos B y C, hace que el dedo A soporte el doble de fuerza normal que cada uno de los otros dos en un agarre de potencia.
 \item El análisis cinemático entregó las posiciones, velocidades y aceleraciones lineales y angulares de las falanges, y las velocidades requeridas en los motores para un tiempo de cierre dado.
 \item El análisis dinámico mostró que los efectos inerciales son despreciables frente a las cargas de agarre y que el mayor consumo de energía se produce en la retención del PIP.
-\item Con el caso de diseño 2 (3.5 kg y $\mu = 0.3$) todas las cargas suben un 46 \% respecto a 4 kg con $\mu = 0.5$: el servo central cumple con FS $\geq$ 1.38, pero el N20 298:1 solo sostiene el power a 120°, y la raíz de la falange proximal soporta 4.91 N$\cdot$m de flexión.
+\item Con el caso de diseño 2 (3.5 kg y $\mu = 0.3$) la normal sube un 46 \% y los torques de motor alrededor de un 35 \% respecto a 4 kg con $\mu = 0.5$: el servo central cumple con FS $\geq$ 1.38, pero el N20 298:1 solo sostiene el power a 120°, y la raíz de la falange proximal soporta 4.91 N$\cdot$m de flexión.
 \item La simulación en Working Model 2D validó el cálculo analítico con un error máximo de 0.034 \% en 180 configuraciones y reprodujo el comportamiento de agarre de los tres modos de accionamiento.
 \item Con motores típicos, el consumo eléctrico por ciclo va de 6.4 J (power 1 kg) a 128 J (pinch 4 kg), y la retención del PIP con los N20 es la que lo determina. El N20 típico 298:1 sostiene de forma continua los agarres de 1 kg, solo admite picos cortos en el power de 4 kg y no puede sostener el pinch de 4 kg en la punta (Tabla \ref{tab:resumenconsumo2}).
 \end{itemize}
