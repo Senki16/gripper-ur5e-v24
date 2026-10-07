@@ -430,6 +430,55 @@ Fuerza tangencial en el piñón z12 (pinch) & 629 N & 851 N \\ \hline
 \end{figure}
 \par\noindent\textbf{Análisis.} Los torques suben entre un 23 y un 33 \% en la postura 15°/15° (por ejemplo, el motor central pasa de 1.028 a 1.364 N$\cdot$m en el pinch): menos que el 46 \% de la normal, porque la fricción tangencial baja con la masa. Solo el power a 120° queda por debajo del par de bloqueo del N20.
 
+\subsubsection{Vistas lateral, superior y frontal}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{D6_vista_lateral_DCL_35kg.png}
+\caption{Diagrama de cuerpo libre en vista lateral del dedo A, 3.5 kg y $\mu = 0.3$.}
+\label{fig:lateral35}
+\end{figure}
+\par\noindent\textbf{Análisis.} En un pinch de 3.5 kg en la punta con $\mu = 0.3$ la normal es $N = W/(2\mu) = 57.2$ N y la fricción $F_t = W/2 = 17.2$ N. El torque en el MCP es 4.014 N$\cdot$m y en el PIP 1.155 N$\cdot$m, con una reacción de 59.9 N en el MCP.
+
+En la vista superior (Figura \ref{fig:superior35}) el dedo A está a 74.46 mm del par B--C, cuyos contactos están separados 34 mm. Con el origen en el contacto de A, B en $(74.46,\,17)$ mm, C en $(74.46,\,-17)$ mm y el centro del objeto a mitad de la distancia, las ecuaciones de equilibrio son:
+\eq{\sum F_x = 0:\; N_A = N_B + N_C \qquad \sum M_z = 0:\; 17\,N_B - 17\,N_C = 0 \;\Rightarrow\; N_B = N_C}
+Fuera del plano, la fricción de los tres contactos sostiene el peso:
+\eq{\sum F_z = 0:\; f_A + f_B + f_C = W = 34.34 \text{ N} \qquad \sum M_x = 0:\; f_B = f_C}
+\eq{\sum M_y = 0:\; 74.46\,(f_B + f_C) = 37.23\,W}
+de donde $f_A = 17.17$ N y $f_B = f_C = 8.58$ N: el peso se reparte 50 / 25 / 25 \%. Con la condición de no deslizamiento $f_i \leq \mu N_i$, la fuerza de agarre mínima en cada dedo es:
+\eq{N_A = \frac{f_A}{\mu} = \frac{W}{2\mu} = 57.2 \text{ N} \qquad N_B = N_C = \frac{W}{4\mu} = 28.6 \text{ N}}
+lo que cumple $N_A = N_B + N_C$. La fuerza de agarre total es 114.5 N; con un factor de seguridad de 1.5 serían 85.9 N en A y 42.9 N en B y C.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{D5_vista_superior_35kg.png}
+\caption{Vista superior con 3.5 kg y $\mu = 0.3$: normales en el plano y fricción hacia afuera de la hoja.}
+\label{fig:superior35}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor{head}\textbf{Fuerza o momento} & \textbf{Dedo A} & \textbf{Dedo B} & \textbf{Dedo C} \\ \hline
+Normal $N$ (fuerza de agarre) & 57.2 N & 28.6 N & 28.6 N \\ \hline
+Fricción $f$ (hacia afuera de la hoja) & 17.17 N & 8.58 N & 8.58 N \\ \hline
+Parte del peso & 50 \% & 25 \% & 25 \% \\ \hline
+Momento de $N$ respecto al eje del objeto & 0 & +0.486 N$\cdot$m & $-$0.486 N$\cdot$m \\ \hline
+Momento de $f$ respecto al eje $y$ del objeto & 0.639 N$\cdot$m & \multicolumn{2}{c|}{0.639 N$\cdot$m (B + C)} \\ \hline
+\end{tabular}
+\caption{Fuerzas y momentos de la vista superior con 3.5 kg y $\mu = 0.3$.}
+\label{tab:superior35}
+\end{table}
+\par\noindent\textbf{Análisis.} Los momentos de B y C respecto al eje del objeto (±0.486 N$\cdot$m) se anulan solo si los dos dedos aprietan igual; cualquier diferencia hace girar el objeto en el plano de la palma. Los momentos de la fricción de A y del par B--C (0.639 N$\cdot$m cada uno) también se equilibran. Si el centro del objeto no queda a mitad de los 74.46 mm, el reparto 50 / 25 / 25 \% cambia y con él las fuerzas de agarre.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{D7_vista_frontal_DCL_35kg.png}
+\caption{Diagrama de cuerpo libre en vista frontal con 3.5 kg y $\mu = 0.3$.}
+\label{fig:frontal35}
+\end{figure}
+\par\noindent\textbf{Análisis.} La brida del UR5e soporta $F_z = 35.6$ N (los 34.3 N del objeto más el peso de los dedos) y un momento $M_y = 0.18$ N$\cdot$m por la excentricidad de 5.27 mm del eje del objeto respecto al eje del gripper.
+
 \subsubsection{Cargas internas}
 \begin{figure}[H]
 \centering
