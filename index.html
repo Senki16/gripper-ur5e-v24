@@ -49,7 +49,7 @@
   <div class="stats">
     <div class="stat"><span class="num">0.034<small>%</small></span><span class="lbl">error máximo frente a Working Model</span></div>
     <div class="stat"><span class="num">12<small>:1</small></span><span class="lbl">del servo central a cada MCP</span></div>
-    <div class="stat"><span class="num">1.94<small>N·m</small></span><span class="lbl">par máximo del motor central</span></div>
+    <div class="stat"><span class="num">5.83<small>N·m</small></span><span class="lbl">torque máximo en el MCP</span></div>
     <div class="stat"><span class="num">9.8<small>mJ</small></span><span class="lbl">energía de un cierre por dedo</span></div>
   </div>
 </section>
@@ -118,14 +118,13 @@
         <div class="tbl"><table>
           <thead><tr><th>Magnitud</th><th>Máximo</th></tr></thead>
           <tbody>
-            <tr><td>Motor central</td><td>1.945 N·m</td></tr>
-            <tr><td>Motor de dedo (N20)</td><td>1.233 N·m</td></tr>
             <tr><td>Torque MCP</td><td>5.832 N·m</td></tr>
             <tr><td>Torque PIP</td><td>2.466 N·m</td></tr>
             <tr><td>Fuerza de contacto</td><td>68.3 N</td></tr>
-            <tr><td>Tangencial en el piñón z12</td><td>972 N</td></tr>
+            <tr><td>Reacción en el MCP</td><td>68.4 N</td></tr>
+            <tr><td>Reacción en el PIP</td><td>68.3 N</td></tr>
           </tbody></table></div>
-        <p class="fine">Pinch en la punta, 4 kg, μ 0.3, dedos casi rectos, η 50 %.</p>
+        <p class="fine">Pinch en la punta, 4 kg, μ 0.3, dedos casi rectos. Solo con las medidas del dedo, sin considerar la transmisión de engranajes.</p>
       </div>
     </div>
   </div>
@@ -136,21 +135,21 @@
   <div class="wrap">
     <p class="eyebrow">3.1 · Caso de diseño 2</p>
     <h2>3.5 kg y μ 0.3.<br>Menos masa, más carga.</h2>
-    <p class="lead">El mismo análisis con el caso de diseño actualizado, siguiendo la metodología del curso: cuerpo rígido, diagrama de cuerpo libre con el tipo de apoyo de cada unión, equilibrio por subensambles, escenarios críticos, cargas internas por el método de las secciones y factor de seguridad. La normal N = W/(nμ) sube 46 % frente a 4 kg con μ 0.5; la fricción F<sub>t</sub> = W/n baja con la masa, así que los torques de motor suben entre 23 y 36 %.</p>
+    <p class="lead">El mismo análisis con el caso de diseño actualizado, siguiendo la metodología del curso: cuerpo rígido, diagrama de cuerpo libre con el tipo de apoyo de cada unión, equilibrio por subensambles, escenarios críticos, cargas internas por el método de las secciones y factor de seguridad. La normal N = W/(nμ) sube 46 % frente a 4 kg con μ 0.5; la fricción F<sub>t</sub> = W/n baja con la masa, así que los torques en las articulaciones suben entre 23 y 33 %. No se considera la transmisión de engranajes: solo las medidas del dedo.</p>
     <div class="tbl"><table>
-      <thead><tr><th>Caso (15°/15°)</th><th>N por dedo</th><th>τMCP / τPIP</th><th>Motor central</th><th>N20</th><th>N20 típico 0.39 N·m</th></tr></thead>
+      <thead><tr><th>Caso (15°/15°)</th><th>N por dedo</th><th>τMCP / τPIP dedo A</th><th>τMCP / τPIP dedo B</th><th>τMCP / τPIP dedo C</th></tr></thead>
       <tbody>
-        <tr><td>Pinch (T)</td><td>57.2 / 57.2 / 0 N</td><td>4.909 / 1.912 N·m</td><td>1.364 N·m</td><td>0.797 N·m</td><td>✗ FS 0.49</td></tr>
-        <tr><td>Power 120° (D)</td><td>38.2 N c/u</td><td>2.749 / 0.750 N·m</td><td>1.145 N·m</td><td>0.312 N·m</td><td>△ FS 1.25, solo picos</td></tr>
-        <tr><td>Power plano (D)</td><td>57.2 / 28.6 / 28.6 N</td><td>4.121 / 1.124 N·m</td><td>1.145 N·m</td><td>0.469 N·m</td><td>✗ FS 0.83</td></tr>
-        <tr><td>Desigual 40/35/25 (T)</td><td>45.8 / 40.1 / 28.6 N</td><td>3.928 / 1.530 N·m</td><td>1.364 N·m</td><td>0.638 N·m</td><td>✗ FS 0.61</td></tr>
+        <tr><td>Pinch (T)</td><td>57.2 / 57.2 / 0 N</td><td>4.909 / 1.912 N·m</td><td>4.909 / 1.912 N·m</td><td>0 / 0 N·m</td></tr>
+        <tr><td>Power 120° (D)</td><td>38.2 N c/u</td><td>2.749 / 0.750 N·m</td><td>2.749 / 0.750 N·m</td><td>2.749 / 0.750 N·m</td></tr>
+        <tr><td>Power plano (D)</td><td>57.2 / 28.6 / 28.6 N</td><td>4.121 / 1.124 N·m</td><td>2.063 / 0.563 N·m</td><td>2.063 / 0.563 N·m</td></tr>
+        <tr><td>Desigual 40/35/25 (T)</td><td>45.8 / 40.1 / 28.6 N</td><td>3.928 / 1.530 N·m</td><td>3.438 / 1.339 N·m</td><td>2.457 / 0.957 N·m</td></tr>
       </tbody></table></div>
-    <p class="fine">Peor postura (contacto en T, dedo recto): motor central 1.418 N·m (FS 1.38 con un servo de 20 kg·cm) y N20 0.899 N·m (FS 0.43). Brida del UR5e: Fz = 35.6 N, My = 0.18 N·m.</p>
+    <p class="fine">Peor postura (pinch en T, dedo recto): τMCP 5.104 N·m, τPIP 2.157 N·m y 59.9 N de reacción en el MCP (frente a 3.772 N·m, 1.584 N·m y 44.1 N con 4 kg y μ 0.5). Brida del UR5e: Fz = 35.6 N, My = 0.18 N·m.</p>
     <div class="gallery" style="margin-top:18px">
-      <figure class="tile"><img src="assets/img/E1_torques_motor.webp" alt="Torques de motor con 3.5 kg y mu 0.3" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El motor central queda por debajo de su par de bloqueo en todas las posturas (máximo 1.418 N·m frente a 1.96 N·m). El N20 lo supera en casi todo el rango y solo queda por debajo con el dedo muy cerrado.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/E2_comparacion_casos.webp" alt="Comparación de los dos casos de diseño" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques suben entre 23 y 33 % en 15°/15° (motor central del pinch: 1.028 → 1.364 N·m): menos que el 46 % de la normal, porque la fricción tangencial baja con la masa. Solo el power a 120° queda por debajo del par de bloqueo del N20.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/J3_torques_pruebas.webp" alt="Torques articulares en las cuatro pruebas con 3.5 kg y mu 0.3" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El pinch es el caso más exigente: 4.909 N·m en el MCP y 1.912 N·m en el PIP de los dedos A y B. El power a 120° reparte la carga por igual (2.749 / 0.750 N·m por dedo) y en el power plano el dedo A carga el doble que B y C.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/J1_torques_por_dedo.webp" alt="Torques MCP y PIP de cada dedo contra el ángulo MCP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques siguen el reparto de la carga y bajan al cerrar el dedo. Frente a 4 kg con μ 0.5 suben entre 23 y 33 % en 15°/15° (MCP del pinch: 3.698 → 4.909 N·m): menos que el 46 % de la normal, porque la fricción tangencial baja con la masa.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/E3_cargas_internas.webp" alt="Cargas internas N, V y M en las falanges" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Cada falange trabaja como viga empotrada en su articulación. El momento flector llega a 4.91 N·m en la raíz de la proximal y 1.91 N·m en la de la distal, iguales a τMCP y τPIP; la cortante es casi constante (59.8 y 53.0 N). La raíz de la falange proximal es la sección crítica.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/E4_normal_y_capacidad.webp" alt="Fuerza normal y capacidad de carga" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Con μ 0.3 los dedos del pinch aprietan 57.2 N. El N20 típico limita la capacidad a unos 1.7 kg en pinch y 2.9 kg en power plano; para 3.5 kg en power plano se necesita μ ≥ 0.4.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/J2_torque_vs_masa.webp" alt="Torques del dedo A contra la masa del objeto" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa. Con 3.5 kg el MCP del dedo A necesita 4.91 N·m con μ 0.3 y 3.23 N·m con μ 0.5: aumentar la fricción de las yemas es la forma más directa de reducir todos los torques.</span></figcaption></figure>
     </div>
     <h3 class="h3 mt">Estática del dedo por tipo de agarre</h3>
     <p class="lead">Un solo dedo recto en vista lateral, sin considerar la transmisión: solo las medidas r2 = MCP→P (31, −13), r3 = MCP→PIP (50, −4) y r9 = PIP→D (21.45, −9) mm. El dedo solo carga N = 57.2 N y f = 17.2 N; cada dedo del par, la mitad. En el pinch toda la carga va en D; en el power se reparte 50/50 entre P y D. Con M = y·F<sub>z</sub> − z·F<sub>y</sub>: τ<sub>PIP</sub> = M<sub>D</sub> y τ<sub>MCP</sub> = M<sub>P</sub> + M<sub>D</sub>.</p>
@@ -163,7 +162,7 @@
         <tr><td>Power, par</td><td>14.3 / 4.3 N</td><td>14.3 / 4.3 N</td><td>0.345 N·m</td><td>1.577 N·m</td><td>14.9 N</td><td>29.9 N</td></tr>
       </tbody></table></div>
     <figure class="tile" style="margin-top:16px"><img src="assets/img/E5_dedo_agarres.webp" alt="Diagrama de cuerpo libre del dedo en los cuatro casos de agarre" loading="lazy"><figcaption>Dedo recto · 3.5 kg, μ 0.3<span class="ana"><b>Análisis.</b> El caso que dimensiona es el pinch del dedo solo: τ<sub>MCP</sub> = 71.45·57.23 + 13·17.17 = 4.312 N·m y τ<sub>PIP</sub> = 21.45·57.23 + 9·17.17 = 1.382 N·m, con 59.7 N de reacción en cada articulación. La normal aporta más del 90 % de cada torque. En el power parte de la carga pasa a P, más cerca del MCP: el torque del MCP baja 27 % y el del PIP 50 %. Los dedos del par necesitan la mitad que el dedo solo.</span></figcaption></figure>
-    <figure class="tile" style="margin-top:16px"><img src="assets/img/wm_pruebas_35kg_mu03.webp" alt="Pruebas en Working Model 2D con 3.5 kg y mu 0.3" loading="lazy"><figcaption>Working Model 2D · 3.5 kg, μ 0.3, η 0.6, 15°/15°<span class="ana"><b>Análisis.</b> El modelo se ejecutó con los deslizadores en 3.5 kg y μ 0.3 y se repitió el barrido de 180 configuraciones: la diferencia máxima con el cálculo fue 0.034 % y la media 0.006 %. En el pinch los medidores marcan 1.364 N·m en el motor central, 0.797 N·m en el N20 y 57.2 N de normal.</span></figcaption></figure>
+    <figure class="tile" style="margin-top:16px"><img src="assets/img/wm_pruebas_35kg_mu03.webp" alt="Pruebas en Working Model 2D con 3.5 kg y mu 0.3" loading="lazy"><figcaption>Working Model 2D · 3.5 kg, μ 0.3, 15°/15°<span class="ana"><b>Análisis.</b> El modelo se ejecutó con los deslizadores en 3.5 kg y μ 0.3 y se repitió el barrido de 180 configuraciones: la diferencia máxima con el cálculo fue 0.034 % y la media 0.006 %. En el pinch los medidores marcan 4.909 N·m en el MCP, 1.912 N·m en el PIP y 57.2 N de normal; en el power plano el dedo A recibe 57.2 N y B y C 28.6 N cada uno.</span></figcaption></figure>
   </div>
 </section>
 
@@ -292,7 +291,7 @@
   <div class="wrap">
     <p class="eyebrow">Pruebas en Working Model</p>
     <h2>Cuatro agarres.<br>El mismo modelo.</h2>
-    <p class="lead">Capturas del modelo estático de Working Model 2D en cada prueba: objeto de 4 kg, μ 0.5, η 0.6, θMCP = θPIP = 15°. Los medidores de la derecha son los que se comparan con el cálculo analítico.</p>
+    <p class="lead">Capturas del modelo estático de Working Model 2D en cada prueba: objeto de 4 kg, μ 0.5, θMCP = θPIP = 15°, sin considerar la transmisión de engranajes. Los medidores de la derecha son los que se comparan con el cálculo analítico.</p>
     <div class="seg" role="tablist" aria-label="Prueba">
       <button role="tab" aria-selected="true" data-k="pinch">Pinch</button>
       <button role="tab" aria-selected="false" data-k="power120">Power 120°</button>
@@ -300,7 +299,7 @@
       <button role="tab" aria-selected="false" data-k="desigual">Desigual</button>
     </div>
     <figure class="tile test-fig">
-      <img id="test-img" src="assets/img/wm_pinch.webp" alt="Working Model 2D, prueba de pinch" width="1334" height="775">
+      <img id="test-img" src="assets/img/wm_pinch_sin_motores.webp" alt="Working Model 2D, prueba de pinch" width="1334" height="775">
       <figcaption id="test-cap"></figcaption>
       <p class="ana-p" id="test-ana"></p>
     </figure>
@@ -317,14 +316,12 @@
     <h2>180 configuraciones.<br>Ninguna por encima de 0.04 %.</h2>
     <p class="lead">El modelo estático de Working Model recorrió pinch, power y carga desigual con contacto en P, D y T en las 20 posturas. El modelo dinámico sostuvo 1 kg desde Tcentral = 0.25 N·m y dejó caer el objeto con 0.20 N·m.</p>
     <div class="two">
-      <figure class="tile"><img src="assets/img/wm_estatica.webp" alt="Modelo estático en Working Model 2D" loading="lazy"><figcaption>Gripper_V24_Estatica.wm2d<span class="ana"><b>Análisis.</b> El modelo reproduce el dedo con sus articulaciones motorizadas, los contactos P, D y T y los medidores de los cuatro motores. En el barrido de 180 configuraciones la diferencia máxima con el cálculo analítico fue 0.034 %, lo que confirma la geometría del plano y la convención de signos.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/wm_estatica.webp" alt="Modelo estático en Working Model 2D" loading="lazy"><figcaption>Gripper_V24_Estatica.wm2d<span class="ana"><b>Análisis.</b> El modelo reproduce el dedo con sus articulaciones motorizadas, los contactos P, D y T y los medidores de torque y reacción en el MCP y el PIP. En el barrido de 180 configuraciones la diferencia máxima con el cálculo analítico fue 0.034 %, lo que confirma la geometría del plano y la convención de signos.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/wm_agarre.webp" alt="Modelo dinámico en Working Model 2D sosteniendo el objeto" loading="lazy"><figcaption>Gripper_V24_Agarre.wm2d<span class="ana"><b>Análisis.</b> Con 1 kg y μ = 0.5 el objeto se sostiene a partir de T<sub>c</sub> = 0.25 N·m y cae con 0.20 N·m, lo que acota el par mínimo del servo para esa carga. Con T<sub>c</sub> = 1.0 N·m el torque en cada MCP converge a 3.589 N·m frente a 3.6 N·m teóricos, una diferencia de 0.3 %.</span></figcaption></figure>
     </div>
     <div class="tbl tbl-dark"><table>
       <thead><tr><th>Magnitud</th><th>Error máximo</th><th>Error medio</th><th>Casos &gt; 5 %</th></tr></thead>
       <tbody>
-        <tr><td>Torque del motor central</td><td>0.0009 %</td><td>0.0002 %</td><td>0</td></tr>
-        <tr><td>Torques de los motores A, B, C</td><td>0.028 %</td><td>0.007–0.011 %</td><td>0</td></tr>
         <tr><td>τMCP de los tres dedos</td><td>0.034 %</td><td>0.0002–0.011 %</td><td>0</td></tr>
         <tr><td>τPIP de los tres dedos</td><td>0.034 %</td><td>0.010–0.017 %</td><td>0</td></tr>
         <tr><td>Reacciones MCP y PIP</td><td>0.034 %</td><td>0.0002–0.011 %</td><td>0</td></tr>
@@ -338,16 +335,16 @@
     <p class="eyebrow">Gráficas</p>
     <h2>Todo el barrido, en diez gráficas.</h2>
     <div class="gallery">
-      <figure class="tile"><img src="assets/img/01_Tcentral_vs_angulo.webp" alt="Torque central contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque del motor central baja al cerrar el dedo: de 645 mN·m (θMCP = 15°, θPIP = 0°) a 334 mN·m (60°/45°). Al flexionar, los puntos de contacto se acercan al eje MCP y el brazo de la normal disminuye, así que el peor caso son los dedos casi rectos.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/02_TA_vs_angulo.webp" alt="Torque del motor A contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El motor A es el más cargado porque su dedo lleva el 40 % de la carga: hasta 170 mN·m con el dedo recto. Con θMCP = 60° y θPIP = 45° el torque se vuelve negativo (−32 mN·m): la carga tiende a cerrar el PIP y, como el sinfín de cuatro entradas no se autobloquea, el N20 debe frenar en lugar de empujar.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/03_TB_vs_angulo.webp" alt="Torque del motor B contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El motor B sigue la misma tendencia que A con valores proporcionales a su 35 % de la carga: de 148 mN·m con el dedo recto a −28 mN·m en la postura más cerrada.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/04_TC_vs_angulo.webp" alt="Torque del motor C contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El motor C, con el 25 % de la carga, es el menos exigido (106 mN·m como máximo). Los tres motores de dedo cruzan cero en la misma postura, lo que indica que el signo del torque depende solo de la geometría y no del reparto de carga.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/01_tauMCP_A_vs_angulo.webp" alt="Torque MCP del dedo A contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque en el MCP del dedo A, que lleva el 40 % de la carga, llega a 1.857 N·m con el dedo casi recto (θMCP = 15°, θPIP = 0°) y baja a 0.957 N·m en la postura 60°/45°. Al flexionar, los contactos se acercan al eje MCP y el brazo de la normal disminuye, así que el peor caso son los dedos casi rectos.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/02_tauPIP_A_vs_angulo.webp" alt="Torque PIP del dedo A contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque en el PIP del dedo A llega a 0.407 N·m con el dedo recto. Con θMCP = 60° y θPIP = 45° se vuelve negativo (−0.077 N·m): la carga tiende a cerrar el PIP y la articulación debe frenar en lugar de empujar.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/03_tauMCP_B_vs_angulo.webp" alt="Torque MCP del dedo B contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El dedo B sigue la misma tendencia que A con valores proporcionales a su 35 % de la carga: de 1.626 N·m con el dedo casi recto a 0.839 N·m en la postura más cerrada.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/04_tauMCP_C_vs_angulo.webp" alt="Torque MCP del dedo C contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El dedo C, con el 25 % de la carga, es el menos exigido (1.162 N·m como máximo). Los torques de los tres dedos siguen exactamente la proporción del reparto, porque la geometría de los tres es la misma.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/05_tauMCP_vs_MCP.webp" alt="Torque MCP contra ángulo MCP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> En el pinch de 4 kg en la punta el torque MCP llega a 3.77 N·m (θMCP = 15°, θPIP = 0°) y baja a 1.67 N·m en la postura 60°/45°. La línea discontinua, que es solo la gravedad del dedo, queda por debajo de 15 mN·m: menos del 0.5 % del total.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/06_tauPIP_vs_PIP.webp" alt="Torque PIP contra ángulo PIP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque PIP baja casi linealmente al flexionar el PIP y se vuelve negativo con el MCP a 60°. El máximo, 1.58 N·m, se da con el dedo casi recto; agarrar con el dedo más cerrado reduce mucho la carga del N20.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/06_tauPIP_vs_PIP.webp" alt="Torque PIP contra ángulo PIP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque PIP baja casi linealmente al flexionar el PIP y se vuelve negativo con el MCP a 60°. El máximo, 1.58 N·m, se da con el dedo casi recto; agarrar con el dedo más cerrado reduce mucho la carga en esa articulación.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/07_N_vs_mu.webp" alt="Fuerza normal contra fricción" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La normal mínima es inversamente proporcional a μ: pasar de μ = 0.3 a 0.7 la reduce a menos de la mitad (65.4 → 28.0 N en un pinch de 4 kg). El power a 120° necesita dos tercios de la normal del pinch porque reparte el peso entre tres dedos. Un recubrimiento de alta fricción en las yemas es la forma más directa de bajar todos los torques.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/08_capacidad_vs_angulo.webp" alt="Capacidad de carga contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La capacidad aumenta al cerrar el MCP porque baja el torque requerido. El motor de dedo limita mucho más que el central: con 100 mN·m en el N20, un pinch en la punta con el dedo recto sostiene solo 0.63 kg, mientras que 1000 mN·m en el central permiten 4.05 kg.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/09_torque_total_vs_masa.webp" alt="Torque total contra masa" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa, como predice N = W/(nμ). La fricción pesa mucho más en el motor central (803 frente a 468 mN·m a 4 kg entre μ = 0.3 y 0.7) que en la suma de los motores de dedo (270 frente a 225 mN·m).</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/10_distribucion_carga.webp" alt="Distribución de carga entre los dedos" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La disposición del plano V2.4 hace que el dedo A cargue el doble que B y C (39.2 frente a 19.6 N), igual que en el pinch. El power a 120° es el reparto más equilibrado (26.2 N por dedo); por eso el dedo A y su N20 son los que deben dimensionarse para el peor caso.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/08_capacidad_vs_angulo.webp" alt="Capacidad de carga contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La capacidad aumenta al cerrar el MCP porque baja el torque requerido. El PIP limita más que el MCP: con 1 N·m disponible en el PIP, un pinch en la punta con el dedo recto sostiene 2.65 kg, mientras que 2 N·m en el MCP permiten 2.25 kg con el dedo recto y 3.84 kg con el MCP a 60°.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/09_torque_articular_vs_masa.webp" alt="Torques articulares contra masa" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa, como predice N = W/(nμ). La fricción pesa mucho más en el MCP (1.929 frente a 1.124 N·m a 4 kg entre μ = 0.3 y 0.7) que en el PIP (0.217 frente a 0.180 N·m), porque la normal actúa con un brazo mucho mayor respecto al MCP.</span></figcaption></figure>
+      <figure class="tile"><img src="assets/img/10_distribucion_carga.webp" alt="Distribución de carga entre los dedos" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La disposición del plano V2.4 hace que el dedo A cargue el doble que B y C (39.2 frente a 19.6 N), igual que en el pinch. El power a 120° es el reparto más equilibrado (26.2 N por dedo); por eso las articulaciones del dedo A son las que deben dimensionarse para el peor caso.</span></figcaption></figure>
     </div>
   </div>
 </section>
