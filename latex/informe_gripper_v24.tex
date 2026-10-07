@@ -361,6 +361,112 @@ Las siguientes gráficas resumen el barrido estático completo. Debajo de cada u
 \item El sinfín central es autobloqueante ($\lambda = 3.6°$), de modo que los MCP se sostienen sin consumo de energía. El sinfín PIP de cuatro entradas no lo es ($\lambda = 18.4°$) y requiere par continuo del N20.
 \end{itemize}
 
+% >>> caso 3.5 kg mu 0.3
+\subsection{Caso de diseño 2: objeto de 3.5 kg y $\mu = 0.3$}
+Los resultados anteriores usan como referencia un objeto de 4 kg con $\mu = 0.5$. En esta sección se repite el análisis con el caso de diseño actualizado, un objeto de 3.5 kg y un coeficiente de fricción de 0.3, manteniendo $\eta = 0.6$. Se sigue la metodología de análisis estático del curso: cuerpo rígido, diagrama de cuerpo libre con el tipo de apoyo de cada unión, equilibrio del sistema completo y de cada subensamble, escenarios críticos, cargas internas por el método de las secciones y factor de seguridad.
+
+\subsubsection{Metodología}
+\begin{itemize}
+\item \textbf{Cuerpo rígido.} Las falanges se consideran indeformables; el efecto del material se evalúa después en resistencia de materiales.
+\item \textbf{Apoyos.} El MCP y el PIP son pasadores lisos con un motor que fija el giro, por lo que cada uno aporta dos componentes de fuerza y un par (equivalente a un soporte fijo en 2D). El contacto con el objeto aporta una fuerza normal y una de fricción.
+\item \textbf{Equilibrio por subensambles.} Se resuelve primero la falange distal, luego la proximal y por último la palma y la brida del UR5e. Las fuerzas en cada unión pasan de un subensamble al siguiente por acción-reacción:
+\eq{\sum F_x = 0 \qquad \sum F_y = 0 \qquad \sum M_O = 0}
+\item \textbf{Escenarios críticos.} Pinch en la punta, power a 120°, power con la disposición del plano y carga desigual, en 20 posturas y 3 puntos de contacto.
+\item \textbf{Cargas internas.} En cada sección $s$ de una falange se suman las cargas que quedan del lado de la punta:
+\eq{N(s) = \sum \vec F\cdot\hat u \qquad V(s) = \sum \vec F\cdot\hat n \qquad M(s) = \sum (\vec r_i - \vec r_s)\times\vec F_i}
+\item \textbf{Factor de seguridad.} Se compara el torque requerido con el par de bloqueo típico de cada motor (servo de 20 kg$\cdot$cm: 1.96 N$\cdot$m; N20 298:1: 0.39 N$\cdot$m):
+\eq{FS = \frac{T_{bloqueo}}{T_{requerido}} \qquad m_{max} = m\cdot FS}
+\end{itemize}
+
+Como la normal mínima es $N = W/(n\mu)$, todas las cargas escalan con $m/\mu$. Frente al caso de referencia el factor es $(3.5/0.3)/(4/0.5) = 1.458$: aunque la masa baja, la menor fricción aumenta las cargas un 46 \%.
+
+\subsubsection{Resultados por caso}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\rowcolor{head}\textbf{Caso (15°/15°)} & \textbf{N por dedo [N]} & \textbf{$\tau_{MCP}$ / $\tau_{PIP}$ [N$\cdot$m]} & \textbf{$T_c$ [N$\cdot$m]} & \textbf{$T_{N20}$ [N$\cdot$m]} & \textbf{N20 típico} \\ \hline
+Pinch (T) & 57.2 / 57.2 / 0 & 4.909 / 1.912 & 1.364 & 0.797 & \textcolor{bad}{$\times$ FS 0.49} \\ \hline
+Power 120° (D) & 38.2 / 38.2 / 38.2 & 2.749 / 0.750 & 1.145 & 0.312 & \textcolor{warn}{$\triangle$ FS 1.25} \\ \hline
+Power plano (D) & 57.2 / 28.6 / 28.6 & 4.121 / 1.124 & 1.145 & 0.469 & \textcolor{bad}{$\times$ FS 0.83} \\ \hline
+Desigual 40/35/25 (T) & 45.8 / 40.1 / 28.6 & 3.928 / 1.530 & 1.364 & 0.638 & \textcolor{bad}{$\times$ FS 0.61} \\ \hline
+\end{tabular}
+\caption{Estática con 3.5 kg, $\mu = 0.3$ y $\eta = 0.6$ en la postura 15°/15°. Con 4 kg y $\mu = 0.5$ los valores de $T_c$ eran 1.028 y 0.863 N$\cdot$m.}
+\label{tab:caso35}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\rowcolor{head}\textbf{Magnitud} & \textbf{4 kg, $\mu = 0.5$} & \textbf{3.5 kg, $\mu = 0.3$} \\ \hline
+Normal por dedo en pinch & 39.2 N & 57.2 N \\ \hline
+Peor torque del motor central (T, 15°/0°) & 0.972 N$\cdot$m & 1.418 N$\cdot$m (FS 1.38) \\ \hline
+Peor torque del N20 (T, 0°/0°) & 0.616 N$\cdot$m & 0.899 N$\cdot$m (FS 0.43) \\ \hline
+Masa máxima que sostiene el servo / el N20 & -- & 4.8 kg / 1.5 kg \\ \hline
+Vista superior: $N_A = N_B + N_C$ & 39.2 = 19.6 + 19.6 N & 57.2 = 28.6 + 28.6 N \\ \hline
+Vista frontal: brida del UR5e & $F_z$ = 40.5 N, $M_y$ = 0.21 N$\cdot$m & $F_z$ = 35.6 N, $M_y$ = 0.18 N$\cdot$m \\ \hline
+Fuerza tangencial en el piñón z12 (pinch) & 583 N & 851 N \\ \hline
+\end{tabular}
+\caption{Comparación entre los dos casos de diseño.}
+\label{tab:comp35}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{E1_torques_motor.png}
+\caption{Torques del motor central y del N20 en pinch en la punta, con los pares de bloqueo típicos.}
+\label{fig:e1}
+\end{figure}
+\par\noindent\textbf{Análisis.} El motor central se mantiene por debajo de su par de bloqueo en todas las posturas (máximo 1.418 N$\cdot$m frente a 1.96 N$\cdot$m). El N20 lo supera en casi todo el rango y solo queda por debajo con el dedo muy cerrado ($\theta_{MCP} \geq 45°$ y $\theta_{PIP} \geq 30°$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{E2_comparacion_casos.png}
+\caption{Torques de motor de los dos casos de diseño en la postura 15°/15°.}
+\label{fig:e2}
+\end{figure}
+\par\noindent\textbf{Análisis.} Todos los torques suben en la misma proporción, 46 \%, porque la geometría no cambia y la carga de contacto escala con $m/\mu$. Solo el power a 120° queda por debajo del par de bloqueo del N20.
+
+\subsubsection{Cargas internas}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{E3_cargas_internas.png}
+\caption{Fuerza normal, cortante y momento flector a lo largo de cada falange (pinch en la punta, dedo A).}
+\label{fig:e3}
+\end{figure}
+\par\noindent\textbf{Análisis.} Cada falange trabaja como una viga empotrada en su articulación y cargada en el contacto. El momento flector crece linealmente hacia la articulación: 4.91 N$\cdot$m en la raíz de la falange proximal y 1.91 N$\cdot$m en la raíz de la distal, iguales a $\tau_{MCP}$ y $\tau_{PIP}$, lo que verifica el equilibrio. La cortante es casi constante (59.8 N y 53.0 N) y la normal es de compresión (2.9 N y 27.8 N). La sección crítica es la raíz de la falange proximal y estas cargas son la entrada del análisis de resistencia de materiales.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{E4_normal_y_capacidad.png}
+\caption{Fuerza normal por dedo y masa máxima que sostienen los motores en función de $\mu$.}
+\label{fig:e4}
+\end{figure}
+\par\noindent\textbf{Análisis.} Con $\mu = 0.3$ los dedos A y B del pinch deben apretar 57.2 N cada uno. Con los motores típicos el N20 limita la capacidad a unos 1.7 kg en pinch y 2.9 kg en power plano; para sostener 3.5 kg en power plano se necesita $\mu \geq 0.4$, y en pinch no basta con aumentar la fricción hasta 0.8.
+
+\subsubsection{Validación en Working Model 2D}
+El modelo estático de Working Model se ejecutó con los deslizadores en 3.5 kg y $\mu = 0.3$ y se repitió el barrido de 180 configuraciones (3 casos $\times$ 3 contactos $\times$ 20 posturas). La diferencia máxima con el cálculo analítico fue de 0.034 \% y la media de 0.006 \%.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{wm_pruebas_35kg_mu03.png}
+\caption{Pruebas en Working Model 2D con 3.5 kg, $\mu = 0.3$, $\eta = 0.6$ y postura 15°/15°.}
+\label{fig:wm35}
+\end{figure}
+\par\noindent\textbf{Análisis.} Los medidores de Working Model reproducen los valores de la Tabla \ref{tab:caso35}: en el pinch el motor central marca 1.364 N$\cdot$m, el N20 0.797 N$\cdot$m y la normal 57.2 N; en el power plano el dedo A recibe 57.2 N y B y C 28.6 N cada uno.
+
+\subsubsection{Análisis del caso de diseño 2}
+\begin{itemize}
+\item Bajar la fricción de 0.5 a 0.3 pesa más que bajar la masa de 4 a 3.5 kg: todas las cargas aumentan un 46 \%.
+\item El servo central de 20 kg$\cdot$cm cumple en todos los escenarios con un factor de seguridad mínimo de 1.38.
+\item El N20 298:1 no puede retener el PIP en pinch, power plano ni carga desigual (FS de 0.43 a 0.83). Para este caso se requiere una reducción mayor en el dedo, un sinfín PIP autobloqueante o superficies de contacto con más fricción.
+\item La raíz de la falange proximal soporta 4.91 N$\cdot$m de flexión y 59.8 N de cortante, y el piñón z12 851 N tangenciales; estos valores definen el dimensionamiento estructural.
+\end{itemize}
+% <<< caso 3.5 kg mu 0.3
+
 % ======================================================================
 \section{Cálculos cinemáticos (3.3)}
 \subsection{Descripción}
@@ -643,6 +749,7 @@ El modelo dinámico se acciona por torque. El tren central se representa con eng
 \item La disposición del plano V2.4, con el dedo A opuesto a los dedos B y C, hace que el dedo A soporte el doble de fuerza normal que cada uno de los otros dos en un agarre de potencia.
 \item El análisis cinemático entregó las posiciones, velocidades y aceleraciones lineales y angulares de las falanges, y las velocidades requeridas en los motores para un tiempo de cierre dado.
 \item El análisis dinámico mostró que los efectos inerciales son despreciables frente a las cargas de agarre y que el mayor consumo de energía se produce en la retención del PIP.
+\item Con el caso de diseño 2 (3.5 kg y $\mu = 0.3$) todas las cargas suben un 46 \% respecto a 4 kg con $\mu = 0.5$: el servo central cumple con FS $\geq$ 1.38, pero el N20 298:1 solo sostiene el power a 120°, y la raíz de la falange proximal soporta 4.91 N$\cdot$m de flexión.
 \item La simulación en Working Model 2D validó el cálculo analítico con un error máximo de 0.034 \% en 180 configuraciones y reprodujo el comportamiento de agarre de los tres modos de accionamiento.
 \item Con motores típicos, el consumo eléctrico por ciclo va de 6.4 J (power 1 kg) a 128 J (pinch 4 kg), y la retención del PIP con los N20 es la que lo determina. El N20 típico 298:1 sostiene de forma continua los agarres de 1 kg, solo admite picos cortos en el power de 4 kg y no puede sostener el pinch de 4 kg en la punta (Tabla \ref{tab:resumenconsumo2}).
 \end{itemize}
