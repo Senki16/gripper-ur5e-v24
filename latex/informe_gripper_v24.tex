@@ -479,6 +479,42 @@ Momento de $f$ respecto al eje $y$ del objeto & 0.639 N$\cdot$m & \multicolumn{2
 \end{figure}
 \par\noindent\textbf{Análisis.} La brida del UR5e soporta $F_z = 35.6$ N (los 34.3 N del objeto más el peso de los dedos) y un momento $M_y = 0.18$ N$\cdot$m por la excentricidad de 5.27 mm del eje del objeto respecto al eje del gripper.
 
+\subsubsection{Estática del dedo por tipo de agarre}
+Los tres dedos son iguales, así que se analiza un solo dedo en vista lateral con las cargas de cada uno obtenidas en la vista superior: el dedo solo (A) recibe $N = W/(2\mu) = 57.23$ N y $f = W/2 = 17.17$ N, y cada dedo del par (B o C) la mitad, $N = 28.61$ N y $f = 8.58$ N. El análisis no considera el mecanismo ni la transmisión de engranajes: solo usa las medidas del dedo recto para obtener las fuerzas y los torques en cada punto de interés (P, D, PIP y MCP).
+
+Con el origen en el MCP, $y'$ a lo largo del dedo y $z'$ hacia el dorso, las medidas usadas son:
+\eq{r_2 = \overrightarrow{MCP\,P} = (31,\,-13) \qquad r_3 = \overrightarrow{MCP\,PIP} = (50,\,-4) \qquad r_9 = \overrightarrow{PIP\,D} = (21.45,\,-9) \text{ mm}}
+de modo que el contacto D queda en $r_3 + r_9 = (71.45,\,-13)$ mm desde el MCP. La normal empuja el dedo hacia el dorso ($+z'$) y la fricción actúa a lo largo del dedo hacia la punta ($+y'$). El momento de cada fuerza y el equilibrio de cada falange son:
+\eq{M = y\,F_z - z\,F_y \qquad \vec R = -\sum \vec F}
+\eq{\sum M_{PIP} = 0 \Rightarrow \tau_{PIP} = M_D^{PIP} \qquad \sum M_{MCP} = 0 \Rightarrow \tau_{MCP} = M_P^{MCP} + M_D^{MCP}}
+En el pinch toda la carga va en D; en el power se reparte 50 / 50 entre P y D.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{E5_dedo_agarres.png}
+\caption{Diagrama de cuerpo libre del dedo recto en los cuatro casos de agarre (3.5 kg, $\mu = 0.3$).}
+\label{fig:e5}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\rowcolor{head}\textbf{Caso} & \textbf{Carga en P} & \textbf{Carga en D} & \textbf{$\tau_{PIP}$ [N$\cdot$m]} & \textbf{$\tau_{MCP}$ [N$\cdot$m]} & \textbf{$R_{PIP}$} & \textbf{$R_{MCP}$} \\ \hline
+Pinch, dedo solo & -- & 57.2 / 17.2 N & \textbf{1.382} & \textbf{4.312} & 59.7 N & 59.7 N \\ \hline
+Pinch, par & -- & 28.6 / 8.6 N & 0.691 & 2.156 & 29.9 N & 29.9 N \\ \hline
+Power, dedo solo & 28.6 / 8.6 N & 28.6 / 8.6 N & 0.691 & 3.155 & 29.9 N & 59.7 N \\ \hline
+Power, par & 14.3 / 4.3 N & 14.3 / 4.3 N & 0.345 & 1.577 & 14.9 N & 29.9 N \\ \hline
+\end{tabular}
+\caption{Fuerzas (normal / fricción) y torques en las articulaciones del dedo recto, sin transmisión.}
+\label{tab:dedo35}
+\end{table}
+
+En el pinch del dedo solo, por ejemplo, $\tau_{PIP} = 21.45(57.23) + 9(17.17) = 1.228 + 0.155 = 1.382$ N$\cdot$m y $\tau_{MCP} = 71.45(57.23) + 13(17.17) = 4.089 + 0.223 = 4.312$ N$\cdot$m. En el power del dedo solo el contacto P aporta $31(28.61) + 13(8.58) = 0.999$ N$\cdot$m al MCP y el contacto D $2.156$ N$\cdot$m, para un total de 3.155 N$\cdot$m.
+
+\par\noindent\textbf{Análisis.} El caso que dimensiona es el pinch del dedo solo: 4.312 N$\cdot$m en el MCP y 1.382 N$\cdot$m en el PIP, con reacciones de 59.7 N en ambas articulaciones. La normal aporta más del 90 \% de cada torque; la fricción solo actúa con el brazo vertical de 9 a 13 mm. Pasar al power acerca parte de la carga al MCP y reduce el torque del MCP un 27 \% y el del PIP un 50 \%. Los dedos del par necesitan la mitad que el dedo solo en todos los casos. Estos torques en las articulaciones son la base para seleccionar los actuadores, a los que luego se les debe aplicar la relación de transmisión y su eficiencia.
+
 \subsubsection{Cargas internas}
 \begin{figure}[H]
 \centering

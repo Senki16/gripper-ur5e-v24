@@ -152,6 +152,17 @@
       <figure class="tile"><img src="assets/img/E3_cargas_internas.webp" alt="Cargas internas N, V y M en las falanges" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Cada falange trabaja como viga empotrada en su articulación. El momento flector llega a 4.91 N·m en la raíz de la proximal y 1.91 N·m en la de la distal, iguales a τMCP y τPIP; la cortante es casi constante (59.8 y 53.0 N). La raíz de la falange proximal es la sección crítica.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/E4_normal_y_capacidad.webp" alt="Fuerza normal y capacidad de carga" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Con μ 0.3 los dedos del pinch aprietan 57.2 N. El N20 típico limita la capacidad a unos 1.7 kg en pinch y 2.9 kg en power plano; para 3.5 kg en power plano se necesita μ ≥ 0.4.</span></figcaption></figure>
     </div>
+    <h3 class="h3 mt">Estática del dedo por tipo de agarre</h3>
+    <p class="lead">Un solo dedo recto en vista lateral, sin considerar la transmisión: solo las medidas r2 = MCP→P (31, −13), r3 = MCP→PIP (50, −4) y r9 = PIP→D (21.45, −9) mm. El dedo solo carga N = 57.2 N y f = 17.2 N; cada dedo del par, la mitad. En el pinch toda la carga va en D; en el power se reparte 50/50 entre P y D. Con M = y·F<sub>z</sub> − z·F<sub>y</sub>: τ<sub>PIP</sub> = M<sub>D</sub> y τ<sub>MCP</sub> = M<sub>P</sub> + M<sub>D</sub>.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Caso</th><th>Carga en P (N / f)</th><th>Carga en D (N / f)</th><th>τPIP</th><th>τMCP</th><th>R PIP</th><th>R MCP</th></tr></thead>
+      <tbody>
+        <tr><td>Pinch, dedo solo</td><td>—</td><td>57.2 / 17.2 N</td><td><b>1.382 N·m</b></td><td><b>4.312 N·m</b></td><td>59.7 N</td><td>59.7 N</td></tr>
+        <tr><td>Pinch, par</td><td>—</td><td>28.6 / 8.6 N</td><td>0.691 N·m</td><td>2.156 N·m</td><td>29.9 N</td><td>29.9 N</td></tr>
+        <tr><td>Power, dedo solo</td><td>28.6 / 8.6 N</td><td>28.6 / 8.6 N</td><td>0.691 N·m</td><td>3.155 N·m</td><td>29.9 N</td><td>59.7 N</td></tr>
+        <tr><td>Power, par</td><td>14.3 / 4.3 N</td><td>14.3 / 4.3 N</td><td>0.345 N·m</td><td>1.577 N·m</td><td>14.9 N</td><td>29.9 N</td></tr>
+      </tbody></table></div>
+    <figure class="tile" style="margin-top:16px"><img src="assets/img/E5_dedo_agarres.webp" alt="Diagrama de cuerpo libre del dedo en los cuatro casos de agarre" loading="lazy"><figcaption>Dedo recto · 3.5 kg, μ 0.3<span class="ana"><b>Análisis.</b> El caso que dimensiona es el pinch del dedo solo: τ<sub>MCP</sub> = 71.45·57.23 + 13·17.17 = 4.312 N·m y τ<sub>PIP</sub> = 21.45·57.23 + 9·17.17 = 1.382 N·m, con 59.7 N de reacción en cada articulación. La normal aporta más del 90 % de cada torque. En el power parte de la carga pasa a P, más cerca del MCP: el torque del MCP baja 27 % y el del PIP 50 %. Los dedos del par necesitan la mitad que el dedo solo.</span></figcaption></figure>
     <figure class="tile" style="margin-top:16px"><img src="assets/img/wm_pruebas_35kg_mu03.webp" alt="Pruebas en Working Model 2D con 3.5 kg y mu 0.3" loading="lazy"><figcaption>Working Model 2D · 3.5 kg, μ 0.3, η 0.6, 15°/15°<span class="ana"><b>Análisis.</b> El modelo se ejecutó con los deslizadores en 3.5 kg y μ 0.3 y se repitió el barrido de 180 configuraciones: la diferencia máxima con el cálculo fue 0.034 % y la media 0.006 %. En el pinch los medidores marcan 1.364 N·m en el motor central, 0.797 N·m en el N20 y 57.2 N de normal.</span></figcaption></figure>
   </div>
 </section>
