@@ -248,7 +248,7 @@ def inline(s, base=None, refs=None):
 
 # ---------------------------------------------------------------- bloques
 def bloques(s):
-    s = s[s.index("\\section{Introducción}"):s.index("\\end{document}")]
+    s = s[s.index("\\section{Introducción}"):s.index("\\appendix")]  # sin el anexo de datos faltantes
     B, i, par = [], 0, []
 
     def cierra():
@@ -508,13 +508,22 @@ def main(plantilla, salida, pdf):
         D.portada([
             ("EQUIPOS PARA INTERFACES ENTRE PROCESOS", "DISEÑO DE DETALLE – GRIPPER ROBÓTICO"),
             ("TALLER 1", "INFORME DE CÁLCULOS MECÁNICOS^lGRIPPER DE TRES DEDOS UR5e V2.4"),
-            ("ESTUDIANTE 1", "DAVID ZULUAGA HENAO"),
+            ("ESTUDIANTE 1", "LUCAS ARANGO"),
+            ("ESTUDIANTE 2", "SAMUEL MARTÍNEZ"),
+            ("ESTUDIANTE 3", "MAXIMILIANO SÁNCHEZ"),
+            ("ESTUDIANTE 4", "VALENTINA TORRES"),
+            ("ESTUDIANTE 5", "NICOLÁS ZAPATA^pDAVID ZULUAGA"),
             ("XX DE MES DE 202X", "7 DE OCTUBRE DE 2026"),
             ("202X", "2026"),
         ])
-        for k in range(2, 6):
-            f = D.d.Content.Find
-            f.Execute("ESTUDIANTE %d^p" % k, True, False, False, False, False, True, 0, False, "", 1)
+        # la portada tiene una línea más de estudiantes: quitar un renglón vacío antes de FECHA y de UNIVERSIDAD
+        for marca in ("FECHA:", "UNIVERSIDAD EAFIT"):
+            ps = D.d.Paragraphs
+            for k in range(2, 40):
+                if ps(k).Range.Text.strip().startswith(marca):
+                    if not ps(k - 1).Range.Text.strip():
+                        ps(k - 1).Range.Delete()
+                    break
         D.limpiar_cuerpo("EJERCICIO 1")
         nf = nt = 0
         for b in B:
