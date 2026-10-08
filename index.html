@@ -22,6 +22,7 @@
       <a href="#simulador">Simulador</a>
       <a href="#pruebas">Pruebas</a>
       <a href="#validacion">Validación</a>
+      <a href="#electronica">Electrónica</a>
     </div>
     <a class="nav-cta" href="assets/informe_gripper_v24.pdf">Informe PDF</a>
   </div>
@@ -346,6 +347,19 @@
       <figure class="tile"><img src="assets/img/09_torque_articular_vs_masa.webp" alt="Torques articulares contra masa" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa, como predice N = W/(nμ). La fricción pesa mucho más en el MCP (1.929 frente a 1.124 N·m a 4 kg entre μ = 0.3 y 0.7) que en el PIP (0.217 frente a 0.180 N·m), porque la normal actúa con un brazo mucho mayor respecto al MCP.</span></figcaption></figure>
       <figure class="tile"><img src="assets/img/10_distribucion_carga.webp" alt="Distribución de carga entre los dedos" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La disposición del plano V2.4 hace que el dedo A cargue el doble que B y C (39.2 frente a 19.6 N), igual que en el pinch. El power a 120° es el reparto más equilibrado (26.2 N por dedo); por eso las articulaciones del dedo A son las que deben dimensionarse para el peor caso.</span></figcaption></figure>
     </div>
+  </div>
+</section>
+
+<!-- ============ ELECTRÓNICA ============ -->
+<section class="sec light" id="electronica">
+  <div class="wrap">
+    <p class="eyebrow">Electrónica · Avance 3</p>
+    <h2>24 V del robot.<br>Cuatro voltajes, una tarjeta.</h2>
+    <p class="lead">Resumen del informe técnico electrónico: arquitectura, alimentación y protecciones, interfaz con el servo AX-18A, mando del motor N20 y lectura del encoder, y el ruteo de la tarjeta de interconexión.</p>
+    <figure class="wide"><img src="assets/img/electronica_1.webp" alt="Arquitectura electrónica y diagramas de bloques de alimentación y señales" width="2000" height="889" loading="lazy"></figure>
+    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_2.webp" alt="Entrada de 24 V, voltajes, protecciones y presupuesto de potencia" width="2000" height="889" loading="lazy"></figure>
+    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_3.webp" alt="Interfaz semidúplex con el servo, motor, encoder y pines del ESP32-C3" width="2000" height="889" loading="lazy"></figure>
+    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_4.webp" alt="Ruteo de la tarjeta, características y trabajo pendiente" width="2000" height="889" loading="lazy"></figure>
   </div>
 </section>
 
