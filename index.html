@@ -18,8 +18,9 @@
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
-    <div class="nav-links"><a href="index.html" class="on" aria-current="page">Inicio</a><a href="proyecto.html">Proyecto</a><a href="mecanica.html">Mecánica</a><a href="electronica.html">Electrónica y control</a><a href="robot.html">En el UR5e</a><a href="documentos.html">Documentos</a></div>
+    <div class="nav-links" id="nav-links"><a href="index.html" class="on" aria-current="page">Inicio</a><a href="proyecto.html">Proyecto</a><a href="mecanica.html">Mecánica</a><a href="electronica.html">Electrónica y control</a><a href="robot.html">En el UR5e</a><a href="documentos.html">Documentos</a></div>
     <a class="nav-cta" href="index.html#visor">Ver en 3D</a>
+    <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links"><span></span><span></span></button>
   </div>
 </nav>
 
@@ -28,7 +29,8 @@
   <div class="wrap">
     <div class="home-head">
       <div><p class="eyebrow"><b>●</b> Universidad EAFIT · 2026 · Grupo 1</p><h1>Gripper de 3 dedos para el <em>UR5e</em></h1></div>
-      <p class="lead">Explora el ensamble V31 exportado del CAD: gira, acerca, separa las piezas y toca cualquiera para saber qué es.</p>
+      <div><p class="lead">Explora el ensamble V31 exportado del CAD: gira, acerca, separa las piezas y toca cualquiera para saber qué es.</p>
+      <div class="hero-ctas"><a class="btn accent" href="#stage"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Explorar en 3D</a><a class="btn ghost" href="proyecto.html">Ver proyecto</a></div></div>
     </div>
     <div class="viewer-shell">
       <div class="stage" id="stage">
@@ -49,9 +51,10 @@
         </div>
         <div class="explode"><label for="exp">Explosión</label><input id="exp" type="range" min="0" max="1" step="0.01" value="0"></div>
         <div class="hint">arrastra · rueda · clic</div>
+        <button class="parts-btn" id="parts-btn" aria-controls="side">Piezas</button>
         <div class="loading" id="loading"><div><p id="load-txt">Cargando ensamble V31 · 10 MB</p><div class="bar"><i id="load-bar"></i></div></div></div>
       </div>
-      <aside class="side">
+      <aside class="side" id="side"><button class="sheet-close" aria-label="Cerrar lista de piezas">Cerrar</button>
         <div class="info" id="info">
           <p class="k">Selección</p>
           <h3>Gripper V31 completo</h3>
