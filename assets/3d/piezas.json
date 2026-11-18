@@ -1,0 +1,405 @@
+[
+ {
+  "parte": "01_Palma_V31",
+  "slug": "01_palma_v31",
+  "nombre": "Palma",
+  "cat": "pla",
+  "tris": 13690,
+  "kb": 479,
+  "dims": [
+   100.0,
+   76.1,
+   100.0
+  ]
+ },
+ {
+  "parte": "02_Acople_motor_engranaje_V31",
+  "slug": "02_acople_motor_engranaje_v31",
+  "nombre": "Acople motor–engranaje",
+  "cat": "gear",
+  "tris": 1240,
+  "kb": 46,
+  "dims": [
+   22.0,
+   10.5,
+   22.0
+  ]
+ },
+ {
+  "parte": "03_Pinon_21T_V31",
+  "slug": "03_pinon_21t_v31",
+  "nombre": "Piñón 21T (motriz)",
+  "cat": "gear",
+  "tris": 1352,
+  "kb": 47,
+  "dims": [
+   23.0,
+   10.0,
+   22.9
+  ]
+ },
+ {
+  "parte": "04_Pinon_28T_sinfin_V31",
+  "slug": "04_pinon_28t_sinfin_v31",
+  "nombre": "Piñón 28T con sinfín",
+  "cat": "gear",
+  "tris": 7030,
+  "kb": 311,
+  "dims": [
+   30.0,
+   30.0,
+   30.0
+  ]
+ },
+ {
+  "parte": "15_Tapa_Dynamixel_V31",
+  "slug": "15_tapa_dynamixel_v31",
+  "nombre": "Tapa Dynamixel",
+  "cat": "pla",
+  "tris": 4662,
+  "kb": 147,
+  "dims": [
+   100.0,
+   12.0,
+   100.0
+  ]
+ },
+ {
+  "parte": "16_Acople_UR5e_V31",
+  "slug": "16_acople_ur5e_v31",
+  "nombre": "Acople UR5e (ISO 9409)",
+  "cat": "acople",
+  "tris": 6126,
+  "kb": 171,
+  "dims": [
+   100.0,
+   69.7,
+   100.0
+  ]
+ },
+ {
+  "parte": "DIN976_Varilla_M3x74",
+  "slug": "din976_varilla_m3x74",
+  "nombre": "Varilla M3×74 (eje MCP)",
+  "cat": "steel",
+  "tris": 112,
+  "kb": 4,
+  "dims": [
+   74.0,
+   3.0,
+   3.0
+  ]
+ },
+ {
+  "parte": "08_Falange_Proximal_V31",
+  "slug": "08_falange_proximal_v31",
+  "nombre": "Falange proximal",
+  "cat": "pla2",
+  "tris": 7424,
+  "kb": 211,
+  "dims": [
+   20.0,
+   66.0,
+   24.3
+  ]
+ },
+ {
+  "parte": "09_Tapa_Motor_V31",
+  "slug": "09_tapa_motor_v31",
+  "nombre": "Tapa del motor",
+  "cat": "pla",
+  "tris": 502,
+  "kb": 21,
+  "dims": [
+   20.0,
+   31.0,
+   3.2
+  ]
+ },
+ {
+  "parte": "10_Falange_Distal_V31",
+  "slug": "10_falange_distal_v31",
+  "nombre": "Falange distal",
+  "cat": "pla2",
+  "tris": 2456,
+  "kb": 76,
+  "dims": [
+   23.0,
+   40.6,
+   18.6
+  ]
+ },
+ {
+  "parte": "11_Tornillo_sinfin_PIP_V31",
+  "slug": "11_tornillo_sinfin_pip_v31",
+  "nombre": "Sinfín PIP",
+  "cat": "gear",
+  "tris": 5576,
+  "kb": 249,
+  "dims": [
+   10.0,
+   15.4,
+   10.6
+  ]
+ },
+ {
+  "parte": "12_Corona_14T_PIP_V31",
+  "slug": "12_corona_14t_pip_v31",
+  "nombre": "Corona 14T PIP",
+  "cat": "gear",
+  "tris": 2552,
+  "kb": 78,
+  "dims": [
+   5.0,
+   16.1,
+   16.1
+  ]
+ },
+ {
+  "parte": "13_Huella_P_V31_TPU",
+  "slug": "13_huella_p_v31_tpu",
+  "nombre": "Yema proximal (TPU)",
+  "cat": "tpu",
+  "tris": 996,
+  "kb": 31,
+  "dims": [
+   20.0,
+   22.1,
+   6.0
+  ]
+ },
+ {
+  "parte": "14_Huella_D_V31_TPU",
+  "slug": "14_huella_d_v31_tpu",
+  "nombre": "Yema distal (TPU)",
+  "cat": "tpu",
+  "tris": 3530,
+  "kb": 119,
+  "dims": [
+   25.5,
+   26.2,
+   8.2
+  ]
+ },
+ {
+  "parte": "Iman_N52_D6x3",
+  "slug": "iman_n52_d6x3",
+  "nombre": "Imán N52 Ø6×3",
+  "cat": "magnet",
+  "tris": 208,
+  "kb": 10,
+  "dims": [
+   6.0,
+   6.1,
+   3.3
+  ]
+ },
+ {
+  "parte": "Pololu 1595",
+  "slug": "pololu_1595",
+  "nombre": "Motor Pololu 1595",
+  "cat": "motor",
+  "tris": 34344,
+  "kb": 1198,
+  "dims": [
+   12.0,
+   39.3,
+   11.2
+  ]
+ },
+ {
+  "parte": "ISO10642_M3x12",
+  "slug": "iso10642_m3x12",
+  "nombre": "ISO10642_M3x12",
+  "cat": "steel",
+  "tris": 394,
+  "kb": 16,
+  "dims": [
+   6.7,
+   12.0,
+   6.7
+  ]
+ },
+ {
+  "parte": "ISO10642_M3x38_cortado",
+  "slug": "iso10642_m3x38_cortado",
+  "nombre": "ISO10642_M3x38_cortado",
+  "cat": "steel",
+  "tris": 328,
+  "kb": 14,
+  "dims": [
+   6.7,
+   38.0,
+   6.7
+  ]
+ },
+ {
+  "parte": "ISO4032_M3",
+  "slug": "iso4032_m3",
+  "nombre": "ISO4032_M3",
+  "cat": "steel",
+  "tris": 176,
+  "kb": 7,
+  "dims": [
+   2.4,
+   5.5,
+   6.4
+  ]
+ },
+ {
+  "parte": "ISO4762_M6x10",
+  "slug": "iso4762_m6x10",
+  "nombre": "ISO4762_M6x10",
+  "cat": "steel",
+  "tris": 328,
+  "kb": 11,
+  "dims": [
+   10.0,
+   16.0,
+   10.0
+  ]
+ },
+ {
+  "parte": "ISO7089_M3",
+  "slug": "iso7089_m3",
+  "nombre": "ISO7089_M3",
+  "cat": "steel",
+  "tris": 360,
+  "kb": 16,
+  "dims": [
+   0.5,
+   7.0,
+   7.0
+  ]
+ },
+ {
+  "parte": "ISO7380_M3x6",
+  "slug": "iso7380_m3x6",
+  "nombre": "ISO7380_M3x6",
+  "cat": "steel",
+  "tris": 324,
+  "kb": 12,
+  "dims": [
+   7.7,
+   5.7,
+   5.7
+  ]
+ },
+ {
+  "parte": "Inserto_M3x4",
+  "slug": "inserto_m3x4",
+  "nombre": "Inserto_M3x4",
+  "cat": "steel",
+  "tris": 360,
+  "kb": 12,
+  "dims": [
+   4.0,
+   4.6,
+   4.6
+  ]
+ },
+ {
+  "parte": "Inserto_M3x5.7",
+  "slug": "inserto_m3x5_7",
+  "nombre": "Inserto_M3x5.7",
+  "cat": "steel",
+  "tris": 344,
+  "kb": 11,
+  "dims": [
+   4.6,
+   5.7,
+   4.6
+  ]
+ },
+ {
+  "parte": "LM3UU",
+  "slug": "lm3uu",
+  "nombre": "Buje LM3UU",
+  "cat": "steel",
+  "tris": 1048,
+  "kb": 34,
+  "dims": [
+   10.0,
+   7.0,
+   7.0
+  ]
+ },
+ {
+  "parte": "PCB1_POWER_envolvente",
+  "slug": "pcb1_power_envolvente",
+  "nombre": "PCB1 · Potencia",
+  "cat": "pcb",
+  "tris": 1178,
+  "kb": 40,
+  "dims": [
+   60.0,
+   27.6,
+   60.0
+  ]
+ },
+ {
+  "parte": "PCB2_CTRL_envolvente",
+  "slug": "pcb2_ctrl_envolvente",
+  "nombre": "PCB2 · Control",
+  "cat": "pcb",
+  "tris": 594,
+  "kb": 22,
+  "dims": [
+   60.0,
+   15.6,
+   62.7
+  ]
+ },
+ {
+  "parte": "hex nut style 1 gradeab_din",
+  "slug": "hex_nut_style_1_gradeab_din",
+  "nombre": "hex nut style 1 gradeab_din",
+  "cat": "steel",
+  "tris": 1036,
+  "kb": 35,
+  "dims": [
+   2.4,
+   6.4,
+   5.5
+  ]
+ },
+ {
+  "parte": "mf_63_zz",
+  "slug": "mf_63_zz",
+  "nombre": "Rodamiento MF63ZZ",
+  "cat": "steel",
+  "tris": 2102,
+  "kb": 75,
+  "dims": [
+   7.2,
+   2.5,
+   7.2
+  ]
+ },
+ {
+  "parte": "socket countersunk head screw_am",
+  "slug": "socket_countersunk_head_screw_am",
+  "nombre": "socket countersunk head screw_am",
+  "cat": "steel",
+  "tris": 852,
+  "kb": 20,
+  "dims": [
+   35.0,
+   5.3,
+   5.3
+  ]
+ },
+ {
+  "parte": "socket head cap screw_am",
+  "slug": "socket_head_cap_screw_am",
+  "nombre": "socket head cap screw_am",
+  "cat": "steel",
+  "tris": 1260,
+  "kb": 29,
+  "dims": [
+   3.8,
+   6.0,
+   3.8
+  ]
+ }
+]

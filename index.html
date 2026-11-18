@@ -3,385 +3,332 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gripper V2.4</title>
-<meta name="description" content="Gripper robótico de tres dedos para UR5e: estática, cinemática, dinámica y validación en Working Model 2D.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231d1d1f'/%3E%3Cpath d='M10 9v9l3 5M22 9v9l-3 5M16 7v10' stroke='%23f5f5f7' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<title>Gripper de 3 dedos para el UR5e · EAFIT</title>
+<meta name="description" content="Gripper de tres dedos para el robot colaborativo UR5e: diseño mecánico V31, electrónica en dos PCB, control con ESP32-S3 y visor 3D interactivo del ensamble.">
+<meta property="og:title" content="Gripper de 3 dedos para el UR5e">
+<meta property="og:description" content="Tres dedos, sensores de fuerza y control propio, alimentado solo con los 24 V del puerto de herramienta del UR5e.">
+<meta property="og:image" content="assets/img/hero_v31.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
-<body>
+<body id="top">
 
-<nav class="nav" aria-label="Secciones">
-  <div class="nav-in">
-    <a class="brand" href="#top">Gripper V2.4</a>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
     <div class="nav-links">
-      <a href="#arquitectura">Arquitectura</a>
-      <a href="#estatica">Estática</a><a href="#estatica-caso2">Caso 3.5 kg</a>
-      <a href="#cinematica">Cinemática</a>
-      <a href="#dinamica">Dinámica</a>
-      <a href="#consumo">Consumo</a>
-      <a href="#simulador">Simulador</a>
-      <a href="#pruebas">Pruebas</a>
-      <a href="#validacion">Validación</a>
-      <a href="#electronica">Electrónica</a>
+      <a href="#reto">Reto</a><a href="#visor">Visor 3D</a><a href="#arquitectura">Arquitectura</a><a href="#mecanica">Mecánica</a>
+      <a href="#manufactura">Manufactura</a><a href="#electronica">Electrónica</a><a href="#software">Software</a><a href="#ur5e">UR5e</a><a href="#analisis">Análisis</a>
     </div>
-    <a class="nav-cta" href="assets/informe_gripper_v24.pdf">Informe PDF</a>
+    <a class="nav-cta" href="#visor">Ver en 3D</a>
   </div>
 </nav>
 
 <!-- ============ HERO ============ -->
-<header class="hero" id="top">
-  <div class="hero-copy">
-    <p class="eyebrow">Gripper robótico para UR5e</p>
-    <h1>Tres dedos.<br>Cuatro motores.<br><span class="grad">Cada fuerza calculada.</span></h1>
-    <p class="hero-sub">Diseño de detalle del gripper V2.4: estática en tres vistas, cinemática y dinámica completas, y validación contra Working Model 2D en 180 configuraciones.</p>
-    <div class="hero-ctas">
-      <a class="btn" href="#simulador">Probar el simulador</a>
-      <a class="link" href="assets/informe_gripper_v24.pdf">Leer el informe ›</a>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><b>●</b> Universidad EAFIT · 2026 · Grupo 1</p>
+        <h1>Gripper de 3 dedos para el <em>UR5e</em></h1>
+        <p class="lead">Mueve tres dedos, mide la fuerza de agarre y se comunica con el robot usando solo los 24 V del puerto de herramienta del UR5e.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#visor"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>Explorar el ensamble</a>
+          <a class="btn ghost" href="#arquitectura">Cómo funciona</a>
+        </div>
+      </div>
+      <figure class="hero-fig reveal">
+        <img src="assets/img/hero_v31.webp" alt="Gripper de tres dedos V31 montado en la brida del UR5e" width="1600" height="1360">
+        <span class="tag" id="hero-tag">Render · ensamble V31</span>
+      </figure>
     </div>
-  </div>
-  <div class="hero-media">
-    <img src="assets/img/gripper_hero_cad.webp" alt="Render del gripper de tres dedos V2.4 sujetando un cilindro" width="1672" height="941">
-    <p class="media-note">Render generado con IA a partir del ensamble CAD del gripper V2.4.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">24<small>V</small></div><div class="l">Única alimentación, desde el puerto de herramienta del UR5e</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">Dedos con sensor de fuerza FSR en la yema</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">PCB a una sola cara: potencia y control</div></div>
+      <div class="stat"><div class="n">126</div><div class="l">Componentes en el ensamble CAD V31</div></div>
+    </div>
   </div>
 </header>
 
-<!-- ============ CIFRAS ============ -->
-<section class="band" aria-label="Cifras clave">
-  <div class="stats">
-    <div class="stat"><span class="num">0.034<small>%</small></span><span class="lbl">error máximo frente a Working Model</span></div>
-    <div class="stat"><span class="num">12<small>:1</small></span><span class="lbl">del servo central a cada MCP</span></div>
-    <div class="stat"><span class="num">5.83<small>N·m</small></span><span class="lbl">torque máximo en el MCP</span></div>
-    <div class="stat"><span class="num">9.8<small>mJ</small></span><span class="lbl">energía de un cierre por dedo</span></div>
+<!-- ============ RETO ============ -->
+<section class="sec" id="reto">
+  <div class="wrap">
+    <div class="reto">
+      <div>
+        <p class="eyebrow"><b>01</b> El reto</p>
+        <p class="quote" style="margin-top:18px">Diseñar un gripper que mueva tres dedos, <span>mida la fuerza de agarre</span> y se comunique con el robot <span>usando solo los 24 V del puerto de herramienta.</span></p>
+      </div>
+      <div>
+        <p class="eyebrow"><b>02</b> Objetivo</p>
+        <p style="margin-top:18px;font-size:18px;color:var(--ink-2)">Integrar potencia, control y comunicaciones en tarjetas compactas, seguras y fabricables a una sola cara, sobre una mecánica impresa en 3D que sostiene la pieza sin consumir energía.</p>
+      </div>
+    </div>
+    <div class="alcance">
+      <div class="alc"><span class="k">I</span><h4>Motores DC</h4><p>3 motores DC con drivers TC1508A, uno por articulación PIP.</p></div>
+      <div class="alc"><span class="k">II</span><h4>Servo Dynamixel</h4><p>1 servo AX-18A con retroalimentación de posición y carga.</p></div>
+      <div class="alc"><span class="k">III</span><h4>Sensado</h4><p>3 sensores de fuerza FSR y finales de carrera.</p></div>
+      <div class="alc"><span class="k">IV</span><h4>Comunicación</h4><p>Enlace RS-485 con el controlador del UR5e.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISOR 3D ============ -->
+<section class="sec viewer-sec" id="visor">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>03</b> Visor 3D</p><h2>El ensamble V31, pieza por pieza.</h2></div>
+      <p class="lead">Modelo exportado directamente del CAD de SolidWorks. Gira con el mouse, acerca con la rueda, separa las piezas con la vista explosionada y toca cualquier pieza para ver qué es.</p>
+    </div>
+    <div class="viewer-shell">
+      <div class="stage" id="stage">
+        <div class="grid-paper"></div>
+        <div class="toolbar">
+          <div class="seg" id="seg-modo" role="group" aria-label="Modo">
+            <button aria-pressed="true" data-modo="asm">Ensamble</button><button aria-pressed="false" data-modo="pieza" id="btn-pieza" disabled>Pieza sola</button>
+          </div>
+          <div class="seg" role="group" aria-label="Vista">
+            <button aria-pressed="false" data-vista="iso">Iso</button><button aria-pressed="false" data-vista="frente">Frente</button><button aria-pressed="false" data-vista="lado">Lado</button><button aria-pressed="false" data-vista="arriba">Arriba</button>
+          </div>
+          <div class="seg" role="group" aria-label="Mostrar">
+            <button aria-pressed="true" id="btn-hw">Tornillería</button><button aria-pressed="true" id="btn-rot">Girar</button>
+          </div>
+          <div class="seg" role="group" aria-label="Dedo" id="seg-dedo">
+            <button aria-pressed="true" data-dedo="0">Todo</button><button aria-pressed="false" data-dedo="1">Dedo 1</button><button aria-pressed="false" data-dedo="2">Dedo 2</button><button aria-pressed="false" data-dedo="3">Dedo 3</button>
+          </div>
+        </div>
+        <div class="explode"><label for="exp">Explosión</label><input id="exp" type="range" min="0" max="1" step="0.01" value="0"></div>
+        <div class="hint">arrastra · rueda · clic</div>
+        <div class="loading" id="loading"><div><p id="load-txt">Cargando ensamble V31 · 10 MB</p><div class="bar"><i id="load-bar"></i></div></div></div>
+      </div>
+      <aside class="side">
+        <div class="info" id="info">
+          <p class="k">Selección</p>
+          <h3>Gripper V31 completo</h3>
+          <p style="color:var(--ink-2);font-size:14px;margin-top:8px">Toca una pieza en el modelo o en la lista para resaltarla.</p>
+        </div>
+        <div class="plist" id="plist"></div>
+      </aside>
+    </div>
   </div>
 </section>
 
 <!-- ============ ARQUITECTURA ============ -->
-<section class="sec light" id="arquitectura">
+<section class="sec" id="arquitectura">
   <div class="wrap">
-    <p class="eyebrow">Arquitectura</p>
-    <h2>Un servo cierra la mano.<br>Tres motores afinan los dedos.</h2>
-    <p class="lead">El servo central mueve un sinfín de módulo 1 que, a través de un par z20, acciona las tres ruedas z30 y los piñones z12 de las articulaciones MCP. Cada dedo lleva además un motor N20 en la falange proximal que mueve su PIP con un sinfín de cuatro entradas.</p>
-    <div class="arch-media" id="arch-media">
-      <img src="assets/img/plano_v24.webp" alt="Plano de medidas GV24-MED-01 del dedo y de la palma" loading="lazy">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>04</b> Arquitectura del sistema</p><h2>Dos tarjetas, cuatro actuadores, un solo cable al robot.</h2></div>
+      <p class="lead">Los 24 V del UR5e entran a la tarjeta de potencia, que los reparte en tres ramas protegidas. La tarjeta de control lee los sensores, mueve los actuadores y habla con el robot por RS-485.</p>
     </div>
-    <div class="cards4">
-      <article class="card">
-        <h3>Sinfín m1 → z30</h3><p class="big">30 : 1</p>
-        <p>Del servo central a cada rueda. Se autobloquea (λ = 3.6°), así que los MCP se sostienen sin consumo.</p>
-      </article>
-      <article class="card">
-        <h3>z20 → z20</h3><p class="big">1 : 1</p>
-        <p>Reparte el giro del servo a los sinfines de los dedos B y C e invierte el sentido.</p>
-      </article>
-      <article class="card">
-        <h3>z30 → z12</h3><p class="big">1 : 2.5</p>
-        <p>Rueda a piñón del MCP. Junto con el sinfín da 12 : 1 idéntico en las tres ramas.</p>
-      </article>
-      <article class="card">
-        <h3>Sinfín m0.5 → z16</h3><p class="big">4 : 1</p>
-        <p>Motor N20 a la articulación PIP. Con cuatro entradas no se autobloquea y retrocede bajo carga.</p>
-      </article>
+    <div class="cols-4">
+      <article class="card block reveal"><span class="k">PCB1 · POTENCIA</span><h3>Tres ramas desde 24 V</h3><p>Fusibles dedicados y tres ramas: 12 V para el servo, 6 V para los motores y 5 V para la lógica.</p></article>
+      <article class="card block reveal"><span class="k">PCB2 · CONTROL</span><h3>ESP32-S3 en zócalos</h3><p>Maneja los drivers, lee los sensores con filtros RC y se comunica con el robot.</p></article>
+      <article class="card block reveal"><span class="k">ACTUADORES</span><h3>Servo + 3 motores DC</h3><p>Servo Dynamixel AX-18A a 12 V y 3 motores DC a 6 V, controlados con drivers TC1508A.</p></article>
+      <article class="card block reveal"><span class="k">SENSADO Y ENLACE</span><h3>Fuerza y comunicación</h3><p>3 FSR y finales de carrera. RS-485 con el UR5e y bus del servo a 1 Mbps.</p></article>
     </div>
-    <div class="modes">
-      <div><span class="mode-n">1</span><h4>Central</h4><p>Solo el servo. θMCP,A = θMCP,B = θMCP,C exactamente.</p></div>
-      <div><span class="mode-n">2</span><h4>Independiente</h4><p>Servo bloqueado por el sinfín. Cada N20 mueve solo su PIP.</p></div>
-      <div><span class="mode-n">3</span><h4>Híbrido</h4><p>El servo fija la apertura y cada N20 corrige la carga de su dedo.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ESTÁTICA ============ -->
-<section class="sec" id="estatica">
-  <div class="wrap">
-    <p class="eyebrow">3.1 · Cálculos estáticos</p>
-    <h2>Tres vistas. Todas en equilibrio.</h2>
-    <p class="lead">Fuerzas, torques y reacciones con las coordenadas reales de los puntos de contacto P, D y T. Las tres vistas corresponden al caso de diseño: objeto de 3.5 kg y μ 0.3; el barrido recorre 20 posturas, tres contactos, cuatro masas, tres coeficientes de fricción y cuatro eficiencias.</p>
-    <div class="views">
-      <figure class="tile"><img src="assets/img/D6_vista_lateral_DCL_35kg.webp" alt="Diagrama de cuerpo libre en vista lateral" loading="lazy"><figcaption><b>Lateral.</b> Plano de flexión del dedo: τMCP = 4.014 N·m y τPIP = 1.155 N·m en un pinch de 3.5 kg en la punta con μ 0.3.<span class="ana"><b>Análisis.</b> Con 3.5 kg y μ 0.3 la normal en la punta es N = W/(2μ) = 57.2 N y la fricción F<sub>t</sub> = W/2 = 17.2 N. El torque en el MCP (4.014 N·m) es unas 3.5 veces el del PIP (1.155 N·m) porque la normal actúa con un brazo mucho mayor respecto al MCP; la reacción en el MCP es 59.9 N. El peso propio del dedo aporta menos del 0.5 % del torque.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/D5_vista_superior_35kg.webp" alt="Fuerzas en la vista superior" loading="lazy"><figcaption><b>Superior.</b> A se opone a B y C (separados 34 mm y a 74.46 mm de A): N_A = N_B + N_C, así que A carga el doble.<span class="ana"><b>Análisis.</b> En el plano, ΣFx = 0 da N_A = N_B + N_C y ΣMz = 0 respecto a A da N_B·17 = N_C·17, es decir N_B = N_C. Fuera del plano, la fricción sostiene el peso: ΣFz = 0 → μ(N_A + N_B + N_C) = W = 34.3 N, y con el centro del objeto a mitad de los 74.46 mm el peso se reparte 50 / 25 / 25 % (f_A = 17.17 N, f_B = f_C = 8.58 N). La fuerza de agarre mínima es N_A = W/(2μ) = 57.2 N y N_B = N_C = 28.6 N (114.5 N en total; con FS 1.5, 85.9 y 42.9 N). Los momentos de B y C respecto al eje del objeto (±0.486 N·m) se anulan; en la idealización a 120° cada dedo recibe 38.2 N.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/D7_vista_frontal_DCL_35kg.webp" alt="Diagrama de cuerpo libre en vista frontal" loading="lazy"><figcaption><b>Frontal.</b> La brida del UR5e recibe 35.6 N y 0.18 N·m con un objeto de 3.5 kg.<span class="ana"><b>Análisis.</b> La brida soporta 35.6 N verticales: los 34.3 N del objeto más el peso de los dedos. El momento de 0.18 N·m aparece porque el eje del objeto queda 5.27 mm desplazado del eje del gripper (a mitad de los 74.46 mm entre A y B/C); es pequeño, pero crece con la masa, así que conviene centrar la pieza.</span></figcaption></figure>
-    </div>
-
-    <div class="split">
-      <div>
-        <h3 class="h3">Fuerza normal mínima por dedo</h3>
-        <div class="tbl"><table>
-          <thead><tr><th>Masa</th><th>Pinch μ 0.3</th><th>Pinch μ 0.5</th><th>Pinch μ 0.7</th><th>Power μ 0.5</th></tr></thead>
-          <tbody>
-            <tr><td>1 kg</td><td>16.35 N</td><td>9.81 N</td><td>7.01 N</td><td>6.54 N</td></tr>
-            <tr><td>2 kg</td><td>32.70 N</td><td>19.62 N</td><td>14.01 N</td><td>13.08 N</td></tr>
-            <tr><td>3 kg</td><td>49.05 N</td><td>29.43 N</td><td>21.02 N</td><td>19.62 N</td></tr>
-            <tr><td>4 kg</td><td>65.40 N</td><td>39.24 N</td><td>28.03 N</td><td>26.16 N</td></tr>
-          </tbody></table></div>
-      </div>
-      <div>
-        <h3 class="h3">Caso crítico</h3>
-        <div class="tbl"><table>
-          <thead><tr><th>Magnitud</th><th>Máximo</th></tr></thead>
-          <tbody>
-            <tr><td>Torque MCP</td><td>5.832 N·m</td></tr>
-            <tr><td>Torque PIP</td><td>2.466 N·m</td></tr>
-            <tr><td>Fuerza de contacto</td><td>68.3 N</td></tr>
-            <tr><td>Reacción en el MCP</td><td>68.4 N</td></tr>
-            <tr><td>Reacción en el PIP</td><td>68.3 N</td></tr>
-          </tbody></table></div>
-        <p class="fine">Pinch en la punta, 4 kg, μ 0.3, dedos casi rectos. Solo con las medidas del dedo, sin considerar la transmisión de engranajes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ESTÁTICA · CASO 2 ============ -->
-<section class="sec light" id="estatica-caso2">
-  <div class="wrap">
-    <p class="eyebrow">3.1 · Caso de diseño 2</p>
-    <h2>3.5 kg y μ 0.3.<br>Menos masa, más carga.</h2>
-    <p class="lead">El mismo análisis con el caso de diseño actualizado, siguiendo la metodología del curso: cuerpo rígido, diagrama de cuerpo libre con el tipo de apoyo de cada unión, equilibrio por subensambles, escenarios críticos, cargas internas por el método de las secciones y factor de seguridad. La normal N = W/(nμ) sube 46 % frente a 4 kg con μ 0.5; la fricción F<sub>t</sub> = W/n baja con la masa, así que los torques en las articulaciones suben entre 23 y 33 %. No se considera la transmisión de engranajes: solo las medidas del dedo.</p>
-    <div class="tbl"><table>
-      <thead><tr><th>Caso (15°/15°)</th><th>N por dedo</th><th>τMCP / τPIP dedo A</th><th>τMCP / τPIP dedo B</th><th>τMCP / τPIP dedo C</th></tr></thead>
-      <tbody>
-        <tr><td>Pinch (T)</td><td>57.2 / 57.2 / 0 N</td><td>4.909 / 1.912 N·m</td><td>4.909 / 1.912 N·m</td><td>0 / 0 N·m</td></tr>
-        <tr><td>Power 120° (D)</td><td>38.2 N c/u</td><td>2.749 / 0.750 N·m</td><td>2.749 / 0.750 N·m</td><td>2.749 / 0.750 N·m</td></tr>
-        <tr><td>Power plano (D)</td><td>57.2 / 28.6 / 28.6 N</td><td>4.121 / 1.124 N·m</td><td>2.063 / 0.563 N·m</td><td>2.063 / 0.563 N·m</td></tr>
-        <tr><td>Desigual 40/35/25 (T)</td><td>45.8 / 40.1 / 28.6 N</td><td>3.928 / 1.530 N·m</td><td>3.438 / 1.339 N·m</td><td>2.457 / 0.957 N·m</td></tr>
-      </tbody></table></div>
-    <p class="fine">Peor postura (pinch en T, dedo recto): τMCP 5.104 N·m, τPIP 2.157 N·m y 59.9 N de reacción en el MCP (frente a 3.772 N·m, 1.584 N·m y 44.1 N con 4 kg y μ 0.5). Brida del UR5e: Fz = 35.6 N, My = 0.18 N·m.</p>
-    <div class="gallery" style="margin-top:18px">
-      <figure class="tile"><img src="assets/img/J3_torques_pruebas.webp" alt="Torques articulares en las cuatro pruebas con 3.5 kg y mu 0.3" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El pinch es el caso más exigente: 4.909 N·m en el MCP y 1.912 N·m en el PIP de los dedos A y B. El power a 120° reparte la carga por igual (2.749 / 0.750 N·m por dedo) y en el power plano el dedo A carga el doble que B y C.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/J1_torques_por_dedo.webp" alt="Torques MCP y PIP de cada dedo contra el ángulo MCP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques siguen el reparto de la carga y bajan al cerrar el dedo. Frente a 4 kg con μ 0.5 suben entre 23 y 33 % en 15°/15° (MCP del pinch: 3.698 → 4.909 N·m): menos que el 46 % de la normal, porque la fricción tangencial baja con la masa.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/E3_cargas_internas.webp" alt="Cargas internas N, V y M en las falanges" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Cada falange trabaja como viga empotrada en su articulación. El momento flector llega a 4.91 N·m en la raíz de la proximal y 1.91 N·m en la de la distal, iguales a τMCP y τPIP; la cortante es casi constante (59.8 y 53.0 N). La raíz de la falange proximal es la sección crítica.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/J2_torque_vs_masa.webp" alt="Torques del dedo A contra la masa del objeto" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa. Con 3.5 kg el MCP del dedo A necesita 4.91 N·m con μ 0.3 y 3.23 N·m con μ 0.5: aumentar la fricción de las yemas es la forma más directa de reducir todos los torques.</span></figcaption></figure>
-    </div>
-    <h3 class="h3 mt">Estática del dedo por tipo de agarre</h3>
-    <p class="lead">Un solo dedo recto en vista lateral, sin considerar la transmisión: solo las medidas r2 = MCP→P (31, −13), r3 = MCP→PIP (50, −4) y r9 = PIP→D (21.45, −9) mm. El dedo solo carga N = 57.2 N y f = 17.2 N; cada dedo del par, la mitad. En el pinch toda la carga va en D; en el power se reparte 50/50 entre P y D. Con M = y·F<sub>z</sub> − z·F<sub>y</sub>: τ<sub>PIP</sub> = M<sub>D</sub> y τ<sub>MCP</sub> = M<sub>P</sub> + M<sub>D</sub>.</p>
-    <div class="tbl"><table>
-      <thead><tr><th>Caso</th><th>Carga en P (N / f)</th><th>Carga en D (N / f)</th><th>τPIP</th><th>τMCP</th><th>R PIP</th><th>R MCP</th></tr></thead>
-      <tbody>
-        <tr><td>Pinch, dedo solo</td><td>—</td><td>57.2 / 17.2 N</td><td><b>1.382 N·m</b></td><td><b>4.312 N·m</b></td><td>59.7 N</td><td>59.7 N</td></tr>
-        <tr><td>Pinch, par</td><td>—</td><td>28.6 / 8.6 N</td><td>0.691 N·m</td><td>2.156 N·m</td><td>29.9 N</td><td>29.9 N</td></tr>
-        <tr><td>Power, dedo solo</td><td>28.6 / 8.6 N</td><td>28.6 / 8.6 N</td><td>0.691 N·m</td><td>3.155 N·m</td><td>29.9 N</td><td>59.7 N</td></tr>
-        <tr><td>Power, par</td><td>14.3 / 4.3 N</td><td>14.3 / 4.3 N</td><td>0.345 N·m</td><td>1.577 N·m</td><td>14.9 N</td><td>29.9 N</td></tr>
-      </tbody></table></div>
-    <figure class="tile" style="margin-top:16px"><img src="assets/img/E5_dedo_agarres.webp" alt="Diagrama de cuerpo libre del dedo en los cuatro casos de agarre" loading="lazy"><figcaption>Dedo recto · 3.5 kg, μ 0.3<span class="ana"><b>Análisis.</b> El caso que dimensiona es el pinch del dedo solo: τ<sub>MCP</sub> = 71.45·57.23 + 13·17.17 = 4.312 N·m y τ<sub>PIP</sub> = 21.45·57.23 + 9·17.17 = 1.382 N·m, con 59.7 N de reacción en cada articulación. La normal aporta más del 90 % de cada torque. En el power parte de la carga pasa a P, más cerca del MCP: el torque del MCP baja 27 % y el del PIP 50 %. Los dedos del par necesitan la mitad que el dedo solo.</span></figcaption></figure>
-    <figure class="tile" style="margin-top:16px"><img src="assets/img/wm_pruebas_35kg_mu03.webp" alt="Pruebas en Working Model 2D con 3.5 kg y mu 0.3" loading="lazy"><figcaption>Working Model 2D · 3.5 kg, μ 0.3, 15°/15°<span class="ana"><b>Análisis.</b> El modelo se ejecutó con los deslizadores en 3.5 kg y μ 0.3 y se repitió el barrido de 180 configuraciones: la diferencia máxima con el cálculo fue 0.034 % y la media 0.006 %. En el pinch los medidores marcan 4.909 N·m en el MCP, 1.912 N·m en el PIP y 57.2 N de normal; en el power plano el dedo A recibe 57.2 N y B y C 28.6 N cada uno.</span></figcaption></figure>
-  </div>
-</section>
-
-<!-- ============ CINEMÁTICA ============ -->
-<section class="sec dark" id="cinematica">
-  <div class="wrap">
-    <p class="eyebrow">3.3 · Cálculos cinemáticos</p>
-    <h2>Del primer milímetro<br>al cierre completo.</h2>
-    <p class="lead">Cierre cicloidal de 0° a 60° en el MCP y de 0° a 45° en el PIP en un segundo, con velocidad y aceleración nulas en los extremos. Velocidades con el Jacobiano del dedo; aceleraciones con su derivada.</p>
-    <div class="stats stats-dark">
-      <div class="stat"><span class="num">0.23<small>m/s</small></span><span class="lbl">velocidad máxima de la punta</span></div>
-      <div class="stat"><span class="num">0.76<small>m/s²</small></span><span class="lbl">aceleración máxima de la punta</span></div>
-      <div class="stat"><span class="num">240<small>rpm</small></span><span class="lbl">eje del sinfín central</span></div>
-      <div class="stat"><span class="num">60<small>rpm</small></span><span class="lbl">sinfín de cada N20</span></div>
-    </div>
-    <figure class="wide"><img src="assets/img/D9_diagrama_cinematico_chatgpt.webp" alt="Diagrama cinemático del dedo con ángulos, velocidades y aceleraciones" width="1672" height="940" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> En t = 0.4 s el dedo ha cerrado 18.4° en el MCP y 13.8° en el PIP, y las dos articulaciones giran en el sentido de cierre (1.894 y 1.421 rad/s) mientras todavía aceleran (3.867 y 2.901 rad/s²). La velocidad crece con la distancia a las articulaciones: 0.064 m/s en P, 0.166 m/s en D y 0.210 m/s en la punta. La aceleración de la punta (0.692 m/s²) apunta hacia la palma porque suma las componentes tangenciales (αr) y centrípetas (ω²r) de los dos giros.</span></figcaption></figure>
-    <figure class="wide"><img src="assets/img/D1_cinematica_angular.webp" alt="Posición, velocidad y aceleración angular" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El perfil cicloidal arranca y termina con velocidad y aceleración nulas, lo que evita impactos en los engranes. La velocidad máxima ocurre a mitad del cierre (2.094 rad/s en el MCP y 1.571 rad/s en el PIP) y las aceleraciones máximas a un cuarto y a tres cuartos del recorrido (6.58 y 4.94 rad/s²). La falange distal suma ambos giros y alcanza 3.67 rad/s.</span></figcaption></figure>
-    <div class="two">
-      <figure class="tile"><img src="assets/img/D2_cinematica_lineal.webp" alt="Velocidad y aceleración lineal de P, D y T" loading="lazy"><figcaption>Velocidad y aceleración lineal de los puntos de contacto.<span class="ana"><b>Análisis.</b> La punta T es el punto más rápido (0.229 m/s y 0.760 m/s²) porque es el más alejado de las articulaciones; D llega a 0.179 m/s y P a 0.070 m/s. Las curvas tienen la misma forma de campana que el perfil angular, así que las velocidades escalan con 1/t<sub>c</sub> y las aceleraciones con 1/t<sub>c</sub>².</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/D3_trayectorias.webp" alt="Trayectorias de los puntos durante el cierre" loading="lazy"><figcaption>Trayectorias de P, D y T y posturas intermedias.<span class="ana"><b>Análisis.</b> Las posturas intermedias muestran cómo se enrolla el dedo: la falange distal gira 105° en total frente a 60° de la proximal. Por eso la punta recorre 113.4 mm, más del triple que el contacto P (35.2 mm), y es la que primero toca objetos pequeños.</span></figcaption></figure>
-    </div>
-    <h3 class="h3">Desplazamientos del cierre</h3>
-    <div class="tbl tbl-dark"><table>
-      <thead><tr><th>Punto / elemento</th><th>Desplazamiento</th><th>Recorrido</th><th>Velocidad máx.</th><th>Aceleración máx.</th></tr></thead>
-      <tbody>
-        <tr><td>Contacto P</td><td>33.6 mm</td><td>35.2 mm</td><td>0.070 m/s</td><td>0.225 m/s²</td></tr>
-        <tr><td>Contacto D</td><td>81.8 mm</td><td>88.7 mm</td><td>0.179 m/s</td><td>0.595 m/s²</td></tr>
-        <tr><td>Punta T</td><td>103.3 mm</td><td>113.4 mm</td><td>0.229 m/s</td><td>0.760 m/s²</td></tr>
-        <tr><td>Falange proximal (MCP)</td><td>60°</td><td>—</td><td>2.094 rad/s</td><td>6.580 rad/s²</td></tr>
-        <tr><td>Falange distal (absoluta)</td><td>105°</td><td>—</td><td>3.665 rad/s</td><td>11.515 rad/s²</td></tr>
-        <tr><td>Eje del sinfín central</td><td>2 vueltas</td><td>—</td><td>25.13 rad/s</td><td>78.96 rad/s²</td></tr>
-        <tr><td>Sinfín del N20</td><td>0.5 vueltas</td><td>—</td><td>6.283 rad/s</td><td>19.74 rad/s²</td></tr>
-      </tbody></table></div>
-  </div>
-</section>
-
-<!-- ============ DINÁMICA ============ -->
-<section class="sec light" id="dinamica">
-  <div class="wrap">
-    <p class="eyebrow">3.4 · Cálculos dinámicos</p>
-    <h2>Mover el dedo cuesta poco.<br>Sostener el objeto, no.</h2>
-    <p class="lead">Ecuaciones de Lagrange con las masas e inercias del plano. La inercia del dedo pide menos de 1 mN·m; lo que dimensiona los motores es la carga del agarre y, sobre todo, la retención del PIP.</p>
-    <div class="cards3">
-      <article class="card"><p class="big">105 mW</p><p>Potencia máxima en el eje del servo al cerrar los tres dedos en vacío (η 0.6).</p></article>
-      <article class="card"><p class="big">9.8 mJ</p><p>Energía de un cierre por dedo. El balance ∫P dt = ΔEc + ΔEp cierra con error de 10⁻¹⁴ J.</p></article>
-      <article class="card"><p class="big">0.444 N·m</p><p>Par continuo que debe dar cada N20 para retener un pinch de 4 kg en la punta.</p></article>
-    </div>
-    <figure class="wide"><img src="assets/img/D10_DCL_dinamico_chatgpt.webp" alt="Diagrama de cuerpo libre dinámico de las dos falanges" width="1672" height="941" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Las fuerzas de inercia (4.41 y 5.71 mN) son entre 20 y 70 veces menores que los pesos de las falanges (309 y 121 mN), así que las reacciones R<sub>MCP</sub> = 439 mN y R<sub>PIP</sub> = 127 mN equivalen prácticamente al peso de lo que cuelga de cada articulación. Los torques motores (6.12 mN·m en el MCP y 1.13 mN·m en el PIP) equilibran sobre todo la gravedad, y la potencia instantánea es P = τω = 11.59 mW en el MCP y 1.61 mW en el PIP.</span></figcaption></figure>
-    <figure class="wide"><img src="assets/img/D4_dinamica_potencia.webp" alt="Torques inerciales y potencia durante el cierre" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques inerciales no pasan de 0.65 mN·m en el MCP y 0.12 mN·m en el PIP, mientras que el torque total con la gravedad del dedo llega a 14.3 y 1.9 mN·m. La potencia del servo tiene forma de campana con máximo de 105 mW cerca de t = 0.6 s, y la del N20 apenas llega a 4.4 mW: mover el dedo en vacío es barato frente a sostener una carga.</span></figcaption></figure>
-    <h3 class="h3">Energía por ciclo completo</h3>
-    <div class="tbl"><table>
-      <thead><tr><th>Fase</th><th>Motor</th><th>Energía</th><th>Potencia máx.</th><th>Nota</th></tr></thead>
-      <tbody>
-        <tr><td>Cierre</td><td>Servo (3 dedos)</td><td>43.6 mJ</td><td>105.3 mW</td><td>η 0.6</td></tr>
-        <tr><td>Cierre</td><td>N20 (por dedo)</td><td>1.79 mJ</td><td>4.43 mW</td><td>η 0.6</td></tr>
-        <tr><td>Retención</td><td>Servo</td><td>0</td><td>0</td><td>Sinfín autobloqueante</td></tr>
-        <tr><td>Retención</td><td>N20 (por dedo)</td><td>I²R·t</td><td>I²R</td><td>T = 0.444 N·m (pinch 4 kg); ver consumo eléctrico</td></tr>
-        <tr><td>Apertura</td><td>Servo (3 dedos)</td><td>15.6 mJ</td><td>37.7 mW</td><td>Vence el autobloqueo</td></tr>
-        <tr><td>Apertura</td><td>N20</td><td>0</td><td>0</td><td>Sinfín reversible</td></tr>
-        <tr><td><b>Ciclo</b></td><td><b>Servo / 3 N20</b></td><td><b>59.2 / 5.4 mJ</b></td><td></td><td>Energía mecánica en los ejes</td></tr>
-      </tbody></table></div>
-
-    <h3 class="h3 mt">Consumo eléctrico con motores típicos</h3>
-    <div class="key" id="consumo">
-      <p class="key-k">Resultado clave</p>
-      <div class="tbl"><table class="key-tbl">
-        <thead><tr><th>Caso</th><th>Energía por ciclo</th><th>Potencia media</th><th>N20 típico (298:1)</th></tr></thead>
-        <tbody>
-          <tr><td>Power 1 kg</td><td>6.4 J</td><td>0.77 W</td><td><span class="pill ok">✓ Continuo</span></td></tr>
-          <tr><td>Power 4 kg</td><td>34.4 J</td><td>4.14 W</td><td><span class="pill warn">△ Solo picos cortos</span></td></tr>
-          <tr><td>Pinch 1 kg</td><td>13.5 J</td><td>1.62 W</td><td><span class="pill ok">✓ Continuo</span></td></tr>
-          <tr><td>Pinch 4 kg</td><td>128 J</td><td>15.45 W</td><td><span class="pill bad">✕ No viable</span> necesita 0.444 N·m, por encima de su par de bloqueo de 0.39 N·m</td></tr>
-        </tbody></table></div>
-      <p class="fine">Ciclo de 8.3 s: cierre 1.5 s, apriete 0.3 s, retención 5 s y apertura 1.5 s, con motores típicos de catálogo.</p>
-    </div>
-    <p class="fine">El plano no define los motores. Se usan datos típicos de catálogo: servo digital de 20 kg·cm (clase DS3218, rotación continua, 6.8 V, 111 rpm, bloqueo 1.96 N·m / 2.5 A) y N20 6 V 298:1 (100 rpm, bloqueo 0.39 N·m / 1.6 A). Modelo DC lineal I = I₀ + T/K<sub>t</sub>, P = (IR + K<sub>e</sub>ω)·I. Ciclo: cierre 1.5 s, apriete 0.3 s, retención 5 s, apertura 1.5 s.</p>
-    <figure class="wide"><img src="assets/img/D8_consumo_electrico.webp" alt="Corriente y potencia eléctrica del servo y del N20 durante un ciclo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Durante el movimiento el servo consume unos 0.15 A y el N20 0.10 A, casi solo su corriente en vacío. En el apriete la corriente sube a 0.38 A en el servo y 0.33 A en el N20. En la retención el servo baja a 5 mA porque el sinfín se autobloquea, mientras que el N20 mantiene 0.33 A durante los 5 s: esa fase representa 2.04 J de los 2.44 J que gasta el N20 en el ciclo.</span></figcaption></figure>
-    <div class="tbl"><table>
-      <thead><tr><th>Caso</th><th>I servo (apriete)</th><th>T N20</th><th>I N20 (retención)</th><th>N20</th><th>E ciclo</th><th>Potencia media</th></tr></thead>
-      <tbody>
-        <tr><td>Power 1 kg</td><td>0.38 A</td><td>0.060 N·m</td><td>0.33 A</td><td>Continuo</td><td>6.4 J</td><td>0.77 W</td></tr>
-        <tr><td>Power 4 kg</td><td>1.07 A</td><td>0.237 N·m</td><td>1.01 A</td><td>Solo pico</td><td>34.4 J</td><td>4.14 W</td></tr>
-        <tr><td>Pinch 1 kg</td><td>0.42 A</td><td>0.112 N·m</td><td>0.53 A</td><td>Continuo</td><td>13.5 J</td><td>1.62 W</td></tr>
-        <tr><td>Pinch 4 kg</td><td>1.23 A</td><td>0.444 N·m</td><td>1.81 A</td><td><b>Excede</b></td><td>128.2 J</td><td>15.45 W</td></tr>
-      </tbody></table></div>
-    <p class="fine">El servo gasta menos de 1.9 J por ciclo porque el sinfín autobloqueante le permite apagarse al retener. Entre el 77 % y el 99 % de la energía la consumen los N20 sosteniendo el PIP; el pinch de 4 kg supera el par de bloqueo del N20 típico.</p>
-  </div>
-</section>
-
-<!-- ============ SIMULADOR ============ -->
-<section class="sec sim-sec" id="simulador">
-  <div class="wrap">
-    <p class="eyebrow">Simulador</p>
-    <h2>Working Model, en el navegador.</h2>
-    <p class="lead">Réplica de los dos modelos de Working Model 2D. Mueve los controles y lee los medidores; el cálculo es el mismo modelo analítico validado contra WM.</p>
-
-    <div class="wm" id="wm">
-      <div class="wm-title">
-        <span class="wm-icon" aria-hidden="true"></span>
-        <span id="wm-file">Working Model - [Gripper_V24_Estatica.wm2d]</span>
-        <span class="wm-win" aria-hidden="true"><i>–</i><i>□</i><i>×</i></span>
-      </div>
-      <div class="wm-menu" aria-hidden="true"><span>File</span><span>Edit</span><span>World</span><span>View</span><span>Object</span><span>Define</span><span>Measure</span><span>Script</span><span>Window</span><span>Help</span></div>
-      <div class="wm-tool">
-        <div class="wm-tabs" role="tablist">
-          <button role="tab" id="tab-est" aria-selected="true" class="on">Estático</button>
-          <button role="tab" id="tab-din" aria-selected="false">Agarre dinámico</button>
-        </div>
-        <button class="wm-btn run" id="btn-run">Run <span>▶</span></button>
-        <button class="wm-btn" id="btn-stop">Stop <span>❚❚</span></button>
-        <button class="wm-btn" id="btn-reset">Reset</button>
-      </div>
-      <div class="wm-body">
-        <div class="wm-inputs" id="wm-inputs"></div>
-        <div class="wm-canvas-wrap"><canvas id="wm-canvas" width="900" height="640" aria-label="Vista lateral del gripper en el simulador"></canvas></div>
-        <div class="wm-meters" id="wm-meters"></div>
-      </div>
-      <div class="wm-status"><span id="wm-status">Ready</span><span class="wm-frame" id="wm-frame">0</span></div>
-    </div>
-    <p class="fine">Vista lateral con el gripper hacia abajo (gravedad = +y′ del dedo). El dedo C coincide con B en esta proyección. En el agarre dinámico el cierre sigue la ley cicloidal y la sujeción se evalúa con el criterio 2μN ≥ W en el punto de contacto real.</p>
-  </div>
-</section>
-
-<!-- ============ PRUEBAS EN WM ============ -->
-<section class="sec" id="pruebas">
-  <div class="wrap">
-    <p class="eyebrow">Pruebas en Working Model</p>
-    <h2>Cuatro agarres.<br>El mismo modelo.</h2>
-    <p class="lead">Capturas del modelo estático de Working Model 2D en cada prueba: objeto de 4 kg, μ 0.5, θMCP = θPIP = 15°, sin considerar la transmisión de engranajes. Los medidores de la derecha son los que se comparan con el cálculo analítico.</p>
-    <div class="seg" role="tablist" aria-label="Prueba">
-      <button role="tab" aria-selected="true" data-k="pinch">Pinch</button>
-      <button role="tab" aria-selected="false" data-k="power120">Power 120°</button>
-      <button role="tab" aria-selected="false" data-k="plano">Power plano</button>
-      <button role="tab" aria-selected="false" data-k="desigual">Desigual</button>
-    </div>
-    <figure class="tile test-fig">
-      <img id="test-img" src="assets/img/wm_pinch_sin_motores.webp" alt="Working Model 2D, prueba de pinch" width="1334" height="775">
-      <figcaption id="test-cap"></figcaption>
-      <p class="ana-p" id="test-ana"></p>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/arquitectura_v31.svg" alt="Diagrama de bloques: UR5e, PCB1 de potencia, PCB2 de control, sensores y actuadores" width="1200" height="430" loading="lazy">
+      <figcaption>Flujo de energía (líneas gruesas) y de señales (líneas finas) del sistema.</figcaption>
     </figure>
-    <div class="tbl"><table id="test-tbl">
-      <thead><tr><th>Magnitud</th><th>Dedo A</th><th>Dedo B</th><th>Dedo C</th></tr></thead>
-      <tbody></tbody></table></div>
-  </div>
-</section>
 
-<!-- ============ VALIDACIÓN ============ -->
-<section class="sec dark" id="validacion">
-  <div class="wrap">
-    <p class="eyebrow">Validación</p>
-    <h2>180 configuraciones.<br>Ninguna por encima de 0.04 %.</h2>
-    <p class="lead">El modelo estático de Working Model recorrió pinch, power y carga desigual con contacto en P, D y T en las 20 posturas. El modelo dinámico sostuvo 1 kg desde Tcentral = 0.25 N·m y dejó caer el objeto con 0.20 N·m.</p>
-    <div class="two">
-      <figure class="tile"><img src="assets/img/wm_estatica.webp" alt="Modelo estático en Working Model 2D" loading="lazy"><figcaption>Gripper_V24_Estatica.wm2d<span class="ana"><b>Análisis.</b> El modelo reproduce el dedo con sus articulaciones motorizadas, los contactos P, D y T y los medidores de torque y reacción en el MCP y el PIP. En el barrido de 180 configuraciones la diferencia máxima con el cálculo analítico fue 0.034 %, lo que confirma la geometría del plano y la convención de signos.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/wm_agarre.webp" alt="Modelo dinámico en Working Model 2D sosteniendo el objeto" loading="lazy"><figcaption>Gripper_V24_Agarre.wm2d<span class="ana"><b>Análisis.</b> Con 1 kg y μ = 0.5 el objeto se sostiene a partir de T<sub>c</sub> = 0.25 N·m y cae con 0.20 N·m, lo que acota el par mínimo del servo para esa carga. Con T<sub>c</sub> = 1.0 N·m el torque en cada MCP converge a 3.589 N·m frente a 3.6 N·m teóricos, una diferencia de 0.3 %.</span></figcaption></figure>
+    <div style="margin-top:72px">
+      <p class="eyebrow"><b>05</b> Proceso de diseño</p>
+      <div class="steps" style="margin-top:22px">
+        <div class="step"><div class="n">01</div><h4>Caja negra</h4><p>Función global: agarrar.</p></div>
+        <div class="step"><div class="n">02</div><h4>Arquitectura</h4><p>Subfunciones del sistema.</p></div>
+        <div class="step"><div class="n">03</div><h4>Conceptos</h4><p>8 alternativas generadas.</p></div>
+        <div class="step"><div class="n">04</div><h4>Selección</h4><p>Pugh y matriz ponderada.</p></div>
+        <div class="step"><div class="n">05</div><h4>Configuración</h4><p>Pautas de seguridad y FMECA.</p></div>
+        <div class="step"><div class="n">06</div><h4>Electrónica</h4><p>2 PCB listas para fabricar.</p></div>
+      </div>
     </div>
-    <div class="tbl tbl-dark"><table>
-      <thead><tr><th>Magnitud</th><th>Error máximo</th><th>Error medio</th><th>Casos &gt; 5 %</th></tr></thead>
-      <tbody>
-        <tr><td>τMCP de los tres dedos</td><td>0.034 %</td><td>0.0002–0.011 %</td><td>0</td></tr>
-        <tr><td>τPIP de los tres dedos</td><td>0.034 %</td><td>0.010–0.017 %</td><td>0</td></tr>
-        <tr><td>Reacciones MCP y PIP</td><td>0.034 %</td><td>0.0002–0.011 %</td><td>0</td></tr>
-      </tbody></table></div>
   </div>
 </section>
 
-<!-- ============ GALERÍA ============ -->
-<section class="sec light" id="graficas">
+<!-- ============ MECÁNICA ============ -->
+<section class="sec" id="mecanica" style="background:var(--paper-2)">
   <div class="wrap">
-    <p class="eyebrow">Gráficas</p>
-    <h2>Todo el barrido, en diez gráficas.</h2>
-    <div class="gallery">
-      <figure class="tile"><img src="assets/img/01_tauMCP_A_vs_angulo.webp" alt="Torque MCP del dedo A contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque en el MCP del dedo A, que lleva el 40 % de la carga, llega a 1.857 N·m con el dedo casi recto (θMCP = 15°, θPIP = 0°) y baja a 0.957 N·m en la postura 60°/45°. Al flexionar, los contactos se acercan al eje MCP y el brazo de la normal disminuye, así que el peor caso son los dedos casi rectos.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/02_tauPIP_A_vs_angulo.webp" alt="Torque PIP del dedo A contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque en el PIP del dedo A llega a 0.407 N·m con el dedo recto. Con θMCP = 60° y θPIP = 45° se vuelve negativo (−0.077 N·m): la carga tiende a cerrar el PIP y la articulación debe frenar en lugar de empujar.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/03_tauMCP_B_vs_angulo.webp" alt="Torque MCP del dedo B contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El dedo B sigue la misma tendencia que A con valores proporcionales a su 35 % de la carga: de 1.626 N·m con el dedo casi recto a 0.839 N·m en la postura más cerrada.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/04_tauMCP_C_vs_angulo.webp" alt="Torque MCP del dedo C contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El dedo C, con el 25 % de la carga, es el menos exigido (1.162 N·m como máximo). Los torques de los tres dedos siguen exactamente la proporción del reparto, porque la geometría de los tres es la misma.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/05_tauMCP_vs_MCP.webp" alt="Torque MCP contra ángulo MCP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> En el pinch de 4 kg en la punta el torque MCP llega a 3.77 N·m (θMCP = 15°, θPIP = 0°) y baja a 1.67 N·m en la postura 60°/45°. La línea discontinua, que es solo la gravedad del dedo, queda por debajo de 15 mN·m: menos del 0.5 % del total.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/06_tauPIP_vs_PIP.webp" alt="Torque PIP contra ángulo PIP" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> El torque PIP baja casi linealmente al flexionar el PIP y se vuelve negativo con el MCP a 60°. El máximo, 1.58 N·m, se da con el dedo casi recto; agarrar con el dedo más cerrado reduce mucho la carga en esa articulación.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/07_N_vs_mu.webp" alt="Fuerza normal contra fricción" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La normal mínima es inversamente proporcional a μ: pasar de μ = 0.3 a 0.7 la reduce a menos de la mitad (65.4 → 28.0 N en un pinch de 4 kg). El power a 120° necesita dos tercios de la normal del pinch porque reparte el peso entre tres dedos. Un recubrimiento de alta fricción en las yemas es la forma más directa de bajar todos los torques.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/08_capacidad_vs_angulo.webp" alt="Capacidad de carga contra ángulo" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La capacidad aumenta al cerrar el MCP porque baja el torque requerido. El PIP limita más que el MCP: con 1 N·m disponible en el PIP, un pinch en la punta con el dedo recto sostiene 2.65 kg, mientras que 2 N·m en el MCP permiten 2.25 kg con el dedo recto y 3.84 kg con el MCP a 60°.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/09_torque_articular_vs_masa.webp" alt="Torques articulares contra masa" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> Los torques crecen linealmente con la masa, como predice N = W/(nμ). La fricción pesa mucho más en el MCP (1.929 frente a 1.124 N·m a 4 kg entre μ = 0.3 y 0.7) que en el PIP (0.217 frente a 0.180 N·m), porque la normal actúa con un brazo mucho mayor respecto al MCP.</span></figcaption></figure>
-      <figure class="tile"><img src="assets/img/10_distribucion_carga.webp" alt="Distribución de carga entre los dedos" loading="lazy"><figcaption class="ana-only"><span class="ana"><b>Análisis.</b> La disposición del plano V2.4 hace que el dedo A cargue el doble que B y C (39.2 frente a 19.6 N), igual que en el pinch. El power a 120° es el reparto más equilibrado (26.2 N por dedo); por eso las articulaciones del dedo A son las que deben dimensionarse para el peor caso.</span></figcaption></figure>
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>06</b> Diseño mecánico</p><h2>Sostiene la pieza sin gastar energía.</h2></div>
+      <p class="lead">Todas las transmisiones terminan en un sinfín. Los sinfines son autobloqueantes: una vez cerrado el agarre, los motores pueden apagarse y la pieza no se suelta.</p>
+    </div>
+    <div class="cols-2">
+      <article class="card block reveal">
+        <span class="k">MCP · MUÑECA</span><h3>Un servo cierra los tres dedos a la vez</h3>
+        <p>El AX-18A mueve un piñón 21T que engrana con tres piñones 28T con sinfín, uno por dedo. Los tres dedos cierran juntos y el eje MCP es una varilla M3×74.</p>
+        <div class="chain"><span>AX-18A</span><i>→</i><span class="hot">Piñón 21T</span><i>→</i><span class="hot">3 × piñón 28T + sinfín</span><i>→</i><span>Falange proximal</span></div>
+      </article>
+      <article class="card block reveal">
+        <span class="k">PIP · DEDOS</span><h3>Un motor Pololu en cada dedo</h3>
+        <p>Cada dedo lleva su motor Pololu con un sinfín que mueve una corona 14T pegada a la falange distal, que gira sobre un buje LM3UU.</p>
+        <div class="chain"><span>Pololu 1595</span><i>→</i><span class="hot">Sinfín PIP</span><i>→</i><span class="hot">Corona 14T</span><i>→</i><span>Falange distal</span></div>
+      </article>
+      <article class="card block reveal">
+        <span class="k">YEMAS</span><h3>Cambio rápido con imanes</h3>
+        <p>Las yemas son de TPU 95A, blandas para mejorar el agarre, y se sujetan a las falanges con 24 imanes N52 Ø6×3. Cada yema aloja un sensor FSR.</p>
+      </article>
+      <article class="card block reveal">
+        <span class="k">SEGURIDAD</span><h3>Par limitado por software</h3>
+        <p>El torque del AX-18A se limita al 50–60 % (registro 34). Con el ensamble actual los dedos se tocan en el centro a MCP ≈ +20°, así que ese límite también se fija por software.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANUFACTURA ============ -->
+<section class="sec" id="manufactura">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>07</b> Materiales y manufactura</p><h2>Impreso en una Bambu Lab A1 mini.</h2></div>
+      <p class="lead">PLA para la estructura y los engranajes, rígido y preciso; TPU 95A para las yemas. Ejes sobre rodamientos MF63ZZ y bujes LM3UU, tornillería M3. Antes de imprimir se valida una galga de ajustes de 32 minutos.</p>
+    </div>
+    <div class="tbl reveal">
+      <table>
+        <thead><tr><th>Placa</th><th>Contenido</th><th>Material</th><th>Tiempo</th><th>Peso</th><th>Pausas</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">0</td><td>Galga de ajustes (agujeros de rodamientos, insertos, imanes, ejes)</td><td><span class="pill">PLA</span></td><td>0 h 32</td><td>10 g</td><td>—</td></tr>
+          <tr><td class="mono">A</td><td>Palma, 3 piñones 28T con sinfín, piñón 21T, acople motor–engranaje, 3 coronas 14T y 3 sinfines PIP</td><td><span class="pill">PLA</span></td><td>9 h 31</td><td>188 g</td><td>—</td></tr>
+          <tr><td class="mono">B</td><td>Acople UR5e</td><td><span class="pill">PLA</span></td><td>4 h 11</td><td>127 g</td><td>—</td></tr>
+          <tr><td class="mono">C</td><td>Tapa Dynamixel, 3 falanges proximales, 3 distales y 3 tapas de motor</td><td><span class="pill">PLA</span></td><td>5 h 22</td><td>105 g</td><td>Z 13,4 y 14,8 · imanes</td></tr>
+          <tr><td class="mono">D</td><td>3 yemas proximales y 3 distales</td><td><span class="pill tpu">TPU 95A</span></td><td>0 h 52</td><td>16 g</td><td>Z 4,8 y 5,8 · imanes</td></tr>
+        </tbody>
+        <tfoot><tr><td></td><td>Total</td><td></td><td>≈ 20 h 30</td><td>430 g PLA + 16 g TPU</td><td>24 imanes</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="cols-3" style="margin-top:20px">
+      <article class="card block reveal"><span class="k">ENGRANAJES</span><h3>Capa de 0,12 mm</h3><p>4 paredes, gyroid 40 %, sin soportes. Los dientes salen más finos y resistentes.</p></article>
+      <article class="card block reveal"><span class="k">ACOPLE UR5e</span><h3>5 paredes</h3><p>Gyroid 40 %, porque lleva toda la carga del brazo.</p></article>
+      <article class="card block reveal"><span class="k">TOLERANCIAS</span><h3>Holguras en el CAD</h3><p>M3 Ø3,3–3,4, MF63ZZ Ø6,1, LM3UU Ø7,1, inserto Ø4,0, imán Ø6,15 × 3,1; encogimiento del PLA compensado al 99,8 %.</p></article>
     </div>
   </div>
 </section>
 
 <!-- ============ ELECTRÓNICA ============ -->
-<section class="sec light" id="electronica">
+<section class="sec dark" id="electronica">
   <div class="wrap">
-    <p class="eyebrow">Electrónica · Avance 3</p>
-    <h2>24 V del robot.<br>Cuatro voltajes, una tarjeta.</h2>
-    <p class="lead">Resumen del informe técnico electrónico: arquitectura, alimentación y protecciones, interfaz con el servo AX-18A, mando del motor N20 y lectura del encoder, y el ruteo de la tarjeta de interconexión.</p>
-    <figure class="wide"><img src="assets/img/electronica_1.webp" alt="Arquitectura electrónica y diagramas de bloques de alimentación y señales" width="2000" height="889" loading="lazy"></figure>
-    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_2.webp" alt="Entrada de 24 V, voltajes, protecciones y presupuesto de potencia" width="2000" height="889" loading="lazy"></figure>
-    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_3.webp" alt="Interfaz semidúplex con el servo, motor, encoder y pines del ESP32-C3" width="2000" height="889" loading="lazy"></figure>
-    <figure class="wide" style="margin-top:16px"><img src="assets/img/electronica_4.webp" alt="Ruteo de la tarjeta, características y trabajo pendiente" width="2000" height="889" loading="lazy"></figure>
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>08</b> Electrónica</p><h2>Distribución de potencia y control.</h2></div>
+      <p class="lead">Ramas separadas por fusible, con reserva de 2200 µF y 1000 µF. Tarjetas a una sola cara, pistas a 45° y conectores JST XH para cambiar módulos sin soldar.</p>
+    </div>
+    <div class="rails reveal" style="background:var(--night-2);border-color:#2a2b2e">
+      <div class="rail"><div class="v">24<small> V</small></div><div class="to">Entrada · UR5e</div><p style="color:var(--on-night-2)">Fusible principal y fusibles de 3 A / 2 A por rama.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">12<small> V</small></div><div class="to">Servo AX-18A</div><p style="color:var(--on-night-2)">Rama dedicada con reserva de capacitancia.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">6<small> V</small></div><div class="to">3 motores DC</div><p style="color:var(--on-night-2)">Drivers TC1508A, uno por dedo.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">5<small> V</small></div><div class="to">Lógica</div><p style="color:var(--on-night-2)">ESP32-S3; el USB queda separado para programar.</p></div>
+    </div>
+    <div class="cols-2" style="margin-top:20px">
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb1_potencia.svg" alt="Ruteo de la PCB1 de potencia" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB1 · Potencia</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb2_control.svg" alt="Ruteo de la PCB2 de control" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB2 · Control</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+    </div>
+    <div class="cols-3" style="margin-top:20px">
+      <article class="card block reveal"><span class="k">PCB2</span><h3>Arranque seguro</h3><p>Resistencias de 10 kΩ a GND mantienen los motores apagados mientras arranca el ESP32, y cada FSR pasa por un filtro RC de 10 kΩ / 100 nF.</p></article>
+      <article class="card block reveal"><span class="k">AX-18A</span><h3>Enlace directo con el servo</h3><p>Half-duplex por un solo cable con protocolo Dynamixel: buffer 74HCT125 de 3,3 V a 5 V y divisor que protege al ESP32. Se eliminó el shield intermedio.</p></article>
+      <article class="card block reveal"><span class="k">SENSORES</span><h3>Instrumentación</h3><p>Un FSR por yema hacia el ADC del ESP32, finales de carrera de apertura y cierre, y la posición, carga y temperatura que reporta el servo.</p></article>
+    </div>
   </div>
 </section>
 
-<!-- ============ DESCARGAS ============ -->
-<section class="sec cta-sec">
-  <div class="wrap center">
-    <h2>El informe completo.</h2>
-    <p class="lead">Datos de entrada, modelos de cálculo, tablas, gráficas y validación en Working Model, en formato de entrega.</p>
-    <div class="hero-ctas center"><a class="btn" href="assets/informe_gripper_v24.pdf">Descargar PDF</a><a class="link" href="assets/informe_mecanica_gripper_v24.pdf">Informe de mecánica (formato EAFIT) ›</a><a class="link" href="assets/informe_mecanica_gripper_v24.docx">Versión Word ›</a><a class="link" href="assets/guion_exposicion_calculos.pdf">Guion de la exposición ›</a></div>
-    <p class="fine">Datos faltantes del plano (motores, fricción entre dientes, ángulo de presión, masa de la palma) se trataron como parámetros.</p>
+<!-- ============ SOFTWARE ============ -->
+<section class="sec" id="software">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>09</b> Programa de control</p><h2>Órdenes de una línea, con parada automática.</h2></div>
+      <p class="lead">El ESP32-S3 recibe órdenes de texto por UART a 115200 baudios (8N1), controla los tres motores con PWM a 20 kHz y el servo, y envía telemetría a un servidor de la universidad. Si no llega una orden válida en 500 ms, detiene todo.</p>
+    </div>
+    <div class="cols-2">
+      <div class="tbl reveal">
+        <table>
+          <thead><tr><th>Orden</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>OPEN n</code> · <code>CLOSE n</code></td><td>Abre o cierra la instancia n: 1–3 son los motores de los dedos y 4 el servo.</td></tr>
+            <tr><td><code>STOP n</code> · <code>STOP</code></td><td>Detiene una instancia o todo el gripper.</td></tr>
+            <tr><td><code>M n pwm</code> · <code>ALL a b c</code></td><td>PWM de −100 a +100 % en un motor o en los tres.</td></tr>
+            <tr><td><code>SERVO µs</code></td><td>Pulso del servo; 0 lo deshabilita.</td></tr>
+            <tr><td><code>STATUS</code> · <code>PING</code></td><td>Lee las consignas o renueva la orden activa.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="term"><span class="p">&gt;</span> CLOSE 4<br><span class="o">OK</span><br><span class="p">&gt;</span> ALL -20 -20 -20<br><span class="o">OK</span><br><span class="p">&gt;</span> STATUS<br><span class="o">STATE -20 -20 -20 2000 1</span><br><span class="p">&gt;</span> <span style="color:#6f6b64">… 500 ms sin órdenes</span><br><span class="o">TIMEOUT STOP</span></div>
+        <div class="cols-2" style="margin-top:16px;gap:12px">
+          <article class="card block" style="padding:18px"><span class="k">SEGURIDAD</span><p style="margin-top:6px">Una orden inválida también detiene los motores y quita la señal del servo.</p></article>
+          <article class="card block" style="padding:18px"><span class="k">TELEMETRÍA</span><p style="margin-top:6px">Cada evento y una muestra cada 500 ms se envían por Wi-Fi en JSON, con cola de 64 eventos.</p></article>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer class="foot">
-  <div class="wrap foot-in">
-    <span>Gripper 3 dedos UR5e V2.4 · Diseño de detalle</span>
-    <span>Universidad EAFIT · 2026</span>
+<!-- ============ UR5e ============ -->
+<section class="sec" id="ur5e" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>10</b> Interfaz con el UR5e</p><h2>Se monta en la brida del robot.</h2></div>
+      <p class="lead">El acople impreso sigue la brida de herramienta del UR5e. La energía y los datos salen del conector de herramienta, así que el gripper no necesita cables externos.</p>
+    </div>
+    <div class="tbl reveal">
+      <table>
+        <thead><tr><th>Parámetro del UR5e</th><th>Valor</th><th>Uso en el gripper</th></tr></thead>
+        <tbody>
+          <tr><td>Carga útil</td><td>5 kg</td><td>Límite de masa de gripper más pieza.</td></tr>
+          <tr><td>Brida de herramienta</td><td>EN ISO 9409-1-50-4-M6</td><td>Acople UR5e impreso con tornillos M6.</td></tr>
+          <tr><td>Alimentación de herramienta</td><td>12 / 24 V · 1,5 A (dos pines) · 1 A (un pin)</td><td>Única fuente: 24 V a la PCB1.</td></tr>
+          <tr><td>Conector</td><td>M8 de 8 pines</td><td>Energía y enlace RS-485 por el mismo cable.</td></tr>
+          <tr><td>Alcance · repetibilidad</td><td>850 mm · ± 0,03 mm</td><td>Espacio de trabajo del agarre.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font:12.5px var(--f-mono);color:var(--ink-3);margin-top:12px">Fuente: Universal Robots, UR5e Technical Specification (2023).</p>
   </div>
-</footer>
+</section>
 
-<script type="module" src="js/sim.js"></script>
-<script src="js/pruebas_analisis.js" defer></script>
-<script src="js/pruebas.js" defer></script>
+<!-- ============ ANÁLISIS ============ -->
+<section class="sec" id="analisis">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>11</b> Análisis de ingeniería</p><h2>Los cálculos detrás del diseño.</h2></div>
+      <p class="lead">Estática en tres vistas, cinemática, dinámica y consumo, validados en Working Model 2D con un error máximo de 0,034 % en 180 configuraciones.</p>
+    </div>
+    <div class="links">
+      <a class="card lnk reveal" href="analisis.html#estatica"><span class="k">3.1</span><h3>Estática</h3><p>Fuerzas de contacto, torques en MCP y PIP y reacciones, para 4 kg (μ 0,5) y 3,5 kg (μ 0,3).</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#cinematica"><span class="k">3.3</span><h3>Cinemática</h3><p>Cierre cicloidal, velocidades y aceleraciones de las falanges y trayectorias de P, D y T.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#dinamica"><span class="k">3.4</span><h3>Dinámica y consumo</h3><p>Lagrange para el dedo de dos eslabones, potencia, energía por ciclo y consumo eléctrico.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#validacion"><span class="k">WM 2D</span><h3>Validación</h3><p>Barrido de 180 configuraciones en Working Model 2D frente al cálculo analítico.</p><p class="go">Abrir validación →</p></a>
+      <a class="card lnk reveal" href="assets/informe_mecanica_gripper_v24.pdf"><span class="k">PDF</span><h3>Informe de cálculos</h3><p>Informe mecánico en formato EAFIT, con los dos casos de diseño.</p><p class="go">Descargar →</p></a>
+      <a class="card lnk reveal" href="analisis.html#electronica"><span class="k">AVANCE 3</span><h3>Electrónica previa</h3><p>Arquitectura, alimentación y tarjeta de la entrega anterior.</p><p class="go">Ver →</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section class="sec" id="equipo">
+  <div class="wrap">
+    <div class="cols-2" style="gap:56px">
+      <div>
+        <p class="eyebrow"><b>12</b> Equipo</p>
+        <h2 style="font-size:clamp(30px,3.6vw,44px);margin-top:14px">Grupo 1 · Universidad EAFIT</h2>
+        <div class="team"><span>Samuel Martínez</span><span>Lucas Arango</span><span>Maximiliano Sánchez</span><span>Valentina Torres</span><span>Nicolás Zapata</span><span>David Zuluaga</span></div>
+      </div>
+      <div>
+        <p class="eyebrow">Bibliografía</p>
+        <ol class="refs" style="margin-top:14px">
+          <li>Zaidi et al. (2021). Actuation Technologies for Soft Robot Grippers and Manipulators. <i>Current Robotics Reports</i>, 2(2).</li>
+          <li>Hernandez et al. (2023). Current Designs of Robotic Arm Grippers: A Systematic Review. <i>Robotics</i>, 12(1).</li>
+          <li>Tai et al. (2016). State of the Art Robotic Grippers and Applications. <i>Robotics</i>, 5(2).</li>
+          <li>Dieter &amp; Schmidt (2009). <i>Engineering Design</i>, 4th ed. McGraw-Hill.</li>
+          <li>Ullman (2010). <i>The Mechanical Design Process</i>, 4th ed. McGraw-Hill.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
+
+<script type="module" src="js/site.js"></script>
 </body>
 </html>
