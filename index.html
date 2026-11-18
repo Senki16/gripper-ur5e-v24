@@ -40,8 +40,8 @@
         </div>
       </div>
       <figure class="hero-fig reveal">
-        <img src="assets/img/hero_v31.webp" alt="Gripper de tres dedos V31 montado en la brida del UR5e" width="1600" height="1360">
-        <span class="tag" id="hero-tag">Render · ensamble V31</span>
+        <img src="assets/img/hero_v31.webp" alt="Render del gripper de tres dedos V31: cuerpo blanco, engranajes naranjas y yemas negras" width="1448" height="1086">
+        <span class="tag" id="hero-tag">Render generado con IA a partir del CAD V31</span>
       </figure>
     </div>
     <div class="stats">
@@ -229,6 +229,10 @@
       <article class="card block reveal"><span class="k">AX-18A</span><h3>Enlace directo con el servo</h3><p>Half-duplex por un solo cable con protocolo Dynamixel: buffer 74HCT125 de 3,3 V a 5 V y divisor que protege al ESP32. Se eliminó el shield intermedio.</p></article>
       <article class="card block reveal"><span class="k">SENSORES</span><h3>Instrumentación</h3><p>Un FSR por yema hacia el ADC del ESP32, finales de carrera de apertura y cierre, y la posición, carga y temperatura que reporta el servo.</p></article>
     </div>
+    <figure class="figure reveal" style="margin-top:20px;padding:20px;background:#f5f4f1;border-radius:18px">
+      <img src="assets/img/diagrama_sensado.svg" alt="Cadena de sensado y actuación: FSR, filtro RC, ESP32-S3, drivers, motores y servo" width="1200" height="560" loading="lazy">
+      <figcaption style="color:#57544e">Cadena sensor → filtro → ESP32-S3 → actuador. El filtro RC de 10 kΩ / 100 nF corta en ≈ 160 Hz.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -253,13 +257,17 @@
         </table>
       </div>
       <div class="reveal">
-        <div class="term"><span class="p">&gt;</span> CLOSE 4<br><span class="o">OK</span><br><span class="p">&gt;</span> ALL -20 -20 -20<br><span class="o">OK</span><br><span class="p">&gt;</span> STATUS<br><span class="o">STATE -20 -20 -20 2000 1</span><br><span class="p">&gt;</span> <span style="color:#6f6b64">… 500 ms sin órdenes</span><br><span class="o">TIMEOUT STOP</span></div>
+        <div class="term"><span class="p">&gt;</span> CLOSE 4<br><span class="o">(4, 1, 3, 1, 2000, -1)</span> <span style="color:#6f6b64"># instancia, evento, orden, activo, consigna</span><br><span class="p">&gt;</span> ALL -20 -20 -20<br><span class="o">OK</span><br><span class="p">&gt;</span> STATUS<br><span class="o">STATE -20 -20 -20 2000 1</span><br><span class="p">&gt;</span> FOO<br><span class="o">ERR COMMAND</span> <span style="color:#6f6b64"># y parada segura</span></div>
         <div class="cols-2" style="margin-top:16px;gap:12px">
           <article class="card block" style="padding:18px"><span class="k">SEGURIDAD</span><p style="margin-top:6px">Una orden inválida también detiene los motores y quita la señal del servo.</p></article>
           <article class="card block" style="padding:18px"><span class="k">TELEMETRÍA</span><p style="margin-top:6px">Cada evento y una muestra cada 500 ms se envían por Wi-Fi en JSON, con cola de 64 eventos.</p></article>
         </div>
       </div>
     </div>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/diagrama_estados.svg" alt="Máquina de estados del firmware: arranque, espera, ejecución, activo y parada segura" width="1200" height="560" loading="lazy">
+      <figcaption>Máquina de estados del firmware del ESP32-S3. En naranja, las transiciones que llevan a la parada segura.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -270,6 +278,10 @@
       <div><p class="eyebrow"><b>10</b> Interfaz con el UR5e</p><h2>Se monta en la brida del robot.</h2></div>
       <p class="lead">El acople impreso sigue la brida de herramienta del UR5e. La energía y los datos salen del conector de herramienta, así que el gripper no necesita cables externos.</p>
     </div>
+    <figure class="figure reveal" style="margin:0 0 20px">
+      <img src="assets/img/ur5e_gripper.webp" alt="Ilustración del gripper montado en un brazo colaborativo sosteniendo un cilindro metálico" width="1672" height="941" loading="lazy" style="border-radius:18px">
+      <figcaption>Ilustración generada con IA a partir del render del CAD V31; no es una foto del prototipo.</figcaption>
+    </figure>
     <div class="tbl reveal">
       <table>
         <thead><tr><th>Parámetro del UR5e</th><th>Valor</th><th>Uso en el gripper</th></tr></thead>

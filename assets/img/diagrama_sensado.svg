@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" font-family="Inter, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#141414"/></marker>
+    <style>
+      .b{fill:#fff;stroke:#141414;stroke-width:1.6}
+      .c{fill:#141414}
+      .t{font-size:19px;font-weight:600;fill:#141414}
+      .s{font-size:14px;fill:#55534e}
+      .m{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;fill:#8a867e;letter-spacing:.08em}
+      .l{stroke:#141414;stroke-width:1.6;fill:none}
+      .q{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;fill:#55534e}
+      .o{fill:#ef6a1a}
+    </style>
+  </defs>
+  <text class="m" x="40" y="40">SENSOR</text><text class="m" x="300" y="40">ACONDICIONAMIENTO</text><text class="m" x="540" y="40">CONTROL</text><text class="m" x="810" y="40">POTENCIA</text><text class="m" x="1010" y="40">ACTUADOR</text>
+  <!-- FSR -->
+  <rect class="b" x="40" y="70" width="200" height="96" rx="12"/>
+  <text class="t" x="60" y="108">3 × FSR</text><text class="s" x="60" y="132">uno por yema</text><text class="s" x="60" y="152">fuerza de agarre</text>
+  <rect class="b" x="300" y="70" width="190" height="96" rx="12"/>
+  <text class="t" x="320" y="108">Filtro RC</text><text class="s" x="320" y="132">10 kΩ / 100 nF</text><text class="s" x="320" y="152">fc ≈ 160 Hz</text>
+  <!-- finales -->
+  <rect class="b" x="40" y="200" width="200" height="96" rx="12"/>
+  <text class="t" x="60" y="238">Finales de carrera</text><text class="s" x="60" y="262">límite de apertura</text><text class="s" x="60" y="282">y de cierre</text>
+  <!-- ESP32 -->
+  <rect class="c" x="540" y="70" width="210" height="420" rx="14"/>
+  <text x="560" y="110" font-size="13" font-family="JetBrains Mono, Consolas, monospace" fill="#a9a59c" letter-spacing=".08em">PCB2</text>
+  <text x="560" y="140" font-size="24" font-weight="600" fill="#fff">ESP32-S3</text>
+  <text x="560" y="166" font-size="14" fill="#a9a59c">en zócalos</text>
+  <text x="560" y="230" font-size="13" font-family="JetBrains Mono, Consolas, monospace" fill="#d9d6cf">ADC ×3</text>
+  <text x="560" y="258" font-size="13" font-family="JetBrains Mono, Consolas, monospace" fill="#d9d6cf">GPIO</text>
+  <text x="560" y="350" font-size="13" font-family="JetBrains Mono, Consolas, monospace" fill="#d9d6cf">PWM 20 kHz ×3</text>
+  <text x="560" y="446" font-size="13" font-family="JetBrains Mono, Consolas, monospace" fill="#d9d6cf">UART half-duplex</text>
+  <!-- drivers / motores -->
+  <rect class="b" x="810" y="300" width="160" height="96" rx="12"/>
+  <text class="t" x="830" y="338">3 × TC1508A</text><text class="s" x="830" y="362">puente H</text><text class="s" x="830" y="382">6 V</text>
+  <rect class="b" x="1010" y="300" width="160" height="96" rx="12"/>
+  <text class="t" x="1030" y="338">3 motores DC</text><text class="s" x="1030" y="362">PIP · sinfín</text><text class="s" x="1030" y="382">Pololu 1595</text>
+  <!-- servo -->
+  <rect class="b" x="810" y="410" width="160" height="96" rx="12"/>
+  <text class="t" x="830" y="448">74HCT125</text><text class="s" x="830" y="472">3,3 → 5 V</text><text class="s" x="830" y="492">+ divisor</text>
+  <rect class="b" x="1010" y="410" width="160" height="96" rx="12"/>
+  <text class="t" x="1030" y="448">AX-18A</text><text class="s" x="1030" y="472">MCP · 12 V</text><text class="s" x="1030" y="492">bus 1 Mbps</text>
+  <!-- flechas -->
+  <path class="l" d="M240 118 H296" marker-end="url(#a)"/>
+  <path class="l" d="M490 118 H515 V226 H536" marker-end="url(#a)"/>
+  <path class="l" d="M240 248 H536" marker-end="url(#a)"/>
+  <path class="l" d="M750 346 H806" marker-end="url(#a)"/>
+  <path class="l" d="M970 348 H1006" marker-end="url(#a)"/>
+  <path class="l" d="M750 452 H806" marker-end="url(#a)"/>
+  <path class="l" d="M970 452 H1006" marker-end="url(#a)"/>
+  <path class="l" d="M1090 506 V530 H645 V494" marker-end="url(#a)" stroke-dasharray="5 5"/>
+  <text class="q" x="760" y="548">retroalimentación: posición · carga · temperatura</text>
+</svg>
