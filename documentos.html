@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Documentos · Gripper UR5e</title>
+<meta name="description" content="Gripper de tres dedos para el robot colaborativo UR5e: diseño mecánico V31, electrónica en dos PCB, control con ESP32-S3 y visor 3D interactivo del ensamble.">
+<meta property="og:title" content="Gripper de 3 dedos para el UR5e">
+<meta property="og:description" content="Tres dedos, sensores de fuerza y control propio, alimentado solo con los 24 V del puerto de herramienta del UR5e.">
+<meta property="og:image" content="assets/img/hero_v31.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
+    <div class="nav-links"><a href="index.html">Inicio</a><a href="proyecto.html">Proyecto</a><a href="mecanica.html">Mecánica</a><a href="electronica.html">Electrónica y control</a><a href="robot.html">En el UR5e</a><a href="documentos.html" class="on" aria-current="page">Documentos</a></div>
+    <a class="nav-cta" href="index.html#visor">Ver en 3D</a>
+  </div>
+</nav>
+
+<main>
+<header class="page-head"><div class="wrap">
+  <p class="eyebrow"><b>●</b> Documentos</p>
+  <h1>Cálculos, validación e informes.</h1>
+  <p class="lead">El análisis de ingeniería detrás del diseño, con sus documentos descargables.</p>
+</div></header>
+<section class="sec" id="analisis">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Análisis de ingeniería</p><h2>Los cálculos detrás del diseño.</h2></div>
+      <p class="lead">Estática en tres vistas, cinemática, dinámica y consumo, validados en Working Model 2D con un error máximo de 0,034 % en 180 configuraciones.</p>
+    </div>
+    <div class="links">
+      <a class="card lnk reveal" href="analisis.html#estatica"><span class="k">3.1</span><h3>Estática</h3><p>Fuerzas de contacto, torques en MCP y PIP y reacciones, para 4 kg (μ 0,5) y 3,5 kg (μ 0,3).</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#cinematica"><span class="k">3.3</span><h3>Cinemática</h3><p>Cierre cicloidal, velocidades y aceleraciones de las falanges y trayectorias de P, D y T.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#dinamica"><span class="k">3.4</span><h3>Dinámica y consumo</h3><p>Lagrange para el dedo de dos eslabones, potencia, energía por ciclo y consumo eléctrico.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#validacion"><span class="k">WM 2D</span><h3>Validación</h3><p>Barrido de 180 configuraciones en Working Model 2D frente al cálculo analítico.</p><p class="go">Abrir validación →</p></a>
+      <a class="card lnk reveal" href="assets/informe_mecanica_gripper_v24.pdf"><span class="k">PDF</span><h3>Informe de cálculos</h3><p>Informe mecánico en formato EAFIT, con los dos casos de diseño.</p><p class="go">Descargar →</p></a>
+      <a class="card lnk reveal" href="analisis.html#electronica"><span class="k">AVANCE 3</span><h3>Electrónica previa</h3><p>Arquitectura, alimentación y tarjeta de la entrega anterior.</p><p class="go">Ver →</p></a>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026 · Grupo 1</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
+
+<script src="js/reveal.js" defer></script>
+</body>
+</html>

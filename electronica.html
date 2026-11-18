@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Electrónica y control · Gripper UR5e</title>
+<meta name="description" content="Gripper de tres dedos para el robot colaborativo UR5e: diseño mecánico V31, electrónica en dos PCB, control con ESP32-S3 y visor 3D interactivo del ensamble.">
+<meta property="og:title" content="Gripper de 3 dedos para el UR5e">
+<meta property="og:description" content="Tres dedos, sensores de fuerza y control propio, alimentado solo con los 24 V del puerto de herramienta del UR5e.">
+<meta property="og:image" content="assets/img/hero_v31.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
+    <div class="nav-links"><a href="index.html">Inicio</a><a href="proyecto.html">Proyecto</a><a href="mecanica.html">Mecánica</a><a href="electronica.html" class="on" aria-current="page">Electrónica y control</a><a href="robot.html">En el UR5e</a><a href="documentos.html">Documentos</a></div>
+    <a class="nav-cta" href="index.html#visor">Ver en 3D</a>
+  </div>
+</nav>
+
+<main>
+<header class="page-head"><div class="wrap">
+  <p class="eyebrow"><b>●</b> Electrónica y control</p>
+  <h1>Dos tarjetas y un programa.</h1>
+  <p class="lead">Distribución de potencia, sensores, enlace con el servo y el firmware del ESP32-S3.</p>
+</div></header>
+<section class="sec dark" id="electronica">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Electrónica</p><h2>Distribución de potencia y control.</h2></div>
+      <p class="lead">Ramas separadas por fusible, con reserva de 2200 µF y 1000 µF. Tarjetas a una sola cara, pistas a 45° y conectores JST XH para cambiar módulos sin soldar.</p>
+    </div>
+    <div class="rails reveal" style="background:var(--night-2);border-color:#2a2b2e">
+      <div class="rail"><div class="v">24<small> V</small></div><div class="to">Entrada · UR5e</div><p style="color:var(--on-night-2)">Fusible principal y fusibles de 3 A / 2 A por rama.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">12<small> V</small></div><div class="to">Servo AX-18A</div><p style="color:var(--on-night-2)">Rama dedicada con reserva de capacitancia.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">6<small> V</small></div><div class="to">3 motores DC</div><p style="color:var(--on-night-2)">Drivers TC1508A, uno por dedo.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">5<small> V</small></div><div class="to">Lógica</div><p style="color:var(--on-night-2)">ESP32-S3; el USB queda separado para programar.</p></div>
+    </div>
+    <div class="cols-2" style="margin-top:20px">
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb1_potencia.svg" alt="Ruteo de la PCB1 de potencia" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB1 · Potencia</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb2_control.svg" alt="Ruteo de la PCB2 de control" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB2 · Control</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+    </div>
+    <div class="cols-3" style="margin-top:20px">
+      <article class="card block reveal"><span class="k">PCB2</span><h3>Arranque seguro</h3><p>Resistencias de 10 kΩ a GND mantienen los motores apagados mientras arranca el ESP32, y cada FSR pasa por un filtro RC de 10 kΩ / 100 nF.</p></article>
+      <article class="card block reveal"><span class="k">AX-18A</span><h3>Enlace directo con el servo</h3><p>Half-duplex por un solo cable con protocolo Dynamixel: buffer 74HCT125 de 3,3 V a 5 V y divisor que protege al ESP32. Se eliminó el shield intermedio.</p></article>
+      <article class="card block reveal"><span class="k">SENSORES</span><h3>Instrumentación</h3><p>Un FSR por yema hacia el ADC del ESP32, finales de carrera de apertura y cierre, y la posición, carga y temperatura que reporta el servo.</p></article>
+    </div>
+    <figure class="figure reveal" style="margin-top:20px;padding:20px;background:#f5f4f1;border-radius:18px">
+      <img src="assets/img/diagrama_sensado.svg" alt="Cadena de sensado y actuación: FSR, filtro RC, ESP32-S3, drivers, motores y servo" width="1200" height="560" loading="lazy">
+      <figcaption style="color:#57544e">Cadena sensor → filtro → ESP32-S3 → actuador. El filtro RC de 10 kΩ / 100 nF corta en ≈ 160 Hz.</figcaption>
+    </figure>
+  </div>
+</section>
+<section class="sec" id="software">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Programa de control</p><h2>Órdenes de una línea, con parada automática.</h2></div>
+      <p class="lead">El ESP32-S3 recibe órdenes de texto por UART a 115200 baudios (8N1), controla los tres motores con PWM a 20 kHz y el servo, y envía telemetría a un servidor de la universidad. Si no llega una orden válida en 500 ms, detiene todo.</p>
+    </div>
+    <div class="cols-2">
+      <div class="tbl reveal">
+        <table>
+          <thead><tr><th>Orden</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>OPEN n</code> · <code>CLOSE n</code></td><td>Abre o cierra la instancia n: 1–3 son los motores de los dedos y 4 el servo.</td></tr>
+            <tr><td><code>STOP n</code> · <code>STOP</code></td><td>Detiene una instancia o todo el gripper.</td></tr>
+            <tr><td><code>M n pwm</code> · <code>ALL a b c</code></td><td>PWM de −100 a +100 % en un motor o en los tres.</td></tr>
+            <tr><td><code>SERVO µs</code></td><td>Pulso del servo; 0 lo deshabilita.</td></tr>
+            <tr><td><code>STATUS</code> · <code>PING</code></td><td>Lee las consignas o renueva la orden activa.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="term"><span class="p">&gt;</span> CLOSE 4<br><span class="o">(4, 1, 3, 1, 2000, -1)</span> <span style="color:#6f6b64"># instancia, evento, orden, activo, consigna</span><br><span class="p">&gt;</span> ALL -20 -20 -20<br><span class="o">OK</span><br><span class="p">&gt;</span> STATUS<br><span class="o">STATE -20 -20 -20 2000 1</span><br><span class="p">&gt;</span> FOO<br><span class="o">ERR COMMAND</span> <span style="color:#6f6b64"># y parada segura</span></div>
+        <div class="cols-2" style="margin-top:16px;gap:12px">
+          <article class="card block" style="padding:18px"><span class="k">SEGURIDAD</span><p style="margin-top:6px">Una orden inválida también detiene los motores y quita la señal del servo.</p></article>
+          <article class="card block" style="padding:18px"><span class="k">TELEMETRÍA</span><p style="margin-top:6px">Cada evento y una muestra cada 500 ms se envían por Wi-Fi en JSON, con cola de 64 eventos.</p></article>
+        </div>
+      </div>
+    </div>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/diagrama_estados.svg" alt="Máquina de estados del firmware: arranque, espera, ejecución, activo y parada segura" width="1200" height="560" loading="lazy">
+      <figcaption>Máquina de estados del firmware del ESP32-S3. En naranja, las transiciones que llevan a la parada segura.</figcaption>
+    </figure>
+  </div>
+</section>
+</main>
+
+<section class="next"><div class="wrap"><a href="robot.html"><span class="eyebrow">Siguiente</span><span class="t">En el UR5e →</span></a></div></section>
+<footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026 · Grupo 1</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
+
+<script src="js/reveal.js" defer></script>
+</body>
+</html>

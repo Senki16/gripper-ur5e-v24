@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gripper de 3 dedos para el UR5e · EAFIT</title>
+<meta name="description" content="Gripper de tres dedos para el robot colaborativo UR5e: diseño mecánico V31, electrónica en dos PCB, control con ESP32-S3 y visor 3D interactivo del ensamble.">
+<meta property="og:title" content="Gripper de 3 dedos para el UR5e">
+<meta property="og:description" content="Tres dedos, sensores de fuerza y control propio, alimentado solo con los 24 V del puerto de herramienta del UR5e.">
+<meta property="og:image" content="assets/img/hero_v31.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body id="top">
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
+    <div class="nav-links">
+      <a href="#reto">Reto</a><a href="#visor">Visor 3D</a><a href="#arquitectura">Arquitectura</a><a href="#mecanica">Mecánica</a>
+      <a href="#manufactura">Manufactura</a><a href="#electronica">Electrónica</a><a href="#software">Software</a><a href="#ur5e">UR5e</a><a href="#analisis">Análisis</a>
+    </div>
+    <a class="nav-cta" href="#visor">Ver en 3D</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><b>●</b> Universidad EAFIT · 2026 · Grupo 1</p>
+        <h1>Gripper de 3 dedos para el <em>UR5e</em></h1>
+        <p class="lead">Mueve tres dedos, mide la fuerza de agarre y se comunica con el robot usando solo los 24 V del puerto de herramienta del UR5e.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#visor"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>Explorar el ensamble</a>
+          <a class="btn ghost" href="#arquitectura">Cómo funciona</a>
+        </div>
+      </div>
+      <figure class="hero-fig reveal">
+        <img src="assets/img/hero_v31.webp" alt="Render del gripper de tres dedos V31: cuerpo blanco, engranajes naranjas y yemas negras" width="1448" height="1086">      </figure>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">24<small>V</small></div><div class="l">Única alimentación, desde el puerto de herramienta del UR5e</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">Dedos con sensor de fuerza FSR en la yema</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">PCB a una sola cara: potencia y control</div></div>
+      <div class="stat"><div class="n">126</div><div class="l">Componentes en el ensamble CAD V31</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ RETO ============ -->
+<section class="sec" id="reto">
+  <div class="wrap">
+    <div class="reto">
+      <div>
+        <p class="eyebrow"><b>01</b> El reto</p>
+        <p class="quote" style="margin-top:18px">Diseñar un gripper que mueva tres dedos, <span>mida la fuerza de agarre</span> y se comunique con el robot <span>usando solo los 24 V del puerto de herramienta.</span></p>
+      </div>
+      <div>
+        <p class="eyebrow"><b>02</b> Objetivo</p>
+        <p style="margin-top:18px;font-size:18px;color:var(--ink-2)">Integrar potencia, control y comunicaciones en tarjetas compactas, seguras y fabricables a una sola cara, sobre una mecánica impresa en 3D que sostiene la pieza sin consumir energía.</p>
+      </div>
+    </div>
+    <div class="alcance">
+      <div class="alc"><span class="k">I</span><h4>Motores DC</h4><p>3 motores DC con drivers TC1508A, uno por articulación PIP.</p></div>
+      <div class="alc"><span class="k">II</span><h4>Servo Dynamixel</h4><p>1 servo AX-18A con retroalimentación de posición y carga.</p></div>
+      <div class="alc"><span class="k">III</span><h4>Sensado</h4><p>3 sensores de fuerza FSR y finales de carrera.</p></div>
+      <div class="alc"><span class="k">IV</span><h4>Comunicación</h4><p>Enlace RS-485 con el controlador del UR5e.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISOR 3D ============ -->
+<section class="sec viewer-sec" id="visor">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>03</b> Visor 3D</p><h2>El ensamble V31, pieza por pieza.</h2></div>
+      <p class="lead">Modelo exportado directamente del CAD de SolidWorks. Gira con el mouse, acerca con la rueda, separa las piezas con la vista explosionada y toca cualquier pieza para ver qué es.</p>
+    </div>
+    <div class="viewer-shell">
+      <div class="stage" id="stage">
+        <div class="grid-paper"></div>
+        <div class="toolbar">
+          <div class="seg" id="seg-modo" role="group" aria-label="Modo">
+            <button aria-pressed="true" data-modo="asm">Ensamble</button><button aria-pressed="false" data-modo="pieza" id="btn-pieza" disabled>Pieza sola</button>
+          </div>
+          <div class="seg" role="group" aria-label="Vista">
+            <button aria-pressed="false" data-vista="iso">Iso</button><button aria-pressed="false" data-vista="frente">Frente</button><button aria-pressed="false" data-vista="lado">Lado</button><button aria-pressed="false" data-vista="arriba">Arriba</button>
+          </div>
+          <div class="seg" role="group" aria-label="Mostrar">
+            <button aria-pressed="true" id="btn-hw">Tornillería</button><button aria-pressed="true" id="btn-rot">Girar</button>
+          </div>
+          <div class="seg" role="group" aria-label="Dedo" id="seg-dedo">
+            <button aria-pressed="true" data-dedo="0">Todo</button><button aria-pressed="false" data-dedo="1">Dedo 1</button><button aria-pressed="false" data-dedo="2">Dedo 2</button><button aria-pressed="false" data-dedo="3">Dedo 3</button>
+          </div>
+        </div>
+        <div class="explode"><label for="exp">Explosión</label><input id="exp" type="range" min="0" max="1" step="0.01" value="0"></div>
+        <div class="hint">arrastra · rueda · clic</div>
+        <div class="loading" id="loading"><div><p id="load-txt">Cargando ensamble V31 · 10 MB</p><div class="bar"><i id="load-bar"></i></div></div></div>
+      </div>
+      <aside class="side">
+        <div class="info" id="info">
+          <p class="k">Selección</p>
+          <h3>Gripper V31 completo</h3>
+          <p style="color:var(--ink-2);font-size:14px;margin-top:8px">Toca una pieza en el modelo o en la lista para resaltarla.</p>
+        </div>
+        <div class="plist" id="plist"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARQUITECTURA ============ -->
+<section class="sec" id="arquitectura">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>04</b> Arquitectura del sistema</p><h2>Dos tarjetas, cuatro actuadores, un solo cable al robot.</h2></div>
+      <p class="lead">Los 24 V del UR5e entran a la tarjeta de potencia, que los reparte en tres ramas protegidas. La tarjeta de control lee los sensores, mueve los actuadores y habla con el robot por RS-485.</p>
+    </div>
+    <div class="cols-4">
+      <article class="card block reveal"><span class="k">PCB1 · POTENCIA</span><h3>Tres ramas desde 24 V</h3><p>Fusibles dedicados y tres ramas: 12 V para el servo, 6 V para los motores y 5 V para la lógica.</p></article>
+      <article class="card block reveal"><span class="k">PCB2 · CONTROL</span><h3>ESP32-S3 en zócalos</h3><p>Maneja los drivers, lee los sensores con filtros RC y se comunica con el robot.</p></article>
+      <article class="card block reveal"><span class="k">ACTUADORES</span><h3>Servo + 3 motores DC</h3><p>Servo Dynamixel AX-18A a 12 V y 3 motores DC a 6 V, controlados con drivers TC1508A.</p></article>
+      <article class="card block reveal"><span class="k">SENSADO Y ENLACE</span><h3>Fuerza y comunicación</h3><p>3 FSR y finales de carrera. RS-485 con el UR5e y bus del servo a 1 Mbps.</p></article>
+    </div>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/arquitectura_v31.svg" alt="Diagrama de bloques: UR5e, PCB1 de potencia, PCB2 de control, sensores y actuadores" width="1200" height="430" loading="lazy">
+      <figcaption>Flujo de energía (líneas gruesas) y de señales (líneas finas) del sistema.</figcaption>
+    </figure>
+
+    <div style="margin-top:72px">
+      <p class="eyebrow"><b>05</b> Proceso de diseño</p>
+      <div class="steps" style="margin-top:22px">
+        <div class="step"><div class="n">01</div><h4>Caja negra</h4><p>Función global: agarrar.</p></div>
+        <div class="step"><div class="n">02</div><h4>Arquitectura</h4><p>Subfunciones del sistema.</p></div>
+        <div class="step"><div class="n">03</div><h4>Conceptos</h4><p>8 alternativas generadas.</p></div>
+        <div class="step"><div class="n">04</div><h4>Selección</h4><p>Pugh y matriz ponderada.</p></div>
+        <div class="step"><div class="n">05</div><h4>Configuración</h4><p>Pautas de seguridad y FMECA.</p></div>
+        <div class="step"><div class="n">06</div><h4>Electrónica</h4><p>2 PCB listas para fabricar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MECÁNICA ============ -->
+<section class="sec" id="mecanica" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>06</b> Diseño mecánico</p><h2>Sostiene la pieza sin gastar energía.</h2></div>
+      <p class="lead">Todas las transmisiones terminan en un sinfín. Los sinfines son autobloqueantes: una vez cerrado el agarre, los motores pueden apagarse y la pieza no se suelta.</p>
+    </div>
+    <div class="cols-2">
+      <article class="card block reveal">
+        <span class="k">MCP · MUÑECA</span><h3>Un servo cierra los tres dedos a la vez</h3>
+        <p>El AX-18A mueve un piñón 21T que engrana con tres piñones 28T con sinfín, uno por dedo. Los tres dedos cierran juntos y el eje MCP es una varilla M3×74.</p>
+        <div class="chain"><span>AX-18A</span><i>→</i><span class="hot">Piñón 21T</span><i>→</i><span class="hot">3 × piñón 28T + sinfín</span><i>→</i><span>Falange proximal</span></div>
+      </article>
+      <article class="card block reveal">
+        <span class="k">PIP · DEDOS</span><h3>Un motor Pololu en cada dedo</h3>
+        <p>Cada dedo lleva su motor Pololu con un sinfín que mueve una corona 14T pegada a la falange distal, que gira sobre un buje LM3UU.</p>
+        <div class="chain"><span>Pololu 1595</span><i>→</i><span class="hot">Sinfín PIP</span><i>→</i><span class="hot">Corona 14T</span><i>→</i><span>Falange distal</span></div>
+      </article>
+      <article class="card block reveal">
+        <span class="k">YEMAS</span><h3>Cambio rápido con imanes</h3>
+        <p>Las yemas son de TPU 95A, blandas para mejorar el agarre, y se sujetan a las falanges con 24 imanes N52 Ø6×3. Cada yema aloja un sensor FSR.</p>
+      </article>
+      <article class="card block reveal">
+        <span class="k">SEGURIDAD</span><h3>Par limitado por software</h3>
+        <p>El torque del AX-18A se limita al 50–60 % (registro 34). Con el ensamble actual los dedos se tocan en el centro a MCP ≈ +20°, así que ese límite también se fija por software.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANUFACTURA ============ -->
+<section class="sec" id="manufactura">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>07</b> Materiales y manufactura</p><h2>Impreso en una Bambu Lab A1 mini.</h2></div>
+      <p class="lead">PLA para la estructura y los engranajes, rígido y preciso; TPU 95A para las yemas. Ejes sobre rodamientos MF63ZZ y bujes LM3UU, tornillería M3. Antes de imprimir se valida una galga de ajustes de 32 minutos.</p>
+    </div>
+    <div class="tbl reveal">
+      <table>
+        <thead><tr><th>Placa</th><th>Contenido</th><th>Material</th><th>Tiempo</th><th>Peso</th><th>Pausas</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">0</td><td>Galga de ajustes (agujeros de rodamientos, insertos, imanes, ejes)</td><td><span class="pill">PLA</span></td><td>0 h 32</td><td>10 g</td><td>—</td></tr>
+          <tr><td class="mono">A</td><td>Palma, 3 piñones 28T con sinfín, piñón 21T, acople motor–engranaje, 3 coronas 14T y 3 sinfines PIP</td><td><span class="pill">PLA</span></td><td>9 h 31</td><td>188 g</td><td>—</td></tr>
+          <tr><td class="mono">B</td><td>Acople UR5e</td><td><span class="pill">PLA</span></td><td>4 h 11</td><td>127 g</td><td>—</td></tr>
+          <tr><td class="mono">C</td><td>Tapa Dynamixel, 3 falanges proximales, 3 distales y 3 tapas de motor</td><td><span class="pill">PLA</span></td><td>5 h 22</td><td>105 g</td><td>Z 13,4 y 14,8 · imanes</td></tr>
+          <tr><td class="mono">D</td><td>3 yemas proximales y 3 distales</td><td><span class="pill tpu">TPU 95A</span></td><td>0 h 52</td><td>16 g</td><td>Z 4,8 y 5,8 · imanes</td></tr>
+        </tbody>
+        <tfoot><tr><td></td><td>Total</td><td></td><td>≈ 20 h 30</td><td>430 g PLA + 16 g TPU</td><td>24 imanes</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="cols-3" style="margin-top:20px">
+      <article class="card block reveal"><span class="k">ENGRANAJES</span><h3>Capa de 0,12 mm</h3><p>4 paredes, gyroid 40 %, sin soportes. Los dientes salen más finos y resistentes.</p></article>
+      <article class="card block reveal"><span class="k">ACOPLE UR5e</span><h3>5 paredes</h3><p>Gyroid 40 %, porque lleva toda la carga del brazo.</p></article>
+      <article class="card block reveal"><span class="k">TOLERANCIAS</span><h3>Holguras en el CAD</h3><p>M3 Ø3,3–3,4, MF63ZZ Ø6,1, LM3UU Ø7,1, inserto Ø4,0, imán Ø6,15 × 3,1; encogimiento del PLA compensado al 99,8 %.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ELECTRÓNICA ============ -->
+<section class="sec dark" id="electronica">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>08</b> Electrónica</p><h2>Distribución de potencia y control.</h2></div>
+      <p class="lead">Ramas separadas por fusible, con reserva de 2200 µF y 1000 µF. Tarjetas a una sola cara, pistas a 45° y conectores JST XH para cambiar módulos sin soldar.</p>
+    </div>
+    <div class="rails reveal" style="background:var(--night-2);border-color:#2a2b2e">
+      <div class="rail"><div class="v">24<small> V</small></div><div class="to">Entrada · UR5e</div><p style="color:var(--on-night-2)">Fusible principal y fusibles de 3 A / 2 A por rama.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">12<small> V</small></div><div class="to">Servo AX-18A</div><p style="color:var(--on-night-2)">Rama dedicada con reserva de capacitancia.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">6<small> V</small></div><div class="to">3 motores DC</div><p style="color:var(--on-night-2)">Drivers TC1508A, uno por dedo.</p></div>
+      <div class="rail" style="border-color:#2a2b2e"><div class="v">5<small> V</small></div><div class="to">Lógica</div><p style="color:var(--on-night-2)">ESP32-S3; el USB queda separado para programar.</p></div>
+    </div>
+    <div class="cols-2" style="margin-top:20px">
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb1_potencia.svg" alt="Ruteo de la PCB1 de potencia" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB1 · Potencia</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+      <figure class="pcb-card reveal"><img src="assets/pcb/pcb2_control.svg" alt="Ruteo de la PCB2 de control" width="792" height="792" loading="lazy">
+        <div class="cap"><h3>PCB2 · Control</h3><span>60 × 60 mm · cobre inferior</span></div></figure>
+    </div>
+    <div class="cols-3" style="margin-top:20px">
+      <article class="card block reveal"><span class="k">PCB2</span><h3>Arranque seguro</h3><p>Resistencias de 10 kΩ a GND mantienen los motores apagados mientras arranca el ESP32, y cada FSR pasa por un filtro RC de 10 kΩ / 100 nF.</p></article>
+      <article class="card block reveal"><span class="k">AX-18A</span><h3>Enlace directo con el servo</h3><p>Half-duplex por un solo cable con protocolo Dynamixel: buffer 74HCT125 de 3,3 V a 5 V y divisor que protege al ESP32. Se eliminó el shield intermedio.</p></article>
+      <article class="card block reveal"><span class="k">SENSORES</span><h3>Instrumentación</h3><p>Un FSR por yema hacia el ADC del ESP32, finales de carrera de apertura y cierre, y la posición, carga y temperatura que reporta el servo.</p></article>
+    </div>
+    <figure class="figure reveal" style="margin-top:20px;padding:20px;background:#f5f4f1;border-radius:18px">
+      <img src="assets/img/diagrama_sensado.svg" alt="Cadena de sensado y actuación: FSR, filtro RC, ESP32-S3, drivers, motores y servo" width="1200" height="560" loading="lazy">
+      <figcaption style="color:#57544e">Cadena sensor → filtro → ESP32-S3 → actuador. El filtro RC de 10 kΩ / 100 nF corta en ≈ 160 Hz.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ SOFTWARE ============ -->
+<section class="sec" id="software">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>09</b> Programa de control</p><h2>Órdenes de una línea, con parada automática.</h2></div>
+      <p class="lead">El ESP32-S3 recibe órdenes de texto por UART a 115200 baudios (8N1), controla los tres motores con PWM a 20 kHz y el servo, y envía telemetría a un servidor de la universidad. Si no llega una orden válida en 500 ms, detiene todo.</p>
+    </div>
+    <div class="cols-2">
+      <div class="tbl reveal">
+        <table>
+          <thead><tr><th>Orden</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>OPEN n</code> · <code>CLOSE n</code></td><td>Abre o cierra la instancia n: 1–3 son los motores de los dedos y 4 el servo.</td></tr>
+            <tr><td><code>STOP n</code> · <code>STOP</code></td><td>Detiene una instancia o todo el gripper.</td></tr>
+            <tr><td><code>M n pwm</code> · <code>ALL a b c</code></td><td>PWM de −100 a +100 % en un motor o en los tres.</td></tr>
+            <tr><td><code>SERVO µs</code></td><td>Pulso del servo; 0 lo deshabilita.</td></tr>
+            <tr><td><code>STATUS</code> · <code>PING</code></td><td>Lee las consignas o renueva la orden activa.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="term"><span class="p">&gt;</span> CLOSE 4<br><span class="o">(4, 1, 3, 1, 2000, -1)</span> <span style="color:#6f6b64"># instancia, evento, orden, activo, consigna</span><br><span class="p">&gt;</span> ALL -20 -20 -20<br><span class="o">OK</span><br><span class="p">&gt;</span> STATUS<br><span class="o">STATE -20 -20 -20 2000 1</span><br><span class="p">&gt;</span> FOO<br><span class="o">ERR COMMAND</span> <span style="color:#6f6b64"># y parada segura</span></div>
+        <div class="cols-2" style="margin-top:16px;gap:12px">
+          <article class="card block" style="padding:18px"><span class="k">SEGURIDAD</span><p style="margin-top:6px">Una orden inválida también detiene los motores y quita la señal del servo.</p></article>
+          <article class="card block" style="padding:18px"><span class="k">TELEMETRÍA</span><p style="margin-top:6px">Cada evento y una muestra cada 500 ms se envían por Wi-Fi en JSON, con cola de 64 eventos.</p></article>
+        </div>
+      </div>
+    </div>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/diagrama_estados.svg" alt="Máquina de estados del firmware: arranque, espera, ejecución, activo y parada segura" width="1200" height="560" loading="lazy">
+      <figcaption>Máquina de estados del firmware del ESP32-S3. En naranja, las transiciones que llevan a la parada segura.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ UR5e ============ -->
+<section class="sec" id="ur5e" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>10</b> Interfaz con el UR5e</p><h2>Se monta en la brida del robot.</h2></div>
+      <p class="lead">El acople impreso sigue la brida de herramienta del UR5e. La energía y los datos salen del conector de herramienta, así que el gripper no necesita cables externos.</p>
+    </div>
+    <figure class="figure reveal" style="margin:0 0 20px">
+      <img src="assets/img/ur5e_gripper.webp" alt="Ilustración del gripper montado en un brazo colaborativo sosteniendo un cilindro metálico" width="1672" height="941" loading="lazy" style="border-radius:18px">
+      <figcaption>Ilustración generada con IA a partir del render del CAD V31; no es una foto del prototipo.</figcaption>
+    </figure>
+    <div class="tbl reveal">
+      <table>
+        <thead><tr><th>Parámetro del UR5e</th><th>Valor</th><th>Uso en el gripper</th></tr></thead>
+        <tbody>
+          <tr><td>Carga útil</td><td>5 kg</td><td>Límite de masa de gripper más pieza.</td></tr>
+          <tr><td>Brida de herramienta</td><td>EN ISO 9409-1-50-4-M6</td><td>Acople UR5e impreso con tornillos M6.</td></tr>
+          <tr><td>Alimentación de herramienta</td><td>12 / 24 V · 1,5 A (dos pines) · 1 A (un pin)</td><td>Única fuente: 24 V a la PCB1.</td></tr>
+          <tr><td>Conector</td><td>M8 de 8 pines</td><td>Energía y enlace RS-485 por el mismo cable.</td></tr>
+          <tr><td>Alcance · repetibilidad</td><td>850 mm · ± 0,03 mm</td><td>Espacio de trabajo del agarre.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font:12.5px var(--f-mono);color:var(--ink-3);margin-top:12px">Fuente: Universal Robots, UR5e Technical Specification (2023).</p>
+  </div>
+</section>
+
+<!-- ============ ANÁLISIS ============ -->
+<section class="sec" id="analisis">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>11</b> Análisis de ingeniería</p><h2>Los cálculos detrás del diseño.</h2></div>
+      <p class="lead">Estática en tres vistas, cinemática, dinámica y consumo, validados en Working Model 2D con un error máximo de 0,034 % en 180 configuraciones.</p>
+    </div>
+    <div class="links">
+      <a class="card lnk reveal" href="analisis.html#estatica"><span class="k">3.1</span><h3>Estática</h3><p>Fuerzas de contacto, torques en MCP y PIP y reacciones, para 4 kg (μ 0,5) y 3,5 kg (μ 0,3).</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#cinematica"><span class="k">3.3</span><h3>Cinemática</h3><p>Cierre cicloidal, velocidades y aceleraciones de las falanges y trayectorias de P, D y T.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#dinamica"><span class="k">3.4</span><h3>Dinámica y consumo</h3><p>Lagrange para el dedo de dos eslabones, potencia, energía por ciclo y consumo eléctrico.</p><p class="go">Abrir análisis →</p></a>
+      <a class="card lnk reveal" href="analisis.html#validacion"><span class="k">WM 2D</span><h3>Validación</h3><p>Barrido de 180 configuraciones en Working Model 2D frente al cálculo analítico.</p><p class="go">Abrir validación →</p></a>
+      <a class="card lnk reveal" href="assets/informe_mecanica_gripper_v24.pdf"><span class="k">PDF</span><h3>Informe de cálculos</h3><p>Informe mecánico en formato EAFIT, con los dos casos de diseño.</p><p class="go">Descargar →</p></a>
+      <a class="card lnk reveal" href="analisis.html#electronica"><span class="k">AVANCE 3</span><h3>Electrónica previa</h3><p>Arquitectura, alimentación y tarjeta de la entrega anterior.</p><p class="go">Ver →</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section class="sec" id="equipo">
+  <div class="wrap">
+    <div class="cols-2" style="gap:56px">
+      <div>
+        <p class="eyebrow"><b>12</b> Equipo</p>
+        <h2 style="font-size:clamp(30px,3.6vw,44px);margin-top:14px">Grupo 1 · Universidad EAFIT</h2>
+        <div class="team"><span>Samuel Martínez</span><span>Lucas Arango</span><span>Maximiliano Sánchez</span><span>Valentina Torres</span><span>Nicolás Zapata</span><span>David Zuluaga</span></div>
+      </div>
+      <div>
+        <p class="eyebrow">Bibliografía</p>
+        <ol class="refs" style="margin-top:14px">
+          <li>Zaidi et al. (2021). Actuation Technologies for Soft Robot Grippers and Manipulators. <i>Current Robotics Reports</i>, 2(2).</li>
+          <li>Hernandez et al. (2023). Current Designs of Robotic Arm Grippers: A Systematic Review. <i>Robotics</i>, 12(1).</li>
+          <li>Tai et al. (2016). State of the Art Robotic Grippers and Applications. <i>Robotics</i>, 5(2).</li>
+          <li>Dieter &amp; Schmidt (2009). <i>Engineering Design</i>, 4th ed. McGraw-Hill.</li>
+          <li>Ullman (2010). <i>The Mechanical Design Process</i>, 4th ed. McGraw-Hill.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
+
+<script type="module" src="js/site.js"></script>
+</body>
+</html>

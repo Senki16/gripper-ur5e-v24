@@ -1,8 +1,5 @@
 import { Visor, CAT } from "./viewer.js";
 
-// Aparición suave de bloques
-const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { rootMargin: "0px 0px -8% 0px" });
-document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
 const COLOR = { pla: "#e6e3db", pla2: "#cccbc7", gear: "#f56b12", acople: "#2c2e33", tpu: "#1f1f21", steel: "#9ea3aa", magnet: "#c7c9cc", motor: "#414347", pcb: "#1a5c38" };
 const $ = (s) => document.querySelector(s);

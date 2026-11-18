@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proyecto · Gripper UR5e</title>
+<meta name="description" content="Gripper de tres dedos para el robot colaborativo UR5e: diseño mecánico V31, electrónica en dos PCB, control con ESP32-S3 y visor 3D interactivo del ensamble.">
+<meta property="og:title" content="Gripper de 3 dedos para el UR5e">
+<meta property="og:description" content="Tres dedos, sensores de fuerza y control propio, alimentado solo con los 24 V del puerto de herramienta del UR5e.">
+<meta property="og:image" content="assets/img/hero_v31.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 3v8a5 5 0 0 0 10 0V3M12 16v5M7 7h3M14 7h3"/></svg></span>Gripper UR5e</a>
+    <div class="nav-links"><a href="index.html">Inicio</a><a href="proyecto.html" class="on" aria-current="page">Proyecto</a><a href="mecanica.html">Mecánica</a><a href="electronica.html">Electrónica y control</a><a href="robot.html">En el UR5e</a><a href="documentos.html">Documentos</a></div>
+    <a class="nav-cta" href="index.html#visor">Ver en 3D</a>
+  </div>
+</nav>
+
+<main>
+<header class="page-head"><div class="wrap">
+  <p class="eyebrow"><b>●</b> Proyecto</p>
+  <h1>El reto y la arquitectura.</h1>
+  <p class="lead">Qué se pidió, qué se construyó y cómo se organizan sus partes.</p>
+</div></header>
+<section class="sec" id="reto">
+  <div class="wrap">
+    <div class="reto">
+      <div>
+        <p class="eyebrow"><b>●</b> El reto</p>
+        <p class="quote" style="margin-top:18px">Diseñar un gripper que mueva tres dedos, <span>mida la fuerza de agarre</span> y se comunique con el robot <span>usando solo los 24 V del puerto de herramienta.</span></p>
+      </div>
+      <div>
+        <p class="eyebrow"><b>●</b> Objetivo</p>
+        <p style="margin-top:18px;font-size:18px;color:var(--ink-2)">Integrar potencia, control y comunicaciones en tarjetas compactas, seguras y fabricables a una sola cara, sobre una mecánica impresa en 3D que sostiene la pieza sin consumir energía.</p>
+      </div>
+    </div>
+    <div class="alcance">
+      <div class="alc"><span class="k">I</span><h4>Motores DC</h4><p>3 motores DC con drivers TC1508A, uno por articulación PIP.</p></div>
+      <div class="alc"><span class="k">II</span><h4>Servo Dynamixel</h4><p>1 servo AX-18A con retroalimentación de posición y carga.</p></div>
+      <div class="alc"><span class="k">III</span><h4>Sensado</h4><p>3 sensores de fuerza FSR y finales de carrera.</p></div>
+      <div class="alc"><span class="k">IV</span><h4>Comunicación</h4><p>Enlace RS-485 con el controlador del UR5e.</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="arquitectura">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Arquitectura del sistema</p><h2>Dos tarjetas, cuatro actuadores, un solo cable al robot.</h2></div>
+      <p class="lead">Los 24 V del UR5e entran a la tarjeta de potencia, que los reparte en tres ramas protegidas. La tarjeta de control lee los sensores, mueve los actuadores y habla con el robot por RS-485.</p>
+    </div>
+    <div class="cols-4">
+      <article class="card block reveal"><span class="k">PCB1 · POTENCIA</span><h3>Tres ramas desde 24 V</h3><p>Fusibles dedicados y tres ramas: 12 V para el servo, 6 V para los motores y 5 V para la lógica.</p></article>
+      <article class="card block reveal"><span class="k">PCB2 · CONTROL</span><h3>ESP32-S3 en zócalos</h3><p>Maneja los drivers, lee los sensores con filtros RC y se comunica con el robot.</p></article>
+      <article class="card block reveal"><span class="k">ACTUADORES</span><h3>Servo + 3 motores DC</h3><p>Servo Dynamixel AX-18A a 12 V y 3 motores DC a 6 V, controlados con drivers TC1508A.</p></article>
+      <article class="card block reveal"><span class="k">SENSADO Y ENLACE</span><h3>Fuerza y comunicación</h3><p>3 FSR y finales de carrera. RS-485 con el UR5e y bus del servo a 1 Mbps.</p></article>
+    </div>
+    <figure class="figure card reveal" style="margin-top:20px;padding:20px">
+      <img src="assets/img/arquitectura_v31.svg" alt="Diagrama de bloques: UR5e, PCB1 de potencia, PCB2 de control, sensores y actuadores" width="1200" height="430" loading="lazy">
+      <figcaption>Flujo de energía (líneas gruesas) y de señales (líneas finas) del sistema.</figcaption>
+    </figure>
+
+    <div style="margin-top:72px">
+      <p class="eyebrow"><b>●</b> Proceso de diseño</p>
+      <div class="steps" style="margin-top:22px">
+        <div class="step"><div class="n">01</div><h4>Caja negra</h4><p>Función global: agarrar.</p></div>
+        <div class="step"><div class="n">02</div><h4>Arquitectura</h4><p>Subfunciones del sistema.</p></div>
+        <div class="step"><div class="n">03</div><h4>Conceptos</h4><p>8 alternativas generadas.</p></div>
+        <div class="step"><div class="n">04</div><h4>Selección</h4><p>Pugh y matriz ponderada.</p></div>
+        <div class="step"><div class="n">05</div><h4>Configuración</h4><p>Pautas de seguridad y FMECA.</p></div>
+        <div class="step"><div class="n">06</div><h4>Electrónica</h4><p>2 PCB listas para fabricar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="equipo">
+  <div class="wrap">
+    <div class="cols-2" style="gap:56px">
+      <div>
+        <p class="eyebrow"><b>●</b> Equipo</p>
+        <h2 style="font-size:clamp(30px,3.6vw,44px);margin-top:14px">Grupo 1 · Universidad EAFIT</h2>
+        <div class="team"><span>Samuel Martínez</span><span>Lucas Arango</span><span>Maximiliano Sánchez</span><span>Valentina Torres</span><span>Nicolás Zapata</span><span>David Zuluaga</span></div>
+      </div>
+      <div>
+        <p class="eyebrow">Bibliografía</p>
+        <ol class="refs" style="margin-top:14px">
+          <li>Zaidi et al. (2021). Actuation Technologies for Soft Robot Grippers and Manipulators. <i>Current Robotics Reports</i>, 2(2).</li>
+          <li>Hernandez et al. (2023). Current Designs of Robotic Arm Grippers: A Systematic Review. <i>Robotics</i>, 12(1).</li>
+          <li>Tai et al. (2016). State of the Art Robotic Grippers and Applications. <i>Robotics</i>, 5(2).</li>
+          <li>Dieter &amp; Schmidt (2009). <i>Engineering Design</i>, 4th ed. McGraw-Hill.</li>
+          <li>Ullman (2010). <i>The Mechanical Design Process</i>, 4th ed. McGraw-Hill.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="next"><div class="wrap"><a href="mecanica.html"><span class="eyebrow">Siguiente</span><span class="t">Mecánica →</span></a></div></section>
+<footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026 · Grupo 1</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
+
+<script src="js/reveal.js" defer></script>
+</body>
+</html>
