@@ -54,12 +54,12 @@
   <path class="sg" d="M190 250 H240 V330 H286" marker-end="url(#a)" marker-start="url(#o2)"/>
   <text class="ls" x="198" y="300">RS-485</text>
   <path class="sg" d="M540 290 H640 V90 H696" marker-end="url(#a)" marker-start="url(#o2)"/>
-  <text class="ls" x="560" y="282">bus servo · 1 Mbps</text>
+  <text class="ls" x="548" y="282">servo 1 Mbps</text>
   <path class="sg" d="M540 320 H660 V190 H696" marker-end="url(#a)"/>
-  <text class="ls" x="560" y="314">PWM · 6 señales</text>
+  <text class="ls" x="548" y="314">PWM ×6</text>
   <path class="sg" d="M920 170 H956" marker-end="url(#a)"/>
   <path class="sg" d="M696 345 H540" marker-end="url(#a)"/>
-  <text class="ls" x="580" y="362">ADC · filtro RC</text>
+  <text class="ls" x="560" y="362">ADC · filtro RC</text>
   <!-- leyenda -->
   <path class="pw" d="M960 300 H1000"/><text class="s" x="1010" y="304">Energía</text>
   <path class="sg" d="M960 330 H1000"/><text class="s" x="1010" y="334">Señales y datos</text>

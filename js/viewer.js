@@ -106,7 +106,7 @@ export class Visor {
   encuadrar(box, dir = [1, 0.6, 1.1]) {
     const c = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3());
     const r = size.length() / 2;
-    const dist = r / Math.sin(THREE.MathUtils.degToRad(this.camera.fov / 2)) * 1.0 / Math.min(1, this.camera.aspect * 0.9);
+    const dist = r / Math.sin(THREE.MathUtils.degToRad(this.camera.fov / 2)) * 1.12 / Math.min(1, this.camera.aspect * 0.9);
     const v = new THREE.Vector3(...dir).normalize();
     this.camera.position.copy(c).addScaledVector(v, dist);
     this.camera.near = dist / 100; this.camera.far = dist * 20; this.camera.updateProjectionMatrix();

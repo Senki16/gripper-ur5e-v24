@@ -10,11 +10,11 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gut); }
 .mono { font-family: var(--f-mono); }
-h1, h2, h3, h4 { font-family: var(--f-head); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+h1, h2, h3, h4 { font-family: var(--f-head); letter-spacing: -0.02em; margin: 0; text-wrap: balance; line-height: 1.18; }
 p { margin: 0; }
 .tnum { font-variant-numeric: tabular-nums; }
 
