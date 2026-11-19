@@ -315,3 +315,9 @@ main > .sec:first-of-type, .page-head + .sec { border-top: 0; }
   .cards6 { gap: 14px; }
 }
 .brand-logo { height: 24px; width: auto; display: block; }
+
+/* Entregas en documentos */
+.grupo-doc { font-size: 22px; margin: 34px 0 14px; }
+.grupo-doc:first-of-type { margin-top: 8px; }
+.grupo-doc span { color: var(--ink-3); font-weight: 400; font-size: 16px; }
+#entregas .links + .grupo-doc { margin-top: 40px; }
