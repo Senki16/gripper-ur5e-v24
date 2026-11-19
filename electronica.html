@@ -29,7 +29,7 @@
 <header class="page-head"><div class="wrap">
   <p class="eyebrow"><b>●</b> Electrónica y control</p>
   <h1>Dos tarjetas y un programa.</h1>
-  <p class="lead">Distribución de potencia, sensores, enlace con el servo y el firmware del ESP32-S3.</p>
+  <p class="lead">Distribución de potencia, sensores, enlace con el servo, el firmware del ESP32-S3 y el monitor de telemetría.</p>
 </div></header>
 <section class="sec dark" id="electronica">
   <div class="wrap">
@@ -91,6 +91,32 @@
       <img src="assets/img/diagrama_estados.svg" alt="Máquina de estados del firmware: arranque, espera, ejecución, activo y parada segura" width="1200" height="560" loading="lazy">
       <figcaption>Máquina de estados del firmware del ESP32-S3. En naranja, las transiciones que llevan a la parada segura.</figcaption>
     </figure>
+  </div>
+</section>
+<section class="sec" id="monitor" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Monitor de telemetría</p><h2>Lo que hace el gripper, en vivo.</h2></div>
+      <p class="lead">El ESP32 envía cada lectura por HTTPS a un servidor de la universidad. Node-RED la revisa y la guarda en InfluxDB, Grafana muestra el histórico y la interfaz del equipo muestra el tiempo real.</p>
+    </div>
+    <figure class="figure card reveal" style="padding:20px">
+      <img src="assets/img/monitor/arquitectura.webp" alt="Arquitectura del monitor: el ESP32 envía JSON por HTTPS a Node-RED, que guarda en InfluxDB; Grafana y la HMI del equipo leen los datos" width="1600" height="806" loading="lazy">
+      <figcaption>Arquitectura y despliegue: todo el servidor corre con un solo Docker Compose. En azul, la interfaz que hizo el equipo.</figcaption>
+    </figure>
+    <div class="cols-2" style="margin-top:20px">
+      <figure class="figure card reveal" style="padding:20px;align-self:start">
+        <img src="assets/img/monitor/tablero_completo.webp" alt="Tablero del monitor con estado, apertura, fuerza, servo AX-18A, motores M1 a M6 y avisos" width="1400" height="1507" loading="lazy">
+        <figcaption>Tablero del equipo (HMI), captura con datos del simulador.</figcaption>
+      </figure>
+      <div class="reveal" style="display:grid;gap:12px;align-content:start">
+        <article class="card block" style="padding:18px"><span class="k">SOLO LECTURA</span><p style="margin-top:6px">Muestra lo que el gripper envía; no manda órdenes a los motores. Se actualiza cada 0,4 s.</p></article>
+        <article class="card block" style="padding:18px"><span class="k">SIN DATOS VIEJOS</span><p style="margin-top:6px">Si pasan 5 s sin una muestra nueva, la pantalla dice «Sin datos» en lugar de mostrar un valor viejo.</p></article>
+        <article class="card block" style="padding:18px"><span class="k">REVISADO ANTES DE GUARDAR</span><p style="margin-top:6px">Node-RED rechaza muestras mal formadas o repetidas y responde 201 solo cuando el dato quedó guardado.</p></article>
+        <article class="card block" style="padding:18px"><span class="k">QUÉ SE VE</span><p style="margin-top:6px">Estado del gripper, apertura y fuerza frente al objetivo, servo AX-18A, corriente y encoder de M1 a M6, y avisos.</p></article>
+        <a class="card lnk block" href="https://grafana-gripper.dis.eafit.edu.co/" target="_blank" rel="noopener" style="padding:18px;border-color:var(--accent)"><span class="k">EN VIVO · SERVIDOR EAFIT</span><h3 style="font-size:18px;margin:6px 0 4px">Abrir el monitor del gripper</h3><p>El tablero real en el servidor de la universidad. Se mueve cuando el gripper está encendido y enviando datos; si no, avisa cuánto hace que llegó la última muestra.</p><p class="go">grafana-gripper.dis.eafit.edu.co →</p></a>
+        <a class="card lnk block" href="assets/entregas/guia_monitor_telemetria.pdf" target="_blank" rel="noopener" style="padding:18px"><span class="k">PDF 1,8 MB</span><h3 style="font-size:18px;margin:6px 0 4px">Guía para exponer el monitor</h3><p>Los cinco diagramas del sistema y cada zona del tablero.</p><p class="go">Abrir →</p></a>
+      </div>
+    </div>
   </div>
 </section>
 </main>
