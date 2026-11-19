@@ -29,8 +29,46 @@
 <header class="page-head"><div class="wrap">
   <p class="eyebrow"><b>●</b> En el UR5e</p>
   <h1>Se monta en la brida del robot.</h1>
-  <p class="lead">La energía y los datos salen del conector de herramienta: no necesita cables externos.</p>
+  <p class="lead">Mira la simulación del gripper tomando y dejando una pieza. La energía y los datos salen del conector de herramienta: no necesita cables externos.</p>
 </div></header>
+<section class="sec" id="simulacion">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow"><b>●</b> Simulación</p><h2>El gripper trabajando en un UR5e.</h2></div>
+      <p class="lead">El brazo toma un cilindro de 36 mm en A, lo lleva a B y lo devuelve. Primero el servo central cierra los tres dedos en el MCP y después cada motor cierra su falange distal, con las mismas órdenes que envía el robot por RS-485.</p>
+    </div>
+    <div class="sim-shell">
+      <div class="stage sim-stage" id="sim-stage">
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Reproducción"><button id="sim-play" aria-pressed="false">Pausa</button><button id="sim-reset">Reiniciar</button></div>
+          <div class="seg" role="group" aria-label="Velocidad"><button data-vel="0.5" aria-pressed="false">0,5×</button><button data-vel="1" aria-pressed="true">1×</button><button data-vel="2" aria-pressed="false">2×</button></div>
+          <div class="seg" role="group" aria-label="Cámara"><button data-simvista="general" aria-pressed="true">General</button><button data-simvista="gripper" aria-pressed="false">Gripper</button></div>
+        </div>
+        <div class="sim-time"><label for="sim-t">Ciclo</label><input id="sim-t" type="range" min="0" max="1" step="0.001" value="0"><span id="sim-fase" class="mono">0,0 s</span></div>
+        <div class="hint">arrastra · rueda</div>
+        <div class="loading" id="sim-loading"><div><p id="sim-load-txt">Cargando gripper V31 · 10 MB</p><div class="bar"><i id="sim-load-bar"></i></div></div></div>
+      </div>
+      <aside class="sim-panel">
+        <div class="sim-blk">
+          <p class="k">Gripper</p>
+          <p class="sim-estado" id="sim-estado" data-g="Reposo">Reposo</p>
+          <p class="sim-robot" id="sim-robot">En reposo</p>
+        </div>
+        <div class="sim-blk">
+          <p class="k">Órdenes del UR5e al gripper</p>
+          <div class="term sim-log" id="sim-log"></div>
+        </div>
+        <div class="sim-blk">
+          <p class="k">Articulaciones del UR5e</p>
+          <dl class="sim-q" id="sim-q"></dl>
+          <p class="k" style="margin-top:14px">Dedos</p>
+          <dl class="sim-q" id="sim-dedos"></dl>
+        </div>
+      </aside>
+    </div>
+    <p class="sim-nota">Simulación cinemática. El brazo se dibuja simplificado con los parámetros DH del UR5e y sus ángulos salen de la cinemática inversa. El gripper es el modelo CAD V31 y sus dedos giran sobre los ejes MCP y PIP reales, hasta que las yemas tocan el cilindro. No simula fuerzas ni tiempos reales del robot.</p>
+  </div>
+</section>
 <section class="sec" id="ur5e" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="sec-head">
@@ -62,5 +100,6 @@
 <footer class="foot"><div class="wrap"><span>Gripper de 3 dedos para el UR5e · Universidad EAFIT · 2026 · Grupo 1</span><span class="mono">CAD V31 · SolidWorks → glTF</span></div></footer>
 
 <script src="js/reveal.js" defer></script>
+<script type="module" src="js/ur5e_sim.js"></script>
 </body>
 </html>

@@ -337,3 +337,29 @@ a.gal-media:hover img { transform: scale(1.03); }
 .gal-item figcaption b { color: var(--accent-ink); font-weight: 500; }
 .gal-item.ancho .gal-media { aspect-ratio: 16 / 9; }
 .gal-item.ancho { grid-column: span 2; }
+
+/* Simulación en el UR5e */
+.sim-shell { display: grid; grid-template-columns: minmax(0, 1fr) 300px; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--card); }
+.sim-stage { min-height: 620px; background: radial-gradient(ellipse at 50% 35%, var(--card), var(--paper-2)); }
+.sim-time { position: absolute; left: 16px; right: 140px; bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 12px; background: rgba(251, 250, 248, .92); border: 1px solid var(--line); border-radius: 12px; padding: 9px 14px; backdrop-filter: blur(8px); max-width: 560px; }
+.sim-time label { font: 500 12px var(--f-mono); color: var(--ink-2); text-transform: uppercase; letter-spacing: .08em; }
+.sim-time input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.sim-time span { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sim-panel { border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+.sim-blk { padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.sim-blk:last-child { border-bottom: 0; }
+.sim-blk .k { font: 500 11.5px var(--f-mono); color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+.sim-estado { font: 600 26px/1.2 var(--f-head); margin: 8px 0 2px; display: flex; align-items: center; gap: 10px; }
+.sim-estado::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ink-3); }
+.sim-estado[data-g="Cerrando"]::before, .sim-estado[data-g="Abriendo"]::before { background: var(--accent); }
+.sim-estado[data-g="Sujetando"]::before { background: #2f8a5b; }
+.sim-robot { margin: 0; color: var(--ink-2); font-size: 14px; }
+.sim-log { margin-top: 10px; font-size: 12.5px; line-height: 1.7; min-height: 9.5em; padding: 12px 14px; }
+.sim-log .c { color: #8f8a80; }
+.sim-q { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 10px; margin: 10px 0 0; font: 13px var(--f-mono); font-variant-numeric: tabular-nums; }
+.sim-q div { display: flex; justify-content: space-between; gap: 6px; }
+.sim-q dt { color: var(--ink-3); }
+.sim-q dd { margin: 0; }
+.sim-nota { font: 12.5px/1.55 var(--f-mono); color: var(--ink-3); margin-top: 12px; max-width: 900px; }
+@media (max-width: 960px) { .sim-shell { grid-template-columns: 1fr; } .sim-panel { border-left: 0; border-top: 1px solid var(--line); } .sim-stage { min-height: 480px; } }
+@media (max-width: 640px) { .sim-shell { border-radius: 16px; } .sim-stage { min-height: 420px; } .sim-time { right: 16px; bottom: 12px; } .sim-stage .hint { display: none; } .sim-q { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
