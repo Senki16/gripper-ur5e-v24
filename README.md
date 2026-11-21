@@ -2,9 +2,9 @@
 
 Proyecto de la línea de énfasis (DIST) de la Universidad EAFIT, Grupo 1, 2026. Es un gripper de tres dedos impreso en 3D para el brazo colaborativo UR5e. Mide la fuerza de agarre y se comunica con el robot usando solo los 24 V del puerto de herramienta.
 
-**Página web:** https://gripper-ur5e-v24.vercel.app
-**Documentos de todas las entregas:** [gripper-ur5e-v24.vercel.app/documentos.html](https://gripper-ur5e-v24.vercel.app/documentos.html#entregas)
-**Monitor de telemetría en vivo:** https://grafana-gripper.dis.eafit.edu.co/
+- **Página web:** https://gripper-ur5e-v24.vercel.app
+- **Documentos de todas las entregas:** [gripper-ur5e-v24.vercel.app/documentos.html](https://gripper-ur5e-v24.vercel.app/documentos.html#entregas)
+- **Monitor de telemetría en vivo:** https://grafana-gripper.dis.eafit.edu.co/
 
 <p align="center"><img src="assets/img/hero_v31.webp" width="720" alt="Render del gripper de tres dedos V31"></p>
 <p align="center"><sub>Render generado con IA a partir del ensamble CAD V31.</sub></p>
